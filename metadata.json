@@ -1,0 +1,7 @@
+{
+  "name": "Housing Editor",
+  "creator": "ImaDoofus",
+  "description": "Chattriggers module for housingeditor.com",
+  "entry": "index.js",
+  "version": "1.0.0"
+}
