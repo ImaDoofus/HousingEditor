@@ -9,6 +9,8 @@ register('guiOpened', () => {
 })
 
 register('guiRender', () => {
+	if (Player.getContainer().getClassName() === 'ContainerCreative') return // dont do stuff in creative menu
+	if (Player.getContainer().getName() === 'Housing Menu') return // dont do stuff in housing menu
 	if (Navigator.isReady) return;
 
 	if (Date.now() - Navigator.itemsLoaded.lastItemAddedTimestamp < cooldown) return; // wait atleast cooldown ms after the last item in the GUI was added before safely saying that the GUI has loaded.

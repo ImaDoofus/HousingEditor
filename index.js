@@ -3,23 +3,73 @@
 
 import Action from './actions/Action.js';
 
-var a = 20
+const cookieType = 'Cookie Crumb'
+const cookieAmount = 1;
+const cookieBonus = 1; // bonus cookie given on last bite
 
-let changeStat1 = new Action('change_stat', { stat: a+1 });
-let changeStat2 = new Action('change_stat', { stat: a+2 });
-let changeStat3 = new Action('change_stat', { stat: a+3 });
-let changeStat4 = new Action('change_stat', { stat: a+4 });
-let changeStat5 = new Action('change_stat', { stat: a+5 });
+let giveItem = new Action('give_item', { item: { id: 1 }, allowMultiple: true });
 
-changeStat1.load();
-changeStat2.load();
-changeStat3.load();
-changeStat4.load();
-changeStat5.load();
+let conditional1 = new Action('conditional', {
+	conditions: [
+		['stat_requirement', { stat: 'cookie_progress', compareValue: 0 }]
+	],
+	ifActions: [
+		['display_title', { title: '&6&l●', subtitle: `&6&l+${cookieAmount}&e ${cookieType}`, fadeIn: 0, fadeOut: 0, stay: 1 }],
+		['play_sound', { sound: 'Eat' }]
+	],
+})
 
-let statMessage = new Action('send_a_chat_message', { message: `stat${a}: %%stat_${a}%%, stat${a-1}: %%stat_${a-1}%%` });
-let statMessage2 = new Action('send_a_chat_message', { message: `stat${a-2}: %%stat_${a-2}%%, stat${a-3}: %%stat_${a-3}%%` });
-let statMessage3 = new Action('send_a_chat_message', { message: `stat${a-4}: %%stat_${a-4}%%` });
-statMessage.load();
-statMessage2.load();
-statMessage3.load();
+let conditional2 = new Action('conditional', {
+	conditions: [
+		['stat_requirement', { stat: 'cookie_progress', compareValue: 1 }]
+	],
+	ifActions: [
+		['display_title', { title: '&6&l◕', subtitle: `&6&l+${cookieAmount}&e ${cookieType}`, fadeIn: 0, fadeOut: 0, stay: 1 }],
+		['play_sound', { sound: 'Eat' }]
+	],
+})
+
+let conditional3 = new Action('conditional', {
+	conditions: [
+		['stat_requirement', { stat: 'cookie_progress', compareValue: 2 }]
+	],
+	ifActions: [
+		['display_title', { title: '&6&l◑', subtitle: `&6&l+${cookieAmount}&e ${cookieType}`, fadeIn: 0, fadeOut: 0, stay: 1 }],
+		['play_sound', { sound: 'Eat' }]
+	],
+})
+
+let conditional4 = new Action('conditional', {
+	conditions: [
+		['stat_requirement', { stat: 'cookie_progress', compareValue: 3 }]
+	],
+	ifActions: [
+		['display_title', { title: '&6&l◔', subtitle: `&6&l+${cookieAmount}&e ${cookieType}`, fadeIn: 0, fadeOut: 0, stay: 1 }],
+		['play_sound', { sound: 'Eat' }]
+	],
+})
+
+let conditional5 = new Action('conditional', {
+	conditions: [
+		['stat_requirement', { stat: 'cookie_progress', compareValue: 4 }]
+	],
+	ifActions: [
+		['display_title', { title: '&6&l○', subtitle: `&6&l+${cookieAmount+cookieBonus}&e ${cookieType}s`, fadeIn: 0, fadeOut: 0, stay: 1 }],
+		['play_sound', { sound: 'Burp' }],
+		['give_item', { item: { id: 1 } }],
+		['change_stat', { stat: 'cookie_progress', value: 0, mode: 'set' }]
+	],
+})
+
+let changeStat = new Action('change_stat', {
+	stat: 'cookie_progress',
+	value: 1,
+})
+
+giveItem.load();
+conditional1.load();
+conditional2.load();
+conditional3.load();
+conditional4.load();
+conditional5.load();
+changeStat.load();

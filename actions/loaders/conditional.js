@@ -39,13 +39,15 @@ function loadCondition(condition) {
 
 	let sequence = [];
 
+	const [conditionType, conditionData] = condition;
+
 	sequence.push({ type: 'guiClick', slot: 50 }); // add conditional
-	switch (condition.type) {
+	switch (conditionType) {
 		case "has_potion_effect":
 			sequence.push({ type: 'guiClick', slot: 16 }); // select "Has Potion Effect"
-			if (condition.effect) {
+			if (conditionData.effect) {
 				sequence.push({ type: 'guiClick', slot: 10}); // select "Effect"
-				let { slot, page } = getPotionEffect(condition.effect);
+				let { slot, page } = getPotionEffect(conditionData.effect);
 				if (page) {
 					sequence.push({ type: 'guiClick', slot: 53 });
 				}
@@ -60,18 +62,18 @@ function loadCondition(condition) {
 
 		case "has_item":
 			sequence.push({ type: 'guiClick', slot: 14 }); // select "Has Item"
-			if (condition.item) {
+			if (conditionData.item) {
 				sequence.push({ type: 'guiClick', slot: 10 }); // select "Item"
-				sequence.push({ type: 'loadItem', item: condition.item, slot: 36 }); // slot 36 is the first slot in the hotbar
+				sequence.push({ type: 'loadItem', item: conditionData.item, slot: 36 }); // slot 36 is the first slot in the hotbar
 				sequence.push({ type: 'guiClick', slot: 63 }); // slot 63 is the first slot in the inventory when "Select an Item" gui is opened
 			}
-			if (condition.whatToCheck === "item_type") { // item metadata is default
+			if (conditionData.whatToCheck === "item_type") { // item metadata is default
 				sequence.push({ type: 'guiClick', slot: 11 }); // select "What to Check"
 				sequence.push({ type: 'guiClick', slot: 10 }); // select "Item Type"
 			}
-			if (condition.whereToCheck) {
+			if (conditionData.whereToCheck) {
 				sequence.push({ type: 'guiClick', slot: 12 }); // select "Where to Check"
-				switch (condition.whereToCheck) { // the default is "Anywhere" that is why there is no case for it
+				switch (conditionData.whereToCheck) { // the default is "Anywhere" that is why there is no case for it
 					case "hand":
 						sequence.push({ type: 'guiClick', slot: 10 }); // select "Hand"
 						break;
@@ -89,7 +91,7 @@ function loadCondition(condition) {
 						break;
 				}
 			}
-			if (condition.requiredAmount) {	// Any Amount is the default here
+			if (conditionData.requiredAmount) {	// Any Amount is the default here
 				sequence.push({ type: 'guiClick', slot: 13 }); // select "Required Amount"
 				sequence.push({ type: 'guiClick', slot: 11 }); // select "Equal or Greater Amount"
 			}
@@ -98,31 +100,31 @@ function loadCondition(condition) {
 		
 		case 'within_region':
 			sequence.push({ type: 'guiClick', slot: 13 }); // select "Within Region"
-			if (condition.region) {
+			if (conditionData.region) {
 				sequence.push({ type: 'guiClick', slot: 10 }); // select "Region"
-				sequence.push({ type: 'selectOption', option: condition.region });
+				sequence.push({ type: 'selectOption', option: conditionData.region });
 			}
 			sequence.push({ type: 'goBack' }); // go back to edit conditionals tab
 			break;
 
 		case 'required_permission':
 			sequence.push({ type: 'guiClick', slot: 12 }); // select "Required Permission"
-			if (condition.permission) {
+			if (conditionData.permission) {
 				sequence.push({ type: 'guiClick', slot: 10 }); // select "Permission"
-				sequence.push({ type: 'selectOption', option: condition.permission });
+				sequence.push({ type: 'selectOption', option: conditionData.permission });
 			}
 			sequence.push({ type: 'goBack' }); // go back to edit conditionals tab
 			break;
 
 		case 'stat_requirement':
 			sequence.push({ type: 'guiClick', slot: 11 }); // select "Stat Requirement"
-			if (condition.stat) {
+			if (conditionData.stat) {
 				sequence.push({ type: 'guiClick', slot: 10 }); // select "Stat"
-				sequence.push({ type: 'inputAnvil', text: condition.stat });
+				sequence.push({ type: 'inputAnvil', text: conditionData.stat });
 			}
-			if (condition.comparator) { // default is "Equal"
+			if (conditionData.comparator) { // default is "Equal"
 				sequence.push({ type: 'guiClick', slot: 11 }); // select "Comparator"
-				switch (condition.comparator) {
+				switch (conditionData.comparator) {
 					case "less_than":
 						sequence.push({ type: 'guiClick', slot: 10 }); // select "Less Than"
 						break;
@@ -140,7 +142,7 @@ function loadCondition(condition) {
 						break;
 				}
 			}
-			if (!isNaN(condition.compareValue)) {
+			if (!isNaN(conditionData.compareValue)) {
 				sequence.push({ type: 'guiClick', slot: 12 }); // select "Compare Value"
 				sequence.push({ type: 'inputAnvil', text: condition.compareValue });
 			}
@@ -149,11 +151,11 @@ function loadCondition(condition) {
 
 		case 'required_group':
 			sequence.push({ type: 'guiClick', slot: 10 }); // select "Required Group"
-			if (condition.group) {
+			if (conditionData.group) {
 				sequence.push({ type: 'guiClick', slot: 10 }); // select "Group"
 				sequence.push({ type: 'selectOption', option: condition.group });
 			}
-			if (condition.includeHigherGroups) {
+			if (conditionData.includeHigherGroups) {
 				sequence.push({ type: 'guiClick', slot: 11 }); // select "Include Higher Groups"
 			}
 			sequence.push({ type: 'goBack' }); // go back to edit conditionals tab
