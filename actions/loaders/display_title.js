@@ -12,17 +12,17 @@ export default (actionData) => {
 		sequence.push({ type: 'inputAnvil', text: actionData.subtitle });
 	}
 
-	if (actionData.fadeIn) {
+	if (!isNaN(actionData.fadeIn)) {
 		sequence.push({ type: 'guiClick', slot: 12 });
 		sequence.push({ type: 'inputAnvil', text: actionData.fadeIn });
 	}
 	
-	if (actionData.stay) {
+	if (!isNaN(actionData.stay)) {
 		sequence.push({ type: 'guiClick', slot: 13 });
 		sequence.push({ type: 'inputAnvil', text: actionData.stay });
 	}
 
-	if (actionData.fadeOut) {
+	if (!isNaN(actionData.fadeOut)) {
 		sequence.push({ type: 'guiClick', slot: 14 });
 		sequence.push({ type: 'inputAnvil', text: actionData.fadeOut });
 	}
