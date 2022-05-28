@@ -144,7 +144,7 @@ function loadCondition(condition) {
 			}
 			if (!isNaN(conditionData.compareValue)) {
 				sequence.push({ type: 'guiClick', slot: 12 }); // select "Compare Value"
-				sequence.push({ type: 'inputAnvil', text: condition.compareValue });
+				sequence.push({ type: 'inputAnvil', text: conditionData.compareValue });
 			}
 			sequence.push({ type: 'goBack' }); // go back to edit conditionals tab
 			break;
@@ -153,7 +153,7 @@ function loadCondition(condition) {
 			sequence.push({ type: 'guiClick', slot: 10 }); // select "Required Group"
 			if (conditionData.group) {
 				sequence.push({ type: 'guiClick', slot: 10 }); // select "Group"
-				sequence.push({ type: 'selectOption', option: condition.group });
+				sequence.push({ type: 'selectOption', option: conditionData.group });
 			}
 			if (conditionData.includeHigherGroups) {
 				sequence.push({ type: 'guiClick', slot: 11 }); // select "Include Higher Groups"

@@ -26,6 +26,7 @@ register('tick', () => {
 			Navigator.click(operation.slot);
 			break;
 		case 'inputAnvil':
+			console.log('inputAnvil', operation.text);
 			Navigator.inputAnvil(operation.text);
 			break;
 		case 'returnToEditActions':
