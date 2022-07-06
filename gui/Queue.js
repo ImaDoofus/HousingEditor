@@ -1,69 +1,75 @@
 import Navigator from './Navigator.js';
+import { Button } from './GuiBuilder.js';
 
 let queue = [];
+let fails = [];
+let timeWithoutOperation = 0;
 let operationTimes = { started: 0, total: 0 };
 
 register('tick', () => {
-	if (!Navigator.isReady) return;
-	if (Navigator.isReturningToEditActions) {
-		return Navigator.returnToEditActions();
+	if (queue.length > 0) timeWithoutOperation++;
+	if (timeWithoutOperation > 60 & queue.length > 0) {
+		fails.push(`&cOperation timed out. &f(too long without operation)`);
+		const doneOperation = queue.pop();
+		doneLoading(doneOperation[1].actionName, doneOperation[1].actionAuthor);
 	}
-	if (Navigator.selectingOption) {
-		return Navigator.selectOption(Navigator.selectingOption);
+	if (!Navigator.isReady) return;
+	if (queue.length === 0) return;
+	timeWithoutOperation = 0;
+	if (Navigator.isReturning) return Navigator.returnToEditActions();
+	if (Navigator.isSelecting) {
+		const attemptResult = Navigator.selectOption(Navigator.optionBeingSelected);
+		if (attemptResult === false) fails.push(`&cFailed to select option: ${Navigator.optionBeingSelected}`);
+		return;
 	}
 
-	if (!queue.length > 0) return;
-	
 	if (operationTimes.started === 0) operationTimes.started = Date.now();
 	operationTimes.total++;
-	// timeRemaining.setString(`Time Remaining: ${Math.round(((Date.now() - operationTimes.started) / operationTimes.total) * queue.length / 1000)} seconds`);
+	timeRemainingButton.setText(`Time Remaining: ${Math.round(((Date.now() - operationTimes.started) / operationTimes.total) * queue.length / 1000)} seconds`);
 
-	let operation = queue.shift();
-	console.log(JSON.stringify(operation), queue.length);
+	let [operationType, operationData] = queue.shift();
 
-	switch(operation.type) {
-		case 'guiClick':
-			Navigator.click(operation.slot);
-			break;
-		case 'inputAnvil':
-			console.log('inputAnvil', operation.text);
-			Navigator.inputAnvil(operation.text);
-			break;
-		case 'returnToEditActions':
-			Navigator.isReturningToEditActions = true;
-			break;
-		case 'goBack':
-			Navigator.goBack();
-			break;
-		case 'selectOption':
-			Navigator.selectingOption = operation.option;
-			break;
-		case 'loadItem':
-			Navigator.loadItem(operation.item, operation.slot);
-			break;
+	switch(operationType) {
+		case 'click': return Navigator.click(operationData.slot);
+		case 'anvil': return Navigator.inputAnvil(operationData.text);
+		case 'returnToEditActions': return Navigator.returnToEditActions();
+		case 'back': return Navigator.goBack();
+		case 'option': return Navigator.setSelecting(operationData.option);
+		// case 'loadItem': return Navigator.loadItem(operationData.item, operationData.slot);
+		case 'done': return doneLoading(operationData.actionName, operationData.actionAuthor);
 	}
 })
 
-export default queue;
+function doneLoading(actionName, actionAuthor) {
+	console.log(`Done loading action: ${actionName}`);
+	timeWithoutOperation = 0;
+	queue = [];
+	operationTimes = { started: 0, total: 0 };
+	Client.currentGui.close();
 
-// register("renderOverlay", myRenderOverlay);
+	if (fails.length > 0) {
+		ChatLib.chat(`&cFailed to load: &r${actionName}&r &cby &b@${actionAuthor}&r &ccorrectly: &f(${fails.length} error${fails.length > 1 ? 's' : ''})`);
+		fails.forEach(fail => ChatLib.chat('   > ' + fail));
+		fails = [];
+	} else {
+		ChatLib.chat(`Loaded: &r${actionName}&r by &b@${actionAuthor}&r successfully!`);
+	}
+}
 
-// var background = new Rectangle(Renderer.WHITE, 10, 10, 150, 50);
-// var timeRemaining = new Text("Time Remaining: 0 seconds", 15, 25).setColor(Renderer.BLACK);
+const timeRemainingButton = new Button(0, 0, 0, 20, 'Time Remaining:');
 
-// function myRenderOverlay() {
-// 	if (queue.length > 0) {
-// 		background.draw();
-// 		timeRemaining.draw();
-// 	}
-// }
-// var gui = new Gui();
+register('guiRender', (x, y) => {
+    if (!Player.getContainer()) return;
+	if (queue.length === 0) return;
 
-// gui.registerDraw(myGuiRenderFunction);
+    timeRemainingButton.setWidth(200);
+    timeRemainingButton.setX(Renderer.screen.getWidth() / 2 - timeRemainingButton.getWidth() / 2);
+    timeRemainingButton.setY(timeRemainingButton.getHeight() * 3);
+
+    timeRemainingButton.render(x,y);
+})
 
 
-// function myGuiRenderFunction(mouseX, mouseY, partialTicks) {
-// 	if (queue.length > 0) {
-// 		Renderer.drawRect(Renderer.WHITE, Renderer.screen.getWidth() / 2 - 50, Renderer.screen.getHeight() / 2 - 50, 100, 100);
-// 	}
-// }
+export function addOperation(operation) {
+	queue.push(operation);
+}

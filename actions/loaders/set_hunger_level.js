@@ -1,12 +1,10 @@
 export default (actionData) => {
-
 	let sequence = [];
 
-	if (actionData.level) {
-		sequence.push({ type: 'guiClick', slot: 10 });
-		sequence.push({ type: 'inputAnvil', text: actionData.level });
+	if (!isNaN(actionData.level)) {
+		sequence.push(['click', { slot: 10 }]);
+		sequence.push(['anvil', { text: actionData.level }]);
 	}
 
-	return { addAction: { slot: 13, page: 1 }, sequence }
-
+	return ['Set Hunger Level', sequence];
 }

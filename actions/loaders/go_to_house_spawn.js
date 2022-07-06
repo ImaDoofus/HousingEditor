@@ -1,7 +1,5 @@
 export default (actionData) => {
-
 	let sequence = [];
 
-	return { addAction: { slot: 14, page: 0 }, sequence }
-
+	return ['Go To House Spawn', sequence];
 }

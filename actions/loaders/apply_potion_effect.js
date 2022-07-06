@@ -1,32 +1,30 @@
-import getPotionEffect from "../../utils/getPotionEffect";
+import getPotionEffect from "../../utils/getPotionEffect.js";
 
 export default (actionData) => {
-
 	let sequence = [];
 
 	if (actionData.effect) {
-		sequence.push({ type: 'guiClick', slot: 10 });
+		sequence.push(['click', { slot: 10 }]);
 		let { slot, page } = getPotionEffect(actionData.effect);
 		if (page) {
-			sequence.push({ type: 'guiClick', slot: 53 });
+			sequence.push(['click', { slot: 53 }]);
 		}
-		sequence.push({ type: 'guiClick', slot: slot }); 
+		sequence.push(['click', { slot }]); 
 	}
 
 	if (actionData.duration) {
-		sequence.push({ type: 'guiClick', slot: 11 });
-		sequence.push({ type: 'inputAnvil', text: actionData.duration });
+		sequence.push(['click', { slot: 11 }]);
+		sequence.push(['anvil', { text: actionData.duration }]);
 	}
 
-	if (actionData.level) {
-		sequence.push({ type: 'guiClick', slot: 12 })
-		sequence.push({ type: 'inputAnvil', text: actionData.level });
+	if (actionData.amplifier) {
+		sequence.push(['click', { slot: 12 }]);
+		sequence.push(['anvil', { text: actionData.amplifier }]);
 	}
 
 	if (actionData.overrideExistingEffects) {
-		sequence.push({ type: 'guiClick', slot: 13 });
+		sequence.push(['click', { slot: 13 }]);
 	}
 
-	return { addAction: { slot: 25, page: 0 }, sequence }
-
+	return ['Apply Potion Effect', sequence];
 }

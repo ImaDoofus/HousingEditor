@@ -1,5 +1,5 @@
 export default (actionData) => {
 	let sequence = [];
-	
-	return ['Reset Inventory', sequence];
+
+	return ['Use/Remove Held Item', sequence];
 }

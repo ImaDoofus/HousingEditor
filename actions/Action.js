@@ -1,38 +1,21 @@
-import loaders from './loaders/_import_all'
-import queue from '../gui/Queue';
+import loaders from './loaders/_import_all.js';
+import { addOperation } from '../gui/Queue.js';
 
-class Action {
+export default class Action {
 	constructor(type, actionData) {
-		this.type = type;
-		this.data = actionData || {};
-		this.loader = getActionLoader(type); // get the function that loads the action
-		this.load = () => {
-			queue.push({ type: 'guiClick', slot: 50 }); // click "Add Action Button"
+		this.loader = loaders[type]; // get the function that loads the action
+		this.sequence = this.loader(actionData); // get the sequence of operations that loads the action ['Action Name', ['operation', data: 'operation specific' }]]
+	}
+	
+	load() {
+		addOperation(['click', { slot: 50 }]); // click "Add Action Button"
+	
+		addOperation(['option', { option: this.sequence[0] }]); // click the action type
+	
+		this.sequence[1].forEach(operation => {
+			addOperation(operation);
+		});
 
-			const actionLoaderData = this.loader(this.data);
-
-			if (actionLoaderData.addAction.page) {
-				for(let i = 0; i < actionLoaderData.addAction.page; i++) {
-					queue.push({ type: 'guiClick', slot: 53 });
-				}
-			}
-
-			queue.push({ type: 'guiClick', slot: actionLoaderData.addAction.slot });
-
-			actionLoaderData.sequence.forEach(operation => {
-				queue.push(operation);
-			});
-
-
-			// TEMP DISABLED
-			queue.push({ type: 'returnToEditActions' });
-
-		}; // this.load() will load the function by calling this.loader(actionData)
+		addOperation(['returnToEditActions']);
 	}
 }
-
-function getActionLoader(type) {
-	return loaders[type];
-}
-
-export default Action;

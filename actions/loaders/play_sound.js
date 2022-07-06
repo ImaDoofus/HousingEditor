@@ -1,17 +1,15 @@
 export default (actionData) => {
-
 	let sequence = [];
 
 	if (actionData.sound) {
-		sequence.push({ type: 'guiClick', slot: 10 });
-		sequence.push({ type: 'selectOption', option: actionData.sound });
+		sequence.push(['click', { slot: 10 }]);
+		sequence.push(['option', { option: actionData.sound }]);
 	}
 
 	if (actionData.pitch) {
-		sequence.push({ type: 'guiClick', slot: 11 });
-		sequence.push({ type: 'inputAnvil', text: actionData.pitch });
+		sequence.push(['click', { slot: 11 }]);
+		sequence.push(['anvil', { text: actionData.pitch }]);
 	}
 
-	return { addAction: { slot: 34, page: 0 }, sequence }
-
+	return ['Play Sound', sequence]; 
 }

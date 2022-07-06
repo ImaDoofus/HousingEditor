@@ -22,6 +22,7 @@ import set_compass_target from "./set_compass_target";
 import set_gamemode from "./set_gamemode";
 import set_health from "./set_health";
 import set_hunger_level from "./set_hunger_level";
+import use_remove_held_item from "./use_remove_held_item";
 
 export default {
 	change_player_group,
@@ -48,4 +49,5 @@ export default {
 	set_gamemode,
 	set_health,
 	set_hunger_level,
+	use_remove_held_item,
 };

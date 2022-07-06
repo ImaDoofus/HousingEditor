@@ -24,6 +24,7 @@ import set_gamemode from "./set_gamemode";
 import set_health from "./set_health";
 import set_hunger_level from "./set_hunger_level";
 import random_action from "./random_action";
+import use_remove_held_item from "./use_remove_held_item";
 
 export default {
 	conditional,
@@ -52,4 +53,5 @@ export default {
 	set_health,
 	set_hunger_level,
 	random_action,
+	use_remove_held_item,
 };

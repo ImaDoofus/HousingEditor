@@ -12,8 +12,8 @@ socket.on('disconnect', () => {
 })
 
 // disconnect the socket on /ct reload
+// socket doesn't normally disconnect on reload.
 // without this the socket will keep on running and can cause some issues
-// Documentation: https://chattriggers.com/javadocs/-chat-triggers/com.chattriggers.ctjs.engine/-i-register/register-game-unload.html
 register('gameUnload', () => { 
 	socket.disconnect();
 })
