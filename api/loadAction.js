@@ -1,5 +1,6 @@
 import { request as axios } from "axios";
 import { HOSTNAME } from './hostname.js';
+import { addOperation } from "../gui/Queue.js";
 import Action from "../actions/Action.js";
 
 export default (actionId) => {

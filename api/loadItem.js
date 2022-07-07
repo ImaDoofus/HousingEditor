@@ -23,7 +23,9 @@ function loadItem(itemId) {
 		const json = response.data;
 		itemBeingLoaded = json;
 		const itemData = json.itemData;
-		const item = new Item(itemData.item.text_type || 1);
+		const item = new Item(itemData.item.type || 1);
+		const itemstack = item.itemStack
+		itemstack.func_77964_b(itemData.item.meta);
 		item.setName(getItemName());
 		item.setLore(getItemLore());
 		Client.sendPacket(
