@@ -59,14 +59,14 @@ function doneLoading(actionName, actionAuthor) {
 const timeRemainingButton = new Button(0, 0, 0, 20, 'Time Remaining:');
 
 register('guiRender', (x, y) => {
-    if (!Player.getContainer()) return;
+	if (!Player.getContainer()) return;
 	if (queue.length === 0) return;
 
-    timeRemainingButton.setWidth(200);
-    timeRemainingButton.setX(Renderer.screen.getWidth() / 2 - timeRemainingButton.getWidth() / 2);
-    timeRemainingButton.setY(timeRemainingButton.getHeight() * 3);
+	timeRemainingButton.setWidth(200);
+	timeRemainingButton.setX(Renderer.screen.getWidth() / 2 - timeRemainingButton.getWidth() / 2);
+	timeRemainingButton.setY(timeRemainingButton.getHeight() * 3);
 
-    timeRemainingButton.render(x,y);
+	timeRemainingButton.render(x,y);
 })
 
 

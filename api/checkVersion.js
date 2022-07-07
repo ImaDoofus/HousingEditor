@@ -1,21 +1,26 @@
-import request from 'requestV2';
+import { request as axios } from "axios";
 import { HOSTNAME } from './hostname.js';
 
-const version = '1.0.0-alpha.1';
+const version = '1.0.0-alpha.2';
 
 register('worldLoad', () => {
 	checkVersion()
 })
 
 function checkVersion() {
-	request({
+	axios({
 		url: HOSTNAME + '/api/version/' + version,
 		method: 'GET',
 	}).then(response => {
-		const json = JSON.parse(response);
-		if (!json.valid) {
-			ChatLib.chat(json.message)
-			new TextComponent('&e&l(&eClick for update guide&l)').setClick('open_url', json.updateGuide).chat();
+		const contentType = response.headers['Content-Type'];
+		if (contentType.indexOf('application/json') > -1) {
+			const json = response.data;
+			if (!json.valid) {
+				ChatLib.chat(json.message);
+				new TextComponent('&e&l(&eClick for update guide&l)').setClick('open_url', json.updateGuide).chat();
+			};
+		} else {
+			ChatLib.chat('&cError: ' + response.statusText);	
 		};
 	}).catch(error => {
 		console.log(error)

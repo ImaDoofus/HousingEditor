@@ -10,6 +10,7 @@ register('guiOpened', () => {
 
 register('guiRender', () => {
 	if (Navigator.isReady) return;
+	if (!Player.getContainer()) return;
 	if (Player.getContainer().getClassName() === 'ContainerCreative') return;
 	if (Player.getContainer().getName() === 'Housing Menu') return;
 	if (Navigator.itemsLoaded.lastItemAddedTimestamp === 0) return; // no items loaded yet so wait for items to load

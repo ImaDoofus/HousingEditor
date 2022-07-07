@@ -1,4 +1,4 @@
-import request from 'requestV2';
+import { request as axios } from "axios";
 import { addOperation } from '../gui/Queue.js';
 import Action from '../actions/Action.js';
 import { HOSTNAME } from './hostname.js';
@@ -16,11 +16,11 @@ function loadItem(itemId) {
 	if (Player.asPlayerMP().player.field_71075_bZ.field_75098_d === false) return ChatLib.chat('&cYou must be in creative mode to use this command.');
 	hotbarSlot = Player.getHeldItemIndex();
 	if (Player.getHeldItem()) return ChatLib.chat('&cPlease make sure your hand is empty.');
-	request({
+	axios({
 		url: HOSTNAME + '/api/items/' + itemId,
 		method: 'GET',
 	}).then(response => {
-		const json = JSON.parse(response);
+		const json = response.data;
 		itemBeingLoaded = json;
 		const itemData = json.itemData;
 		const item = new Item(itemData.item.text_type || 1);
@@ -33,8 +33,15 @@ function loadItem(itemId) {
 			)
 		);
 	}).catch(error => {
-		console.log(error)
-		ChatLib.chat(`&cError loading item: &f${error}`);
+		if (!error.response) return ChatLib.chat('&cError: ' + error);
+		const response  = error.response;
+		const contentType = response.headers['Content-Type'];
+		if (contentType.indexOf('application/json') > -1) {
+			const json = response.data;
+			ChatLib.chat('&cError: ' + json.message);
+		} else {
+			ChatLib.chat('&cError: ' + response.statusText);	
+		};
 	});
 }
 
@@ -52,7 +59,7 @@ function loadRightClickActions(actionList, actionName, actionAuthor) {
 		let action = new Action(actionType, actionData);
 		action.load();
 	}
-    addOperation(['done', { actionName, actionAuthor }]);
+	addOperation(['done', { actionName, actionAuthor }]);
 }
 
 register('packetReceived', (packet) => {
