@@ -9,7 +9,7 @@ register('worldLoad', () => {
 
 function checkVersion() {
 	axios({
-		url: HOSTNAME + '/api/version/' + version,
+		url: HOSTNAME + '/version/' + version,
 		method: 'GET',
 	}).then(response => {
 		const contentType = response.headers['Content-Type'];
@@ -23,7 +23,7 @@ function checkVersion() {
 			ChatLib.chat('&cError: ' + response.statusText);	
 		};
 	}).catch(error => {
-		console.log(error)
-		ChatLib.chat('&cError checking HousingEditor version.');
+		if (!error.response) return ChatLib.chat(error);
+		ChatLib.chat('&cError checking Housing Editor version: ' + error.response.statusText);
 	});
 }

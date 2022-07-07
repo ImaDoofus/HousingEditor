@@ -17,7 +17,7 @@ function loadItem(itemId) {
 	hotbarSlot = Player.getHeldItemIndex();
 	if (Player.getHeldItem()) return ChatLib.chat('&cPlease make sure your hand is empty.');
 	axios({
-		url: HOSTNAME + '/api/items/' + itemId,
+		url: HOSTNAME + '/items/' + itemId,
 		method: 'GET',
 	}).then(response => {
 		const json = response.data;

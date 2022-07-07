@@ -1,7 +1,5 @@
-import { request as axios } from "axios";
 import { Input, Button } from './GuiBuilder.js';
-import Action from '../actions/Action.js';
-import { addOperation } from './Queue.js';
+import loadAction from '../api/loadAction.js';
 
 const button = new Button(0, 0, 0, 20, 'Paste');
 
@@ -98,33 +96,16 @@ register('guiMouseClick', (x, y, mouseButton) => {
 		button.setText('Getting Data...');
 		button.setEnabled(false);
 
-		setTimeout(() => {
-			button.setText('Paste');
-			axios({
-				url: 'http://localhost:3000/api/actions/' + input.getText(),
-				method: 'GET',
-			}).then(response => {
-				const json = response.data;
-				input.setSelectionEnd(0);
-				input.setCursorPosition(0);
-				input.setLineScrollOffset(0);
-				input.setIsFocused(false);
-				input.setText('Paste Action ID');
-				loadResponse(json.actionData, json.post?.title, json.author?.name);
-			}).catch(error => {
-				if (!error.response) return ChatLib.chat('&cError: ' + error);
-				const response  = error.response;
-				const contentType = response.headers['Content-Type'];
-				if (contentType.indexOf('application/json') > -1) {
-					const json = response.data;
-					ChatLib.chat('&cError: ' + json.message);
-				} else {
-					ChatLib.chat('&cError: ' + response.statusText);	
-				};
-				Client.currentGui.close();
-			})
-		}, 1000);
+		loadAction(input.getText());
 
+		input.setSelectionEnd(0);
+		input.setCursorPosition(0);
+		input.setLineScrollOffset(0);
+		input.setIsFocused(false);
+		input.setText('Paste Action ID');
+		
+		button.setText('Paste');
+		button.setEnabled(true);
 	}
 })
 
@@ -146,13 +127,3 @@ register('guiClosed', (gui) => {
 		button.setText('Import');
 	}
 })
-
-function loadResponse(actionList, actionName, actionAuthor) {
-	for (let i = 0; i < actionList.length; i++) {
-		let actionType = actionList[i][0];
-		let actionData = actionList[i][1];
-		let action = new Action(actionType, actionData);
-		action.load();
-	}
-	addOperation(['done', { actionName, actionAuthor }]);
-}

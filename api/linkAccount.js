@@ -11,23 +11,25 @@ register('command', code => {
 
 function linkAccount(code) {
 	axios({
-		url: `${HOSTNAME}/api/users/verify-link-code`,
+		url: `${HOSTNAME}/users/verify-link-code`,
 		method: 'POST',
 		body: {
 			code: code,
 			uuid: Player.getUUID(),
 			name: Player.getName()
 		},
-		json: true
+		parseBody: true
 	}).then(response => {
+		const json = response.data;
+		ChatLib.chat(json.message);
+	}).catch(error => {
+		if (!error.response) return ChatLib.chat(error);
+		const response = error.response;
 		const contentType = response.headers['Content-Type'];
 		if (contentType.indexOf('application/json') > -1) {
-			const json = response.data;
-			ChatLib.chat(json.message);
+			ChatLib.chat(error);
 		} else {
 			ChatLib.chat('&cError: ' + response.statusText);	
 		};
-	}).catch(error => {
-		ChatLib.chat(error);
 	})
 }
