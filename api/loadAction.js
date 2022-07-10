@@ -4,7 +4,6 @@ import { addOperation } from "../gui/Queue.js";
 import Action from "../actions/Action.js";
 
 export default (actionId) => {
-	console.log(actionId);
 	axios({
 		url: `${HOSTNAME}/actions/${actionId}`,
 		method: 'GET',

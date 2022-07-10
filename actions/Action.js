@@ -8,6 +8,8 @@ export default class Action {
 	}
 	
 	load() {
+		addOperation(['setActionName', { actionName: this.sequence[0] }]);
+
 		addOperation(['click', { slot: 50 }]); // click "Add Action Button"
 	
 		addOperation(['option', { option: this.sequence[0] }]); // click the action type

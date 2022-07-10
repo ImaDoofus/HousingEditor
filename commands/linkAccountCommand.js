@@ -1,13 +1,9 @@
 import { request as axios } from "axios";
-import { HOSTNAME } from './hostname.js';
+import { HOSTNAME } from '../api/hostname.js';
 
 register('command', code => {
 	linkAccount(code);
-}).setName('link-account')
-
-register('command', code => {
-	linkAccount(code);	
-}).setName('/link-account')
+}).setName('link-account').setAliases(['linkaccount', '/linkaccount', '/link-account'])
 
 function linkAccount(code) {
 	axios({
@@ -27,7 +23,7 @@ function linkAccount(code) {
 		const response = error.response;
 		const contentType = response.headers['Content-Type'];
 		if (contentType.indexOf('application/json') > -1) {
-			ChatLib.chat(error);
+			ChatLib.chat('&cError: ' + response.data.message);
 		} else {
 			ChatLib.chat('&cError: ' + response.statusText);	
 		};

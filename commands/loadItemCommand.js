@@ -1,11 +1,12 @@
 import { request as axios } from "axios";
 import { addOperation } from '../gui/Queue.js';
 import Action from '../actions/Action.js';
-import { HOSTNAME } from './hostname.js';
+import { HOSTNAME } from '../api/hostname.js';
+import loadItemstack from "../utils/loadItemstack.js";
 
 register('command', itemId => {
 	loadItem(itemId);
-}).setName('loaditem')
+}).setName('load-item').setAliases(['loaditem']);
 
 const C10PacketCreativeInventoryAction = Java.type("net.minecraft.network.play.client.C10PacketCreativeInventoryAction");
 
@@ -14,7 +15,7 @@ let hotbarSlot = 0;
 
 function loadItem(itemId) {
 	if (Player.asPlayerMP().player.field_71075_bZ.field_75098_d === false) return ChatLib.chat('&cYou must be in creative mode to use this command.');
-	hotbarSlot = Player.getHeldItemIndex();
+	hotbarSlot = Player.getHeldItemIndex() + 36;
 	if (Player.getHeldItem()) return ChatLib.chat('&cPlease make sure your hand is empty.');
 	axios({
 		url: HOSTNAME + '/items/' + itemId,
@@ -28,12 +29,7 @@ function loadItem(itemId) {
 		itemstack.func_77964_b(itemData.item.meta);
 		item.setName(getItemName());
 		item.setLore(getItemLore());
-		Client.sendPacket(
-			new C10PacketCreativeInventoryAction(
-				36 + hotbarSlot || 0, // slot, 36=hotbar slot 1
-				item.itemStack // item to get as a minecraft item stack object
-			)
-		);
+		loadItemstack(itemstack, hotbarSlot);
 	}).catch(error => {
 		if (!error.response) return ChatLib.chat('&cError: ' + error);
 		const response  = error.response;
@@ -47,7 +43,7 @@ function loadItem(itemId) {
 	});
 }
 
-const getItemName = () => ChatLib.replaceFormatting(itemBeingLoaded.itemData.customName || itemBeingLoaded.itemData.item.name || 'N/A');
+const getItemName = () => ChatLib.replaceFormatting(itemBeingLoaded.itemData.customName || itemBeingLoaded.itemData.item.name);
 const getItemLore = () => itemBeingLoaded.itemData.customLore.map(line => ChatLib.replaceFormatting(line));
 
 function loadRightClickActions(actionList, actionName, actionAuthor) {

@@ -10,7 +10,7 @@ input.mcObject.func_146203_f(24) // set max length
 
 register('guiRender', (x, y) => {
 	if (!Player.getContainer()) return;
-	if (Player.getContainer().getName() !== 'Edit Actions') return;
+	if (!isInActionGui()) return;
 
 	const guiTopField = net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField('field_147009_r');
 	const xSizeField = net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField('field_146999_f');
@@ -36,7 +36,7 @@ register('guiRender', (x, y) => {
 
 register('guiKey', (char, keyCode, gui, event) => {
 	if (!Player.getContainer()) return;
-	if (Player.getContainer().getName() !== 'Edit Actions') return;
+	if (!isInActionGui()) return;
 
 	input.mcObject.func_146195_b(true);
 	if (input.mcObject.func_146206_l()) {
@@ -63,7 +63,7 @@ function inputUpdate() {
 
 register('guiMouseClick', (x, y, mouseButton) => {
 	if (!Player.getContainer()) return;
-	if (Player.getContainer().getName() !== 'Edit Actions') return;
+	if (!isInActionGui()) return;
 
 	input.mcObject.func_146192_a(x,y,mouseButton);
 	if (x > input.getX() && x < input.getX() + input.getWidth() && y > input.getY() && y < input.getY() + input.getHeight()) {
@@ -78,9 +78,13 @@ register('guiMouseClick', (x, y, mouseButton) => {
 
 	if (x > button.getX() && x < button.getX() + button.getWidth() && y > button.getY() && y < button.getY() + button.getHeight()) {
 		if (button.getText() === 'Paste') {
-			input.setText(java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().getData(java.awt.datatransfer.DataFlavor.stringFlavor))
-			World.playSound('random.click', 1, 1)
-			inputUpdate();
+			try {
+				input.setText(java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().getData(java.awt.datatransfer.DataFlavor.stringFlavor))
+				World.playSound('random.click', 1, 1)
+				inputUpdate();
+			} catch (e) {
+				console.log(e)
+			}
 			return;
 		}
 		if (input.getText() === 'Invalid ID') {
@@ -127,3 +131,9 @@ register('guiClosed', (gui) => {
 		button.setText('Import');
 	}
 })
+
+function isInActionGui() {
+	const containerName = Player.getContainer().getName();
+	if (containerName === 'Edit Actions' || containerName.match(/Edit \//)) return true;
+	return false;
+}

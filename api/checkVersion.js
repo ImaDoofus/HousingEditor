@@ -1,7 +1,8 @@
 import { request as axios } from "axios";
 import { HOSTNAME } from './hostname.js';
+import config from "./config.js";
 
-const version = '1.0.0-alpha.2';
+const version = config.version;
 
 register('worldLoad', () => {
 	checkVersion()
@@ -15,10 +16,12 @@ function checkVersion() {
 		const contentType = response.headers['Content-Type'];
 		if (contentType.indexOf('application/json') > -1) {
 			const json = response.data;
-			if (!json.valid) {
+			if (json.valid) {
+				ChatLib.chat(json.message);
+			} else {
 				ChatLib.chat(json.message);
 				new TextComponent('&e&l(&eClick for update guide&l)').setClick('open_url', json.updateGuide).chat();
-			};
+			}
 		} else {
 			ChatLib.chat('&cError: ' + response.statusText);	
 		};

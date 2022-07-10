@@ -1,0 +1,10 @@
+import './protoolsCommand.js';
+import './setCommand.js';
+import './upCommand.js';
+import './tpPosCommands.js';
+import './selfStatCommand.js';
+import './linkAccountCommand.js';
+import './loadItemCommand.js';
+import './cubeCommands.js';
+import './housingEditorCommand.js';
+import './locationCommand.js';

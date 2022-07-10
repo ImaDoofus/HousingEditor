@@ -68,7 +68,7 @@ function loadCondition(condition) {
 				sequence.push(['click', { slot: 11 }]); // select "What to Check"
 				sequence.push(['click', { slot: 10 }]); // select "Item Type"
 			}
-			if (conditionData.whereToCheck) {
+			if (conditionData.whereToCheck && conditionData.whereToCheck !== 'anywhere') {
 				sequence.push(['click', { slot: 12 }]); // select "Where to Check"
 				switch (conditionData.whereToCheck) { // the default is "Anywhere" that is why there is no case for it
 					case "hand":
@@ -82,9 +82,6 @@ function loadCondition(condition) {
 						break;
 					case "inventory":
 						sequence.push(['click', { slot: 13 }]); // select "Inventory"
-						break;
-					default: // if the condition.whereToCheck is not one of the above, click go back
-						sequence.push(['back']);
 						break;
 				}
 			}
@@ -115,27 +112,25 @@ function loadCondition(condition) {
 
 		case 'stat_requirement':
 			sequence.push(['click', { slot: 11 }]); // select "Stat Requirement"
-			if (conditionData.stat) {
+			if (conditionData.stat && conditionData.stat !== 'Kills') {
 				sequence.push(['click', { slot: 10 }]); // select "Stat"
 				sequence.push(['anvil', { text: conditionData.stat }]);
 			}
-			if (conditionData.comparator) { // default is "Equal"
+			if (conditionData.comparator && conditionData.comparator !== 'equal_to') { // default is "Equal"
+				console.log(conditionData.comparator);
 				sequence.push(['click', { slot: 11 }]); // select "Comparator"
 				switch (conditionData.comparator) {
 					case "less_than":
 						sequence.push(['click', { slot: 10 }]); // select "Less Than"
 						break;
-					case "less_than_or_equal":
+					case "less_than_or_equal_to":
 						sequence.push(['click', { slot: 11 }]); // select "Less Than or Equal"
 						break;
-					case "greater_than_or_equal":
+					case "greater_than_or_equal_to":
 						sequence.push(['click', { slot: 13 }]); // select "Greater Than or Equal"
 						break;
 					case "greater_than":
 						sequence.push(['click', { slot: 14 }]); // select "Greater Than"
-						break;
-					default: // if none go back
-						sequence.push(['back']);
 						break;
 				}
 			}

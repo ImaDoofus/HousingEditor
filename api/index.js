@@ -1,3 +1,3 @@
 import './checkVersion.js';
-import './linkAccount.js';
-import './loadItem.js';
+import './houseDeleteProtection.js';
+import './uploadHousing.js';

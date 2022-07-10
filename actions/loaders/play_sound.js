@@ -6,7 +6,7 @@ export default (actionData) => {
 		sequence.push(['option', { option: actionData.sound }]);
 	}
 
-	if (actionData.pitch) {
+	if (!isNaN(actionData.pitch) && actionData.pitch !== 1) {
 		sequence.push(['click', { slot: 11 }]);
 		sequence.push(['anvil', { text: actionData.pitch }]);
 	}

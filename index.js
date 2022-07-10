@@ -2,8 +2,7 @@
 /// <reference lib="es2015" />
 
 import './gui/LoadActionGUI.js';
+import './gui/SearchHouseGUI.js';
 import './api';
-
-// var contentTypes = conn.getContentType().split(';');
-// var charset = contentTypes.length > 1 ? contentTypes[1].trim().substring('charset='.length) : 'UTF-8';
-// var reader = new JBufferedReader(new JInputStreamReader(stream, charset));
+import './commands';
+import './worldedit';

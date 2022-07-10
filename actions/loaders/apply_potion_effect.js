@@ -12,12 +12,12 @@ export default (actionData) => {
 		sequence.push(['click', { slot }]); 
 	}
 
-	if (actionData.duration) {
+	if (!isNaN(actionData.duration) && actionData.duration !== 60) {
 		sequence.push(['click', { slot: 11 }]);
 		sequence.push(['anvil', { text: actionData.duration }]);
 	}
 
-	if (actionData.amplifier) {
+	if (!isNaN(actionData.amplifier) && actionData.amplifier !== 1) {
 		sequence.push(['click', { slot: 12 }]);
 		sequence.push(['anvil', { text: actionData.amplifier }]);
 	}

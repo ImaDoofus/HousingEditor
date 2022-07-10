@@ -7,12 +7,17 @@ export default class LimitedAction {
 	}
 	getSequence() {
 		let sequence = [];
+
+		sequence.push(['setActionName', { actionName: this.sequence[0] }]);
 		sequence.push(['click', { slot: 50 }]); // click "Add Action Button"
 		sequence.push(['option', { option: this.sequence[0] }]); // click the action type
+
 		this.sequence[1].forEach(operation => {
 			sequence.push(operation);
 		});
+
 		sequence.push(['returnToEditActions']);
+
 		return sequence;
 	}
 }

@@ -1,15 +1,17 @@
 import Navigator from './Navigator.js';
 import { Button } from './GuiBuilder.js';
+import config from '../api/config.js';
 
 let queue = [];
 let fails = [];
 let timeWithoutOperation = 0;
 let operationTimes = { started: 0, total: 0 };
+let currentActionName = null;
 
 register('tick', () => {
 	if (queue.length > 0) timeWithoutOperation++;
-	if (timeWithoutOperation > 60 & queue.length > 0) {
-		fails.push(`&cOperation timed out. &f(too long without operation)`);
+	if (timeWithoutOperation > config.guiTimeout & queue.length > 0 && !config.useSafeMode) {
+		fails.push(`&cOperation timed out. &f(too long without GUI click)`);
 		const doneOperation = queue.pop();
 		doneLoading(doneOperation[1].actionName, doneOperation[1].actionAuthor);
 	}
@@ -19,7 +21,7 @@ register('tick', () => {
 	if (Navigator.isReturning) return Navigator.returnToEditActions();
 	if (Navigator.isSelecting) {
 		const attemptResult = Navigator.selectOption(Navigator.optionBeingSelected);
-		if (attemptResult === false) fails.push(`&cFailed to select option: ${Navigator.optionBeingSelected}`);
+		if (attemptResult === false) fails.push(`&cCouldn't find option &f${Navigator.optionBeingSelected} &cin &f${currentActionName}&c.`);
 		return;
 	}
 
@@ -37,6 +39,7 @@ register('tick', () => {
 		case 'option': return Navigator.setSelecting(operationData.option);
 		// case 'loadItem': return Navigator.loadItem(operationData.item, operationData.slot);
 		case 'done': return doneLoading(operationData.actionName, operationData.actionAuthor);
+		case 'setActionName': return currentActionName = operationData.actionName; // strictly for error reporting
 	}
 })
 

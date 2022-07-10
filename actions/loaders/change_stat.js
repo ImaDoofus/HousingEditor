@@ -1,20 +1,18 @@
 export default (actionData) => {
 	let sequence = [];
 
-	if (actionData.stat) {
+	if (actionData.stat && actionData.stat !== "Kills") {
 		sequence.push(['click', { slot: 10 }]);
 		sequence.push(['anvil', { text: actionData.stat }]);
 	}
 
-	if (actionData.mode) {
-		if (actionData.mode !== 'increment') { // increment is the default mode, no need to set it
+	if (actionData.mode && actionData.mode !== "increment") {
+		sequence.push(['click', { slot: 11 }]);
+		if (actionData.mode === 'decrement') {
 			sequence.push(['click', { slot: 11 }]);
-			if (actionData.mode === 'decrement') {
-				sequence.push(['click', { slot: 11 }]);
-			}
-			if (actionData.mode === 'set') {
-				sequence.push(['click', { slot: 12 }]);
-			}
+		}
+		if (actionData.mode === 'set') {
+			sequence.push(['click', { slot: 12 }]);
 		}
 	}
 

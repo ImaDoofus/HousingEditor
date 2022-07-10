@@ -1,12 +1,48 @@
 import utilInputAnvil from '../utils/inputAnvil.js';
-import utilLoadItem from '../utils/loadItem.js';
+import config from '../api/config.js';
 
-const lastItemAddedMargin = 20; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
+const lastItemAddedMargin = config.guiCooldown; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
+
+const arrow = new Image(javax.imageio.ImageIO.read(new java.io.File('./config/ChatTriggers/modules/HousingEditor/assets/red-arrow.png')));
+let drawArrow = false;
+let drawArrowAt = { x: 0, y: 0 };
+let slotToManuallyClick = -1;
+
+const guiTopField = net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField('field_147009_r');
+const guiLeftField = net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField('field_147003_i');
+guiTopField.setAccessible(true);
+guiLeftField.setAccessible(true);
+
+register('postGuiRender', () => {
+	if (drawArrow) {
+		Renderer.translate(0, 0, 400);
+		Renderer.drawImage(arrow, drawArrowAt.x + drawArrowAt.offsetX, drawArrowAt.y + drawArrowAt.offsetY, 50, 50);
+	}
+}).setPriority(Priority.HIGHEST);
 
 register('guiOpened', () => {
 	setNotReady();
 	Navigator.guiIsLoading = true;
 })
+
+if (config.useSafeMode) {
+	const C0EPacketClickWindow = Java.type('net.minecraft.network.play.client.C0EPacketClickWindow');
+	const slotIdField = C0EPacketClickWindow.class.getDeclaredField('field_149552_b');
+	slotIdField.setAccessible(true);
+
+	if (config.useSafeMode) {
+		register('packetSent', (packet, event) => {
+			if (Player.getContainer().getName() === 'Housing Menu') return; 
+			if (Navigator.isReady) return;
+			if (packet instanceof C0EPacketClickWindow) {
+				const slotId = slotIdField.get(packet);
+				if (!slotId) return;
+				if (slotId !== slotToManuallyClick) cancel(event); 
+			}
+		})
+	}
+}
+
 
 register('guiRender', () => {
 	if (Navigator.isReady) return;
@@ -28,26 +64,33 @@ register('renderItemIntoGui', (item) => {
 	};
 })
 
-// register('packetReceived', (packet) => {
-// 	if (packet.class.getName() === 'net.minecraft.network.play.server.S2FPacketSetSlot') {
-// 		let slotField = packet.class.getDeclaredField('field_149177_b');
-// 		slotField.setAccessible(true);
-// 		let slot = slotField.get(packet);
-
-// 		if (slot === 36) { // if the slot is the first hotbar slot (slot that is used to load items)
-// 			setNotReady();
-// 		}
-// 	}
-// })
-
-function click(slot) {
-	Player.getContainer().click(slot);
+function setArrowToSlot(slotId) {
+	const MCSlot = Player.getContainer().container.func_75139_a(slotId);
+	const slot = new Slot(MCSlot);
+	const slotX = slot.getDisplayX();
+	const slotY = slot.getDisplayY();
+	const guiTop = guiTopField.get(Client.currentGui.get());
+	const guiLeft = guiLeftField.get(Client.currentGui.get());
+	drawArrowAt = { x: slotX + guiLeft, y: slotY + guiTop, offsetX: 10, offsetY: -45 };
 	setNotReady()
+	drawArrow = true;
+}
+
+
+function click(slotId) {
+	if (config.useSafeMode) {
+		slotToManuallyClick = slotId;
+		setArrowToSlot(slotId);
+	} else {
+		Player.getContainer().click(slotId);
+		setNotReady()
+	}
 }
 
 function returnToEditActions() {
 	Navigator.isReturning = true;
-	if (Player.getContainer().getName() === 'Edit Actions') return Navigator.isReturning = false;
+	const containerName = Player.getContainer().getName();
+	if (containerName === 'Edit Actions' || containerName.match(/Edit \//)) return Navigator.isReturning = false;
 	goBack();
 }
 
@@ -81,16 +124,16 @@ function selectOption(optionName) {
 
 const goBack = () => click(Player.getContainer().getSize() - 5 - 36); // click the back button on all size guis
 
-// const loadItem = (item, slot) => utilLoadItem(item, slot);
-
 function inputAnvil(text) {
-	utilInputAnvil(text);
+	if (config.useSafeMode) slotToManuallyClick = 2;
+	utilInputAnvil(text, true);
 	setNotReady();
 }
 
 function setNotReady() {
 	Navigator.itemsLoaded = { items: {}, lastItemAddedTimestamp: 0 };
 	Navigator.isReady = false;
+	drawArrow = false;
 }
 
 let Navigator = {
@@ -104,7 +147,6 @@ let Navigator = {
 	click,
 	goBack,
 	returnToEditActions,
-	// loadItem,
 	inputAnvil,
 }
 
