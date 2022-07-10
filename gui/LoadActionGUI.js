@@ -134,7 +134,7 @@ register('guiClosed', (gui) => {
 
 function isInActionGui() {
 	const containerName = Player.getContainer().getName();
-	if (Player.getContainer().getClassName() === 'ContainerChest') return false;
+	if (Player.getContainer().getClassName() !== 'ContainerChest') return false;
 	if (containerName === 'Edit Actions' || containerName.match(/Edit \//)) return true;
 	return false;
 }

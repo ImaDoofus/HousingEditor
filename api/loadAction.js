@@ -2,6 +2,7 @@ import { request as axios } from "axios";
 import { HOSTNAME } from './hostname.js';
 import { addOperation } from "../gui/Queue.js";
 import Action from "../actions/Action.js";
+import config from "./config.js";
 
 export default (actionId) => {
 	axios({
@@ -25,7 +26,7 @@ export default (actionId) => {
 }
 
 function loadResponse(actionList, actionName, actionAuthor) {
-	ChatLib.chat(`Loading action: ${actionName}&r by &b@${actionAuthor}`);
+	if (config.showLoadingMessage) ChatLib.chat(`Loading action: ${actionName}&r by &b@${actionAuthor}`);
 	for (let i = 0; i < actionList.length; i++) {
 		let actionType = actionList[i][0];
 		let actionData = actionList[i][1];

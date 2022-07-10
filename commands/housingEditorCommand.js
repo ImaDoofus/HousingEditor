@@ -2,7 +2,7 @@ import { editConfig } from '../api/config.js';
 import config from '../api/config.js';
 
 const housingEditorCommand = register('command', ...args => {
-	if (args.length === 0) args[0] = 'help';
+	if (!args[0]) args[0] = 'help';
 
 	let command = args[0];
 

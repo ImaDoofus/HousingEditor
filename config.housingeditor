@@ -9,8 +9,8 @@
 # This file contains configuration for the housing editor mod, you can find the original config at https://github.com/ImaDoofus/HousingEditor
 
 # ---- DO NOT CHANGE ----#
-version: 1.0.0-alpha.3
-production: true
+version: 1.0.0-alpha.4
+production: false
 # -----------------------#
 
 
