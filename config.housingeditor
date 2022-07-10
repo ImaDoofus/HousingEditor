@@ -30,7 +30,7 @@ houseDeleteProtection: true
 #-----------------#
 
 # "Safe Mode" will show you where to click while loading in an action, this requires manual input and is no longer considered a "macro".
-useSafeMode: true
+useSafeMode: false
 
 # Amount of cooldown between clicking an item in a GUI, values under 20 will result in more errors.
 guiCooldown: 20
