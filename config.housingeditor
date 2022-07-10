@@ -10,7 +10,7 @@
 
 # ---- DO NOT CHANGE ----#
 version: 1.0.0-alpha.4
-production: false
+production: true
 # -----------------------#
 
 
