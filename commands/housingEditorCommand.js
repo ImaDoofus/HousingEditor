@@ -26,7 +26,7 @@ const housingEditorCommand = register('command', ...args => {
 	if (command === 'safemode') {
 		config.useSafeMode = !config.useSafeMode;
 		editConfig('useSafeMode', config.useSafeMode);
-		ChatLib.chat(`${config.chatPrefix} &6Changed safe mode to ${!config.useSafeMode ? '&aenabled' : '&cdisabled'} &6in the config.`);
+		ChatLib.chat(`${config.chatPrefix} &6Changed safe mode to ${config.useSafeMode ? '&aenabled' : '&cdisabled'} &6in the config.`);
 		ChatLib.chat(`${config.chatPrefix} &6Use &c/housingeditor reload &6to reload the config.`);
 	}
 })
