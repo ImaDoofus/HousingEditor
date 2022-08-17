@@ -1,0 +1,8 @@
+{
+  "name": "Housing Editor",
+  "creator": "ImaDoofus",
+  "description": "module for housingeditor.com",
+  "entry": "index.js",
+  "version": "1.0.0-alpha.3",
+  "requires": ["axios"]
+}

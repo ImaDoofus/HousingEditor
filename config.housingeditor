@@ -1,0 +1,69 @@
+# ██╗  ██╗ ██████╗ ██╗   ██╗███████╗██╗███╗   ██╗ ██████╗     ███████╗██████╗ ██╗████████╗ ██████╗ ██████╗ 
+# ██║  ██║██╔═══██╗██║   ██║██╔════╝██║████╗  ██║██╔════╝     ██╔════╝██╔══██╗██║╚══██╔══╝██╔═══██╗██╔══██╗
+# ███████║██║   ██║██║   ██║███████╗██║██╔██╗ ██║██║  ███╗    █████╗  ██║  ██║██║   ██║   ██║   ██║██████╔╝
+# ██╔══██║██║   ██║██║   ██║╚════██║██║██║╚██╗██║██║   ██║    ██╔══╝  ██║  ██║██║   ██║   ██║   ██║██╔══██╗
+# ██║  ██║╚██████╔╝╚██████╔╝███████║██║██║ ╚████║╚██████╔╝    ███████╗██████╔╝██║   ██║   ╚██████╔╝██║  ██║
+# ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝     ╚══════╝╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+# By ImaDoofus
+
+# This file contains configuration for the housing editor mod, you can find the original config at https://github.com/ImaDoofus/HousingEditor
+
+# ---- DO NOT CHANGE ----#
+version: 1.0.0-alpha.4
+production: true
+# -----------------------#
+
+
+
+#---------#
+# General #
+#---------#
+
+# prefix of some housing editor messages, so you know the message is a result of housing editor and not hypixel/other mods.
+chatPrefix: &f[&aHousing&f&lEditor&f]&r
+
+# Protection from house resets, and deletes. If this option is enabled and you try to reset/delete your house it will cancel the action. 
+houseDeleteProtection: true
+
+#-----------------#
+# Actions / Items #
+#-----------------#
+
+# "Safe Mode" will show you where to click while loading in an action, this requires manual input and is no longer considered a "macro".
+useSafeMode: false
+
+# Amount of cooldown between clicking an item in a GUI, values under 20 will result in more errors.
+guiCooldown: 20
+
+# Amount of ticks after not clicking anything in the GUI before calling it an error and timing out. If you have lots of lagspikes / slow internet you should increase this.
+# 20 ticks = 1 second
+guiTimeout: 60
+
+# Whether or not to show "Loading action/item by @user" everytime you load an action.
+showLoadingMessage: true
+
+
+
+#----------------------#
+# Worldedit / Protools #
+#----------------------#
+
+# Use the better worldedit features from Housing Editor.
+useBetterWorldedit: true
+
+# Configure what protools you get when you do the /protools command.
+regionSelectionTool: true
+setTool: true
+fillTool: true
+cutTool: true
+copyTool: true
+pasteTool: true
+undoTool: true
+teleportationTool: true
+
+# Distance between particles (in blocks) low seperation will cause lag (0 = disabled).
+particleSeperation: 0.5
+
+# Whether or not to message you the size of your selection in blocks when you make a selection.
+showSelectionVolume: false
+
