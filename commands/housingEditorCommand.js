@@ -3,7 +3,7 @@ import config from '../api/config.js';
 //import Settings from "../config";
 
 const housingEditorCommand = register('command', ...args => {
-	if (!args[0]) args[0] = 'help';
+	if (!args) args = ['help'];
 
 	let command = args[0];
 	
