@@ -1,6 +1,6 @@
 import { editConfig } from '../api/config.js';
 import config from '../api/config.js';
-import Settings from "../config";
+//import Settings from "../config";
 
 const housingEditorCommand = register('command', ...args => {
 	if (!args[0]) args[0] = 'help';
@@ -55,7 +55,7 @@ const housingEditorCommand = register('command', ...args => {
 		}
 	}
 
-	if (command === 'config') Settings.openGUI();
+	//if (command === 'config') Settings.openGUI();
 
 	if (command === 'safemode') {
 		config.useSafeMode = !config.useSafeMode;
