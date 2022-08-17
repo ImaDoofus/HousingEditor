@@ -3,9 +3,13 @@ import { HOSTNAME } from './hostname.js';
 import config from "./config.js";
 
 const version = config.version;
+let versionWasChecked = false;
 
 register('worldLoad', () => {
-	checkVersion()
+	if (!versionWasChecked) {
+		checkVersion()
+		versionWasChecked = true;
+	}
 })
 
 function checkVersion() {

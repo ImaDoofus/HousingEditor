@@ -1,11 +1,12 @@
 import { editConfig } from '../api/config.js';
 import config from '../api/config.js';
+import Settings from "../config";
 
 const housingEditorCommand = register('command', ...args => {
 	if (!args[0]) args[0] = 'help';
 
 	let command = args[0];
-
+	
 	if (command === 'help') {
 		let page = parseInt(args[1])
 		if (isNaN(page)) page = 1;
@@ -41,9 +42,12 @@ const housingEditorCommand = register('command', ...args => {
 			ChatLib.chat(ChatLib.getCenteredText("&6HousingEditor Commands (3/3)"))
 			ChatLib.chat(ChatLib.getCenteredText('&7Item Manipulation Commands'))
 			ChatLib.chat('')
+			ChatLib.chat('&6/item <command/help> &c(WIP) &fMain command which covers all HousingEditor item utilties.')
 			ChatLib.chat('&6/nbt &fCopies the NBT data of your held item to the clipboard.')
 			ChatLib.chat('&6/unbreakable (/ub) &fToggles whether or not an item is unbreakable.')
 			ChatLib.chat("&6/hideflags <value> (/hf) &fToggles the visibility of an item's flags, the value parameter is an optional byte which will allow you to hide specific flags")
+			ChatLib.chat('&6/lore <add/set/remove/list/clear> &fManipulate the lore of your held item. (Use /lore help for more information)')
+			ChatLib.chat('&6/rename <text> &fRename your held item.')
 			ChatLib.chat('')
 			ChatLib.chat(`&6-----------------------------------------------------`);
 		} else {
@@ -51,7 +55,7 @@ const housingEditorCommand = register('command', ...args => {
 		}
 	}
 
-	if (command === 'reload') ChatTriggers.loadCT();
+	if (command === 'config') Settings.openGUI();
 
 	if (command === 'safemode') {
 		config.useSafeMode = !config.useSafeMode;
