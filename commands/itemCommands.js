@@ -7,7 +7,7 @@ function isCreative() {
 
 function getItemLore(item) {
     let lore = []
-    if (item.getNBT()?.getCompoundTag("tag")?.getCompoundTag("display").get("Lore")) lore = item.getNBT().toObject()['tag']['display']['Lore']
+    if (item.getNBT()?.getTag("tag")?.getTag("display").get("Lore")) lore = item.getNBT().toObject()['tag']['display']['Lore']
     return lore
 }
 
@@ -36,16 +36,16 @@ register('command', (boolean = null) => {
     boolean = { 'true': true, 'false': false }[boolean?.toLowerCase()]
     if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
     if (!Player.getHeldItem()) return ChatLib.chat(`&cYou must be holding an item to use this command.`)
-    if ((!Player.getHeldItem().getNBT().getCompoundTag('tag')?.getByte('Unbreakable') && boolean !== false) || boolean === true) {
-        if (!Player.getHeldItem().getNBT().getCompoundTag('tag')) {
+    if ((!Player.getHeldItem().getNBT().getTag('tag')?.getByte('Unbreakable') && boolean !== false) || boolean === true) {
+        if (!Player.getHeldItem().getNBT().getTag('tag')) {
             setHeldItemTag('Unbreakable', 1);
         } else {
-            Player.getHeldItem().getItemNBT().getCompoundTag('tag').setByte('Unbreakable', 1)
+            Player.getHeldItem().getItemNBT().getTag('tag').setByte('Unbreakable', 1)
         }
         ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aItem is now unbreakable.`)
     } else {
-        if (Player.getHeldItem().getNBT().getCompoundTag('tag')) {
-            Player.getHeldItem().getItemNBT().getCompoundTag('tag').setByte('Unbreakable', 0)
+        if (Player.getHeldItem().getNBT().getTag('tag')) {
+            Player.getHeldItem().getItemNBT().getTag('tag').setByte('Unbreakable', 0)
         }
         ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aItem is now breakable.`)
     }
@@ -57,16 +57,16 @@ register('command', (boolean = null, value = 127) => {
     if (value < -128 || value > 127 || isNaN(value)) return ChatLib.chat('&cInvalid custom HideFlag value, must be a byte.');
     if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
     if (!Player.getHeldItem()) return ChatLib.chat(`&cYou must be holding an item to use this command.`)
-    if ((!Player.getHeldItem().getNBT().getCompoundTag('tag')?.getByte('HideFlags') && boolean !== false) || boolean === true) {
-        if (!Player.getHeldItem().getNBT().getCompoundTag('tag')) {
+    if ((!Player.getHeldItem().getNBT().getTag('tag')?.getByte('HideFlags') && boolean !== false) || boolean === true) {
+        if (!Player.getHeldItem().getNBT().getTag('tag')) {
             setHeldItemTag('HideFlags', parseInt(value));
         } else {
-            Player.getHeldItem().getItemNBT().getCompoundTag('tag').setByte('HideFlags', parseInt(value))
+            Player.getHeldItem().getItemNBT().getTag('tag').setByte('HideFlags', parseInt(value))
         }
         ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aItem flags hidden.`)
     } else {
-        if (Player.getHeldItem().getNBT().getCompoundTag('tag')) {
-            Player.getHeldItem().getItemNBT().getCompoundTag('tag').setByte('HideFlags', 0)
+        if (Player.getHeldItem().getNBT().getTag('tag')) {
+            Player.getHeldItem().getItemNBT().getTag('tag').setByte('HideFlags', 0)
         }
         ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aAll item flags are now visible.`)
     }
@@ -138,6 +138,26 @@ register('command', (...text) => {
     Player.getHeldItem().setName(text)
     ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aRenamed item.`)
 }).setName('rename')
+
+register('command', () => {
+    if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
+    loadItemstack(
+        getItemFromNBT('{id:"minecraft:heavy_weighted_pressure_plate",Count:1b,tag:{display:{Lore:[0:"§7Place this block in your house",1:"§7to place an Action Pad!"],Name:"§aAction Pad"}},Damage:0s}').itemStack,
+        Player.getHeldItemIndex() + 36
+    )
+    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aGave you an action pad!`);
+
+}).setName('actionpad').setAliases(['ap'])
+
+register('command', () => {
+    if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
+    loadItemstack(
+        getItemFromNBT('{id:"minecraft:name_tag",Count:1b,tag:{display:{Lore:[0:"§7Place this in your house to",1:"§7place a Hologram!"],Name:"§aHologram"}},Damage:0s}').itemStack,
+        Player.getHeldItemIndex() + 36
+    )
+    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aGave you a hologram!`);
+
+}).setName('hologram').setAliases(['hg'])
 
 register('command', (mode, ...params) => {
     mode = mode.toLowerCase();
