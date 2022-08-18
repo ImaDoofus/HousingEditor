@@ -21,5 +21,5 @@ export default (actionData) => {
 		sequence.push(['anvil', { text: actionData.value }]);
 	}
 
-	return ['Change Stat', sequence];
+	return ['Change Player Stat', sequence];
 }
