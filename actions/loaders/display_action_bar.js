@@ -1,9 +1,9 @@
 export default (actionData) => {
 	let sequence = [];
 
-	if (actionData.message && actionData.message !== "Hello World!") {
+	if (actionData.message) {
 		sequence.push(['click', { slot: 10 }]);
-		sequence.push(['anvil', { text: actionData.message }]);
+		sequence.push(['chat', { text: actionData.message }]);
 	}
 
 	return ['Display Action Bar', sequence];

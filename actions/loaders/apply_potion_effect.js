@@ -1,4 +1,4 @@
-import getPotionEffect from "../../utils/getPotionEffect.js";
+import getPotionEffect from "../../utils/getPotionEffect";
 
 export default (actionData) => {
 	let sequence = [];

@@ -1,9 +1,9 @@
-import config from '../api/config.js';
+import Settings from '../utils/config';
 
 let selectingInAir = false;
 let usedTeleport = false;
 
-if (config.useBetterWorldedit) {
+if (Settings.useBetterWorldedit) {
 	let lastUsed = Date.now();
 	let cooldown = 1000;
 

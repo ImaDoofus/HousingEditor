@@ -14,15 +14,20 @@ import apply_potion_effect from "./apply_potion_effect";
 import clear_all_potion_effects from "./clear_all_potion_effects";
 import give_experience_levels from "./give_experience_levels";
 import send_to_lobby from "./send_to_lobby";
-import change_stat from "./change_stat";
+import change_player_stat from "./change_player_stat";
+import change_global_stat from "./change_global_stat";
 import teleport_player from "./teleport_player";
 import fail_parkour from "./fail_parkour";
 import play_sound from "./play_sound";
 import set_compass_target from "./set_compass_target";
 import set_gamemode from "./set_gamemode";
-import set_health from "./set_health";
+import change_health from "./change_health";
 import set_hunger_level from "./set_hunger_level";
 import use_remove_held_item from "./use_remove_held_item";
+import exit from "./exit";
+import cancel_event from "./cancel_event";
+import apply_inventory_layout from "./apply_inventory_layout";
+import trigger_function from "./trigger_function";
 
 export default {
 	change_player_group,
@@ -41,13 +46,18 @@ export default {
 	clear_all_potion_effects,
 	give_experience_levels,
 	send_to_lobby,
-	change_stat,
+	change_player_stat,
+	change_global_stat,
 	teleport_player,
 	fail_parkour,
 	play_sound,
 	set_compass_target,
 	set_gamemode,
-	set_health,
+	change_health,
 	set_hunger_level,
 	use_remove_held_item,
+	exit,
+	cancel_event,
+	apply_inventory_layout,
+	trigger_function,
 };

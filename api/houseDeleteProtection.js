@@ -1,10 +1,10 @@
-import config from './config.js';
+import Settings from '../utils/config';
 
 const C0EPacketClickWindow = Java.type('net.minecraft.network.play.client.C0EPacketClickWindow');
 const clickedItemField = C0EPacketClickWindow.class.getDeclaredField('field_149551_e');
 clickedItemField.setAccessible(true);
 
-if (config.houseDeleteProtection) {
+if (Settings.houseDeleteProtection) {
 	register('packetSent', (packet, event) => {
 		if (packet instanceof C0EPacketClickWindow) {
 			const itemstack = clickedItemField.get(packet);

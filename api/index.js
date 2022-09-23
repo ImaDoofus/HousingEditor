@@ -1,3 +1,4 @@
-import './checkVersion.js';
-import './houseDeleteProtection.js';
-import './uploadHousing.js';
+import './checkVersion';
+import './houseDeleteProtection';
+import './cookieGiveProtection';
+import './uploadHousing';

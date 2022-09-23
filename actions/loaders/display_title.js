@@ -1,18 +1,17 @@
 export default (actionData) => {
 	let sequence = [];
 
-	if (actionData.title && actionData.title !== "Hello World!") {
+	if (actionData.title) {
 		sequence.push(['click', { slot: 10 }]);
-		sequence.push(['anvil', { text: actionData.title }]);
+		sequence.push(['chat', { text: actionData.title }]);
 	}
 
-	if (actionData.subtitle && actionData.title !== "Paper") {
+	if (actionData.subtitle) {
 		sequence.push(['click', { slot: 11 }]);
-		sequence.push(['anvil', { text: actionData.subtitle }]);
+		sequence.push(['chat', { text: actionData.subtitle }]);
 	}
 
 	if (!isNaN(actionData.fadeIn) && actionData.fadeIn !== 1) {
-		console.log("fadeIn", actionData.fadeIn);
 		sequence.push(['click', { slot: 12 }]);
 		sequence.push(['anvil', { text: actionData.fadeIn }]);
 	}

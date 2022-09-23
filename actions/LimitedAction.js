@@ -1,4 +1,4 @@
-import loaders from './loaders/_import_limited.js';
+import loaders from './loaders/_import_limited';
 
 export default class LimitedAction {
 	constructor(type, actionData) {

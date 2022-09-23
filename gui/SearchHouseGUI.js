@@ -2,7 +2,7 @@
 // search function isnt really optimized, because it checks for searchQuery every postGuiRender loop instead of on guiKey, but it's okay
 // because it's not actually laggy and only runs when that "Player Housing" GUI is open
 
-import { Input } from './GuiBuilder.js';
+import { Input } from './GuiBuilder';
 const input = new Input(0, 0, 0, 18);
 const color = Renderer.color(100, 255, 0, 255);
 let searchQuery;
@@ -75,7 +75,6 @@ register('postGuiRender', () => {
 	Player.getContainer().getItems().forEach((item, i) => {
 		if (item && item.getLore().includes("§5§o§eClick to visit!")) {
 			if (removeFormatting(item.getName()).includes(removeFormatting(searchQuery))) {
-				// console.log(removeFormatting(item.getName()))
 				highlightSlot(i);
 			}
 		}

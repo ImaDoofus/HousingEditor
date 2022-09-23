@@ -1,16 +1,16 @@
-import Navigator from './Navigator.js';
-import { Button } from './GuiBuilder.js';
-import config from '../api/config.js';
+import Navigator from './Navigator';
+import { Button } from './GuiBuilder';
+import Settings from '../utils/config';
 
 let queue = [];
 let fails = [];
 let timeWithoutOperation = 0;
 let operationTimes = { started: 0, total: 0 };
-let currentActionName = null;
+let currentGuiContext = null;
 
 register('tick', () => {
 	if (queue.length > 0) timeWithoutOperation++;
-	if (timeWithoutOperation > config.guiTimeout & queue.length > 0 && !config.useSafeMode) {
+	if (timeWithoutOperation > Settings.guiTimeout & queue.length > 0 && !Settings.useSafeMode) {
 		fails.push(`&cOperation timed out. &f(too long without GUI click)`);
 		const doneOperation = queue.pop();
 		doneLoading(doneOperation[1].actionName, doneOperation[1].actionAuthor);
@@ -21,7 +21,7 @@ register('tick', () => {
 	if (Navigator.isReturning) return Navigator.returnToEditActions();
 	if (Navigator.isSelecting) {
 		const attemptResult = Navigator.selectOption(Navigator.optionBeingSelected);
-		if (attemptResult === false) fails.push(`&cCouldn't find option &f${Navigator.optionBeingSelected} &cin &f${currentActionName}&c.`);
+		if (attemptResult === false) fails.push(`&cCouldn't find option &f${Navigator.optionBeingSelected} &cin &f${currentGuiContext}&c.`);
 		return;
 	}
 
@@ -30,21 +30,24 @@ register('tick', () => {
 	timeRemainingButton.setText(`Time Remaining: ${Math.round(((Date.now() - operationTimes.started) / operationTimes.total) * queue.length / 1000)} seconds`);
 
 	let [operationType, operationData] = queue.shift();
-
+	if (operationType === 'setGuiContext') {
+		currentGuiContext = operationData.context; // for error messages
+		if (queue.length === 0) return;
+		[operationType, operationData] = queue.shift();
+	}
 	switch(operationType) {
 		case 'click': return Navigator.click(operationData.slot);
 		case 'anvil': return Navigator.inputAnvil(operationData.text);
 		case 'returnToEditActions': return Navigator.returnToEditActions();
 		case 'back': return Navigator.goBack();
 		case 'option': return Navigator.setSelecting(operationData.option);
-		// case 'loadItem': return Navigator.loadItem(operationData.item, operationData.slot);
+		case 'chat': return Navigator.inputChat(operationData.text);
+		case 'item': return Navigator.selectItem(operationData.item);
 		case 'done': return doneLoading(operationData.actionName, operationData.actionAuthor);
-		case 'setActionName': return currentActionName = operationData.actionName; // strictly for error reporting
 	}
 })
 
 function doneLoading(actionName, actionAuthor) {
-	console.log(`Done loading action: ${actionName}`);
 	timeWithoutOperation = 0;
 	queue = [];
 	operationTimes = { started: 0, total: 0 };
@@ -54,6 +57,7 @@ function doneLoading(actionName, actionAuthor) {
 		ChatLib.chat(`&cFailed to load: &r${actionName}&r &cby &b@${actionAuthor}&r &ccorrectly: &f(${fails.length} error${fails.length > 1 ? 's' : ''})`);
 		fails.forEach(fail => ChatLib.chat('   > ' + fail));
 		fails = [];
+		ChatLib.chat(`&f${queue.length} &coperation${queue.length !== 1 ? 's' : ''} left in queue.`);
 	} else {
 		ChatLib.chat(`Loaded: &r${actionName}&r by &b@${actionAuthor}&r successfully!`);
 	}

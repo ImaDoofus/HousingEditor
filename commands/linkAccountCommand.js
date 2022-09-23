@@ -1,5 +1,5 @@
 import { request as axios } from "axios";
-import { HOSTNAME } from '../api/hostname.js';
+import { HOSTNAME } from '../api/hostname';
 
 register('command', code => {
 	linkAccount(code);

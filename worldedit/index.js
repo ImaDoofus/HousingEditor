@@ -1,2 +1,1 @@
-import './selectionAddons.js';
-import './selectionInAir.js';
+import './selectionInAir';

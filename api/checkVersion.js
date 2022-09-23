@@ -1,8 +1,9 @@
 import { request as axios } from "axios";
-import { HOSTNAME } from './hostname.js';
-import config from "./config.js";
+import { HOSTNAME } from './hostname';
 
-const version = config.version;
+const metadata = FileLib.read('HousingEditor', './metadata.json');
+export const version = JSON.parse(metadata).version;
+
 let versionWasChecked = false;
 
 register('worldLoad', () => {

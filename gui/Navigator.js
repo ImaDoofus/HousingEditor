@@ -1,7 +1,9 @@
-import utilInputAnvil from '../utils/inputAnvil.js';
-import config from '../api/config.js';
+import utilInputAnvil from '../utils/inputAnvil';
+import utilLoadItem from '../utils/loadItemstack';
+import createItemStack from '../utils/createItemStack';
+import Settings from '../utils/config';
 
-const lastItemAddedMargin = config.guiCooldown; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
+const lastItemAddedMargin = 300; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
 
 const arrow = new Image(javax.imageio.ImageIO.read(new java.io.File('./config/ChatTriggers/modules/HousingEditor/assets/red-arrow.png')));
 let drawArrow = false;
@@ -25,12 +27,12 @@ register('guiOpened', () => {
 	Navigator.guiIsLoading = true;
 })
 
-if (config.useSafeMode) {
+if (Settings.useSafeMode) {
 	const C0EPacketClickWindow = Java.type('net.minecraft.network.play.client.C0EPacketClickWindow');
 	const slotIdField = C0EPacketClickWindow.class.getDeclaredField('field_149552_b');
 	slotIdField.setAccessible(true);
 
-	if (config.useSafeMode) {
+	if (Settings.useSafeMode) {
 		register('packetSent', (packet, event) => {
 			if (Player.getContainer().getName() === 'Housing Menu') return; 
 			if (Navigator.isReady) return;
@@ -43,6 +45,9 @@ if (config.useSafeMode) {
 	}
 }
 
+register('chat', event => {
+	if (ChatLib.getChatMessage(event).match(/ \[PREVIOUS\] \[CANCEL\]/)) Navigator.isReady = true; // when the GUI closed for inputting text.
+})
 
 register('guiRender', () => {
 	if (Navigator.isReady) return;
@@ -78,19 +83,19 @@ function setArrowToSlot(slotId) {
 
 
 function click(slotId) {
-	if (config.useSafeMode) {
+	if (Settings.useSafeMode) {
 		slotToManuallyClick = slotId;
 		setArrowToSlot(slotId);
 	} else {
 		Player.getContainer().click(slotId);
-		setNotReady()
+		setNotReady();
 	}
 }
 
 function returnToEditActions() {
 	Navigator.isReturning = true;
 	const containerName = Player.getContainer().getName();
-	if (containerName === 'Edit Actions' || containerName.match(/Edit \//)) return Navigator.isReturning = false;
+	if (containerName.match(/Edit /)) return Navigator.isReturning = false;
 	goBack();
 }
 
@@ -98,6 +103,38 @@ function setSelecting(option) {
 	Navigator.isSelecting = true;
 	Navigator.optionBeingSelected = option;
 }
+
+function selectItem(item) {
+	switch (item.type) {
+		case 'customItem':
+			const itemStack = createItemStack(item.itemData);
+			Navigator.isLoadingItem = true;
+			utilLoadItem(itemStack, 26);
+			setNotReady();
+			break;
+		case 'clickSlot':
+			click(item.slot + 35);
+			break;
+	}
+}
+
+// const S2FPacketSetSlot = Java.type("net.minecraft.network.play.server.S2FPacketSetSlot");
+// https://wiki.vg/Protocol#Set_Slot
+
+register('packetReceived', (packet) => {
+	if (!Navigator.isLoadingItem) return;
+	if (packet.class.getName() === 'net.minecraft.network.play.server.S2FPacketSetSlot') {
+		const containerName = Player.getContainer().getName();
+		if (containerName !== 'Select an Item') return;
+		// let slotField = packet.class.getDeclaredField('field_149177_b');
+		// slotField.setAccessible(true);
+		// let slot = slotField.get(packet);
+		// if (slot === -1)
+		Navigator.isLoadingItem = false;
+		click(53); // slot that is used to load items
+	}
+})
+
 
 function selectOption(optionName) {
 	const playerContainer = Player.getContainer();
@@ -125,8 +162,14 @@ function selectOption(optionName) {
 const goBack = () => click(Player.getContainer().getSize() - 5 - 36); // click the back button on all size guis
 
 function inputAnvil(text) {
-	if (config.useSafeMode) slotToManuallyClick = 2;
+	if (Settings.useSafeMode) slotToManuallyClick = 2;
 	utilInputAnvil(text, true);
+	setNotReady();
+}
+
+function inputChat(text) {
+	if (Settings.useSafeMode) Client.companion.setCurrentChatMessage(text);
+	else ChatLib.say(text);
 	setNotReady();
 }
 
@@ -140,14 +183,17 @@ let Navigator = {
 	isReady: false,
 	isSelecting: false,
 	isReturning: false,
+	isLoadingItem: false,
 	guiIsLoading: true,
 	itemsLoaded: { items: {}, lastItemAddedTimestamp: 0 },
 	selectOption,
+	selectItem,
 	setSelecting,
 	click,
 	goBack,
 	returnToEditActions,
 	inputAnvil,
+	inputChat,
 }
 
 export default Navigator;

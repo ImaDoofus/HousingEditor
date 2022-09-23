@@ -1,19 +1,19 @@
-import config from '../api/config.js';
-import { realPositions } from '../worldedit/selectionAddons.js';
-if (config.useBetterWorldedit) {
+import Settings from '../utils/config';
+import { positions } from '../worldedit/selectionAddons';
+
+if (Settings.useBetterWorldedit) {
 	register('command', () => {
-		if (realPositions[0].length === 0) return ChatLib.chat('&cPosition A is not set.');
-		const [x, y, z] = realPositions[0];
+		if (positions[0].length === 0) return ChatLib.chat('&cPosition A is not set.');
+		const [x, y, z] = positions[0];
 		ChatLib.command(`tp ${x} ${y} ${z}`);
 	}).setName('tpposa').setAliases(['tppos1', '/tpposa', '/tppos1']);
 
 	register('command', () => {
-		if (realPositions[1].length === 0) return ChatLib.chat('&cPosition B is not set.');
-		const [x, y, z] = realPositions[1];
+		if (positions[1].length === 0) return ChatLib.chat('&cPosition B is not set.');
+		const [x, y, z] = positions[1];
 		ChatLib.command(`tp ${x} ${y} ${z}`);
 	}).setName('tpposb').setAliases(['tppos2', '/tpposb', '/tppos2']);
 };
-
 
 // RELATIVE TELEPORTING SUPPORT
 function onHousing() {
@@ -39,7 +39,8 @@ register("messageSent", (message, event) => {
 	if (
 		message.toLowerCase().startsWith("/tp") &&
 		message.toLowerCase() !== "/tp" &&
-		onHousing()
+		onHousing() &&
+		!message.toLowerCase().includes("pos")
 	) {
 		cancel(event);
 		ChatLib.addToSentMessageHistory(message);

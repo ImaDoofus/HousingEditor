@@ -1,4 +1,3 @@
-
 // Get a ChatTriggers item object from a string of NBT
 const getItemFromNBT = (nbtStr) => {
     let nbt = net.minecraft.nbt.JsonToNBT.func_180713_a(nbtStr); // Get MC NBT object from string

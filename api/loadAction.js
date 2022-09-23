@@ -1,10 +1,12 @@
 import { request as axios } from "axios";
-import { HOSTNAME } from './hostname.js';
-import { addOperation } from "../gui/Queue.js";
-import Action from "../actions/Action.js";
-import config from "./config.js";
+import { HOSTNAME } from './hostname';
+import { addOperation } from "../gui/Queue";
+import Action from "../actions/Action";
+import Settings from '../utils/config';
 
 export default (actionId) => {
+	if (actionId === 'test') return loadTestAction();
+
 	axios({
 		url: `${HOSTNAME}/actions/${actionId}`,
 		method: 'GET',
@@ -26,7 +28,7 @@ export default (actionId) => {
 }
 
 function loadResponse(actionList, actionName, actionAuthor) {
-	if (config.showLoadingMessage) ChatLib.chat(`Loading action: ${actionName}&r by &b@${actionAuthor}`);
+	if (Settings.showLoadingMessage) ChatLib.chat(`Loading action: ${actionName}&r by &b@${actionAuthor}`);
 	for (let i = 0; i < actionList.length; i++) {
 		let actionType = actionList[i][0];
 		let actionData = actionList[i][1];
@@ -34,4 +36,11 @@ function loadResponse(actionList, actionName, actionAuthor) {
 		action.load();
 	}
 	addOperation(['done', { actionName, actionAuthor }]);
+}
+
+function loadTestAction() {
+	ChatLib.chat('Loading test action.');
+	let change_player_stat = new Action('send_a_chat_message', { message: 'howdy' });
+	change_player_stat.load();
+	addOperation(['done', { actionName: 'Test Action', actionAuthor: 'Test Author' }]);
 }

@@ -1,9 +1,9 @@
 import { request as axios } from "axios";
-import { addOperation } from '../gui/Queue.js';
-import Action from '../actions/Action.js';
-import { HOSTNAME } from '../api/hostname.js';
-import loadItemstack from "../utils/loadItemstack.js";
-import config from "../api/config.js";
+import { addOperation } from '../gui/Queue';
+import Action from '../actions/Action';
+import { HOSTNAME } from '../api/hostname';
+import loadItemstack from "../utils/loadItemstack";
+import Settings from '../utils/config';
 
 register('command', itemId => {
 	loadItem(itemId);
@@ -48,7 +48,7 @@ const getItemName = () => ChatLib.replaceFormatting(itemBeingLoaded.itemData.cus
 const getItemLore = () => itemBeingLoaded.itemData.customLore.map(line => ChatLib.replaceFormatting(line));
 
 function loadRightClickActions(actionList, actionName, actionAuthor) {
-	if (config.showLoadingMessage) ChatLib.chat(`Loading item: ${actionName}&r by &b@${actionAuthor}`);
+	if (Settings.showLoadingMessage) ChatLib.chat(`Loading item: ${actionName}&r by &b@${actionAuthor}`);
 	if (actionList.length === 0) return;
 	ChatLib.say('/item');
 	addOperation(['click', { slot: 34 }]); // "Edit Actions"

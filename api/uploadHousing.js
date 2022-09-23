@@ -1,1 +1,1 @@
-import config from "./config";
+import Settings from '../utils/config';

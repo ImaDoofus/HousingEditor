@@ -1,5 +1,5 @@
-import { Input, Button } from './GuiBuilder.js';
-import loadAction from '../api/loadAction.js';
+import { Input, Button } from './GuiBuilder';
+import loadAction from '../api/loadAction';
 
 const button = new Button(0, 0, 0, 20, 'Paste');
 
@@ -49,6 +49,12 @@ register('guiKey', (char, keyCode, gui, event) => {
 })
 
 function inputUpdate() {
+	if (input.getText() === 'test') {
+		button.setText('Test');
+		button.setEnabled(true);
+		return;
+	}
+
 	if (input.getText().match(/^[a-f\d]{24}$/i)) {
 		button.setText('Import');
 		button.setEnabled(true);
@@ -83,7 +89,7 @@ register('guiMouseClick', (x, y, mouseButton) => {
 				World.playSound('random.click', 1, 1)
 				inputUpdate();
 			} catch (e) {
-				console.log(e)
+				.log(e)
 			}
 			return;
 		}
@@ -136,6 +142,6 @@ function isInActionGui() {
 	const containerName = Player.getContainer().getName();
 	if (Client.currentGui.getClassName() === "GuiEditSign") return
 	if (Player.getContainer().getClassName() !== 'ContainerChest') return false;
-	if (containerName === 'Edit Actions' || containerName.match(/Edit \//)) return true;
+	if (containerName.match(/Edit /)) return true;
 	return false;
 }

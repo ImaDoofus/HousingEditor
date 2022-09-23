@@ -1,4 +1,4 @@
-import LimitedAction from "../LimitedAction.js";
+import LimitedAction from "../LimitedAction";
 
 export default (actionData) => {
 	let sequence = [];

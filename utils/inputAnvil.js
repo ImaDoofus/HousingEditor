@@ -1,4 +1,3 @@
-
 export default (input) => {
 	if (Client.currentGui.getClassName() === 'GuiRepair') { // check if in anvil gui
 		let outputSlotField = Player.getContainer().container.class.getDeclaredField('field_82852_f');
