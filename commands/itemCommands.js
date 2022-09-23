@@ -8,7 +8,7 @@ function isCreative() {
 
 function getItemLore(item) {
     let lore = []
-    if (item.getNBT()?.getTag("tag")?.getTag("display")?.get("Lore")) lore = item.getNBT().toObject()['tag']['display']['Lore']
+    if (item.getNBT()?.getTag("tag")?.getTag("display").get("Lore")) lore = item.getNBT().toObject()['tag']['display']['Lore']
     return lore
 }
 
