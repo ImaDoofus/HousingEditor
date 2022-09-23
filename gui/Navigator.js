@@ -3,7 +3,7 @@ import utilLoadItem from '../utils/loadItemstack';
 import createItemStack from '../utils/createItemStack';
 import Settings from '../utils/config';
 
-const lastItemAddedMargin = 300; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
+const lastItemAddedMargin = Settings.guiCooldown; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
 
 const arrow = new Image(javax.imageio.ImageIO.read(new java.io.File('./config/ChatTriggers/modules/HousingEditor/assets/red-arrow.png')));
 let drawArrow = false;

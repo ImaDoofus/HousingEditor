@@ -89,7 +89,7 @@ register('guiMouseClick', (x, y, mouseButton) => {
 				World.playSound('random.click', 1, 1)
 				inputUpdate();
 			} catch (e) {
-				.log(e)
+				console.log(e)
 			}
 			return;
 		}

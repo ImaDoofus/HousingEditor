@@ -122,7 +122,6 @@ function loadCondition(condition) {
 				sequence.push(['chat', { text: conditionData.stat }]);
 			}
 			if (conditionData.comparator && conditionData.comparator !== 'equal_to') { // default is "Equal"
-				console.log(conditionData.comparator);
 				sequence.push(['click', { slot: 11 }]); // select "Comparator"
 				switch (conditionData.comparator) {
 					case "less_than":
@@ -153,7 +152,6 @@ function loadCondition(condition) {
 				sequence.push(['chat', { text: conditionData.stat }]);
 			}
 			if (conditionData.comparator && conditionData.comparator !== 'equal_to') { // default is "Equal"
-				console.log(conditionData.comparator);
 				sequence.push(['click', { slot: 11 }]); // select "Comparator"
 				switch (conditionData.comparator) {
 					case "less_than":
