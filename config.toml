@@ -1,0 +1,68 @@
+
+[general]
+
+	[general.general]
+		house_delete_protection = false
+		chat_prefix = "&f[&aHousing&f&lEditor&f]&r"
+		accidental_house_delete_protection = true
+
+	[general.category]
+		color_picker = "255,126,126,155"
+		text = ""
+		test_for_imadoofus = "sdfsdf"
+
+[settings]
+
+	[settings.general]
+		house_delete_protection = false
+		chat_prefix = "&f[&aHousing&f&lEditor&f]&r"
+
+	[settings."actions_/_items"]
+		safe_mode = false
+		show_loading_messages = true
+
+	[settings."actions/items"]
+		safe_mode = false
+
+["worldedit_/_protools"]
+
+	["worldedit_/_protools"."worldedit_/_protools"]
+		better_worldedit = true
+		selection_tool = true
+		"give_tools_on_/protools_(/pt)" = ""
+		set_tool = true
+
+	["worldedit_/_protools".particle_preview]
+		protools_particle_preview_quality = 3
+
+	["worldedit_/_protools".worldedit]
+		better_worldedit = true
+
+	["worldedit_/_protools".recieve_pro_tools]
+		paste_tool = true
+		undo_tool = true
+		wireframe_tool = true
+		teleportation_tool = true
+		cut_tool = false
+		selection_tool = false
+		fill_tool = false
+		set_tool = false
+		copy_tool = true
+		walls_tool = true
+
+[miscellaneous]
+
+	[miscellaneous.general]
+		gui_timeout = 176
+		gui_cooldown = 20
+
+	[miscellaneous.miscellaneous]
+		gui_timeout = 60
+		gui_cooldown = 20
+
+["actions_/_items"]
+
+	["actions_/_items"."actions_/_items"]
+		safe_mode = true
+		show_loading_messages = true
+
