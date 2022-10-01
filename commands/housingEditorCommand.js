@@ -48,7 +48,7 @@ const housingEditorCommand = register('command', ...args => {
 			ChatLib.chat('&6/rename <text> &fRename your held item.')
 			ChatLib.chat('&6/actionpad (/ap) &fAutomatically recieve an actionpad into your selected hotbar slot.')
 			ChatLib.chat('&6/hologram (/hg) &fAutomatically recieve a hologram into your selected hotbar slot.')
-			ChatLib.chat('&6/npc) &fAutomatically recieve a NPC item into your selected hotbar slot.')
+			ChatLib.chat('&6/npc &fAutomatically recieve a NPC item into your selected hotbar slot.')
 			ChatLib.chat('&6/wear <head/chest/legs/feet> &fWear your held item on the selected slot.')
 			ChatLib.chat('&6/count <amount> (/stack) &fSets the amount of items in your held item.')
 			ChatLib.chat("&6/material <material> (/mat) &fSets the material of your held item.")
