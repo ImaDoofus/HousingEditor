@@ -190,9 +190,16 @@ register('command', () => {
     World.playSound('random.pop', 0.2, 2)
 }).setName('hologram').setAliases(['hg'])
 
-register('command', (mode, ...params) => {
-    mode = mode.toLowerCase();
-}).setName('item')
+register('command', () => {
+    if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
+    if (Player.getHeldItemIndex() === 8) return ChatLib.chat('&cThis slot is already in use.')
+    loadItemstack(
+        getItemFromNBT('{id:"minecraft:skull",Count:1b,tag:{display:{Lore:[0:"§7Place this in your house to",1:"§7place an NPC!"],Name:"§aNPC"}},Damage:3s}').itemStack,
+        Player.getHeldItemIndex() + 36
+    )
+    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aGave you an NPC item!`);
+    World.playSound('random.pop', 0.2, 2)
+}).setName('npc')
 
 register('command', (amount) => {
     if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
