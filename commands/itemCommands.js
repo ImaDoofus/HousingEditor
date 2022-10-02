@@ -2,6 +2,8 @@ import getItemFromNBT from "../utils/getItemFromNBT";
 import loadItemstack from "../utils/loadItemstack";
 import Settings from "../utils/config.js";
 
+let currentItemNBT = ''
+
 function isCreative() {
     return Player.asPlayerMP().player.field_71075_bZ.field_75098_d
 }
@@ -19,8 +21,9 @@ function getItemLore(item) {
 register('command', () => {
     if (Player.getHeldItem()) {
         var itemNBT = new Message(
-            new TextComponent("\n&bHeld Item NBT &3&l(&3Click to Copy&3&l)\n\n" + JSON.stringify(Player.getHeldItem().getNBT().toObject(), null, 4) + "\n").setHoverValue("&eClick to copy").setClick('run_command', `copy-nbt`),
+            new TextComponent("\n&bHeld Item NBT &3&l(&3Click to Copy&3&l)\n\n" + JSON.stringify(Player.getHeldItem().getNBT().toObject(), null, 4) + "\n").setHoverValue("&eClick to copy").setClick('run_command', `/copy-nbt`),
         )
+        currentItemNBT = Player.getHeldItem().getRawNBT()
         ChatLib.chat(itemNBT)
     } else {
         ChatLib.chat(`&cYou must be holding an item to use this command.`)
@@ -28,7 +31,7 @@ register('command', () => {
 }).setName('nbt')
 
 register('command', () => {
-    ChatLib.command(`ct copy ${Player.getHeldItem().getRawNBT()}`, true)
+    ChatLib.command(`ct copy ${currentItemNBT}`, true)
     ChatLib.chat(`${Settings.chatPrefix}&r &aCopied NBT to clipboard.`)
 }).setName('copy-nbt')
 
