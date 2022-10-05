@@ -169,7 +169,10 @@ function inputAnvil(text) {
 
 function inputChat(text) {
 	if (Settings.useSafeMode) Client.companion.setCurrentChatMessage(text);
-	else ChatLib.say(text);
+	else {
+		if (text.startsWith('/')) text = "&r" + text
+		ChatLib.say(text);
+	}
 	setNotReady();
 }
 

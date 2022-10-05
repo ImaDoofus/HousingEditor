@@ -38,7 +38,7 @@ class Settings {
 		category: "Actions / Items",
 		subcategory: "Actions / Items",
 	})
-	safeMode = false;
+	useSafeMode = false;
 	
 	@SwitchProperty({
 		name: "Show Loading Messages",

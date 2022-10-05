@@ -37,18 +37,23 @@ const housingEditorCommand = register('command', ...args => {
 			ChatLib.chat('')
 			ChatLib.chat(`&6-----------------------------------------------------`);
 		} else if (page === 3) {
-			ChatLib.chat(`&6-----------------------------------------------------`);
-			ChatLib.chat(ChatLib.getCenteredText("&6HousingEditor Commands (3/3)"))
+		ChatLib.chat(ChatLib.getCenteredText("&6HousingEditor Commands (3/3)"))
 			ChatLib.chat(ChatLib.getCenteredText('&7Item Manipulation Commands'))
 			ChatLib.chat('')
 			ChatLib.chat('&6/item <command/help> &c(WIP) &fMain command which covers all HousingEditor item utilties.')
-			ChatLib.chat('&6/nbt &fCopies the NBT data of your held item to the clipboard.')
-			ChatLib.chat('&6/unbreakable (/ub) &fToggles whether or not an item is unbreakable.')
-			ChatLib.chat("&6/hideflags <value> (/hf) &fToggles the visibility of an item's flags, the value parameter is an optional byte which will allow you to hide specific flags")
+			ChatLib.chat('&6/nbt &fDisplays the NBT of your held item in chat.')
+			ChatLib.chat('&6/unbreakable <true/false> (/ub) &fToggles whether or not an item is unbreakable.')
+			ChatLib.chat("&6/hideflags <true/false> <value> (/hf) &fToggles the visibility of an item's flags, the value parameter is an optional byte which will allow you to hide specific flags")
 			ChatLib.chat('&6/lore <add/set/remove/list/clear> &fManipulate the lore of your held item. (Use /lore help for more information)')
 			ChatLib.chat('&6/rename <text> &fRename your held item.')
 			ChatLib.chat('&6/actionpad (/ap) &fAutomatically recieve an actionpad into your selected hotbar slot.')
 			ChatLib.chat('&6/hologram (/hg) &fAutomatically recieve a hologram into your selected hotbar slot.')
+			ChatLib.chat('&6/npc &fAutomatically recieve a NPC item into your selected hotbar slot.')
+			ChatLib.chat('&6/wear <head/chest/legs/feet> &fWear your held item on the selected slot.')
+			ChatLib.chat('&6/count <amount> (/stack) &fSets the amount of items in your held item.')
+			ChatLib.chat("&6/material <material> (/mat) &fSets the material of your held item.")
+			ChatLib.chat("&6/damage <damage> (/metadata) &fSets the damage value  of your held item.")
+			ChatLib.chat("&6/enchantall <level> (/ea) &fAdd every enchantment with the specified level to your held item")
 			ChatLib.chat('')
 			ChatLib.chat(`&6-----------------------------------------------------`);
 		} else {

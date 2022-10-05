@@ -2,21 +2,28 @@ import getItemFromNBT from "../utils/getItemFromNBT";
 import loadItemstack from "../utils/loadItemstack";
 import Settings from "../utils/config.js";
 
+let currentItemNBT = ''
+
 function isCreative() {
     return Player.asPlayerMP().player.field_71075_bZ.field_75098_d
 }
 
 function getItemLore(item) {
     let lore = []
-    if (item.getNBT()?.getTag("tag")?.getTag("display").get("Lore")) lore = item.getNBT().toObject()['tag']['display']['Lore']
-    return lore
+    try {
+        if (item.getNBT()?.getTag("tag")?.getTag("display").get("Lore")) lore = item.getNBT().toObject()['tag']['display']['Lore']
+        return lore
+    } catch (e) {
+        return []
+    }
 }
 
 register('command', () => {
     if (Player.getHeldItem()) {
         var itemNBT = new Message(
-            new TextComponent("\n&bHeld Item NBT &3&l(&3Click to Copy&3&l)\n\n" + JSON.stringify(Player.getHeldItem().getNBT().toObject(), null, 4) + "\n").setHoverValue("&eClick to copy").setClick('run_command', `copy-nbt`),
+            new TextComponent("\n&bHeld Item NBT &3&l(&3Click to Copy&3&l)\n\n" + JSON.stringify(Player.getHeldItem().getNBT().toObject(), null, 4) + "\n").setHoverValue("&eClick to copy").setClick('run_command', `/copy-nbt`),
         )
+        currentItemNBT = Player.getHeldItem().getRawNBT()
         ChatLib.chat(itemNBT)
     } else {
         ChatLib.chat(`&cYou must be holding an item to use this command.`)
@@ -24,7 +31,7 @@ register('command', () => {
 }).setName('nbt')
 
 register('command', () => {
-    ChatLib.command(`ct copy ${Player.getHeldItem().getRawNBT()}`, true)
+    ChatLib.command(`ct copy ${currentItemNBT}`, true)
     ChatLib.chat(`${Settings.chatPrefix}&r &aCopied NBT to clipboard.`)
 }).setName('copy-nbt')
 
@@ -51,12 +58,12 @@ register('command', (boolean = null) => {
         } else {
             Player.getHeldItem().getItemNBT().getTag('tag').setByte('Unbreakable', 1)
         }
-        ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aItem is now unbreakable.`)
+        ChatLib.chat(`${Settings.chatPrefix}&r &aItem is now unbreakable.`)
     } else {
         if (Player.getHeldItem().getNBT().getTag('tag')) {
             Player.getHeldItem().getItemNBT().getTag('tag').setByte('Unbreakable', 0)
         }
-        ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aItem is now breakable.`)
+        ChatLib.chat(`${Settings.chatPrefix}&r &aItem is now breakable.`)
     }
 
 }).setName('unbreakable').setAliases(['ub'])
@@ -72,12 +79,12 @@ register('command', (boolean = null, value = 127) => {
         } else {
             Player.getHeldItem().getItemNBT().getTag('tag').setByte('HideFlags', parseInt(value))
         }
-        ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aItem flags hidden.`)
+        ChatLib.chat(`${Settings.chatPrefix}&r &aItem flags hidden.`)
     } else {
         if (Player.getHeldItem().getNBT().getTag('tag')) {
             Player.getHeldItem().getItemNBT().getTag('tag').setByte('HideFlags', 0)
         }
-        ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aAll item flags are now visible.`)
+        ChatLib.chat(`${Settings.chatPrefix}&r &aAll item flags are now visible.`)
     }
 
 }).setName('hideflags').setAliases(['hf'])
@@ -96,12 +103,12 @@ register('command', (mode, ...params) => {
             text = params.join(' ')
             if (!text) return ChatLib.chat('&cInvalid Usage: /lore add <text>')
             lore.push(text)
-            item.setLore(lore)
-            ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aAdded lore to item.`)
+            loadItemstack(item.setLore(lore).itemStack, Player.getHeldItemIndex() + 36)
+            ChatLib.chat(`${Settings.chatPrefix}&r &aAdded lore to item.`)
             break;
         case 'clear':
-            item.setLore([])
-            ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aCleared lore from item.`)
+            loadItemstack(item.setLore([]).itemStack, Player.getHeldItemIndex() + 36)
+            ChatLib.chat(`${Settings.chatPrefix}&r &aCleared lore from item.`)
             break;
         case 'list':
             if (lore.length > 0) {
@@ -120,8 +127,8 @@ register('command', (mode, ...params) => {
             if (index < 1 || index > lore.length) return ChatLib.chat('&cSpecified line index is out of the item\'s range.')
             newLore = lore
             newLore[index - 1] = text
-            item.setLore(newLore)
-            ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aLore line successfully updated.`)
+            loadItemstack(item.setLore(newLore), Player.getHeldItemIndex() + 36)
+            ChatLib.chat(`${Settings.chatPrefix}&r &aLore line successfully updated.`)
             break;
         case 'remove':
             index = parseInt(params[0])
@@ -129,8 +136,8 @@ register('command', (mode, ...params) => {
             if (index < 1 || index > lore.length) return ChatLib.chat('&cSpecified line index is out of the item\'s range.')
             newLore = lore
             newLore.splice(index - 1, 1)
-            item.setLore(newLore)
-            ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aLore line successfully removed.`)
+            loadItemstack(item.setLore(newLore), Player.getHeldItemIndex() + 36)
+            ChatLib.chat(`${Settings.chatPrefix}&r &aLore line successfully removed.`)
             break;
         case 'insert':
             index = parseInt(params[0])
@@ -141,8 +148,8 @@ register('command', (mode, ...params) => {
             if (!text) return ChatLib.chat('&cInvalid Usage: /lore insert <index> <text>')
             newLore = lore
             newLore.splice(index - 1, 0, text)
-            item.setLore(newLore)
-            ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aInserted lore line at line ${index} of held item.`)
+            loadItemstack(item.setLore(newLore), Player.getHeldItemIndex() + 36)
+            ChatLib.chat(`${Settings.chatPrefix}&r &aInserted lore line at line ${index} of held item.`)
             break;
         default:
             ChatLib.chat('&6Usage:')
@@ -161,7 +168,7 @@ register('command', (...text) => {
     if (!text) return ChatLib.chat('&cInvalid Usage: /rename <text>')
     text = text.join(' ')
     loadItemstack(Player.getHeldItem().setName(text).itemStack, Player.getHeldItemIndex() + 36)
-    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aRenamed item.`)
+    ChatLib.chat(`${Settings.chatPrefix}&r &aRenamed item.`)
 }).setName('rename')
 
 register('command', () => {
@@ -171,7 +178,7 @@ register('command', () => {
         getItemFromNBT('{id:"minecraft:heavy_weighted_pressure_plate",Count:1b,tag:{display:{Lore:[0:"§7Place this block in your house",1:"§7to place an Action Pad!"],Name:"§aAction Pad"}},Damage:0s}').itemStack,
         Player.getHeldItemIndex() + 36
     )
-    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aGave you an action pad!`);
+    ChatLib.chat(`${Settings.chatPrefix}&r &aGave you an action pad!`);
     World.playSound('random.pop', 0.2, 2)
 }).setName('actionpad').setAliases(['ap'])
 
@@ -182,13 +189,20 @@ register('command', () => {
         getItemFromNBT('{id:"minecraft:name_tag",Count:1b,tag:{display:{Lore:[0:"§7Place this in your house to",1:"§7place a Hologram!"],Name:"§aHologram"}},Damage:0s}').itemStack,
         Player.getHeldItemIndex() + 36
     )
-    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aGave you a hologram!`);
+    ChatLib.chat(`${Settings.chatPrefix}&r &aGave you a hologram!`);
     World.playSound('random.pop', 0.2, 2)
 }).setName('hologram').setAliases(['hg'])
 
-register('command', (mode, ...params) => {
-    mode = mode.toLowerCase();
-}).setName('item')
+register('command', () => {
+    if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
+    if (Player.getHeldItemIndex() === 8) return ChatLib.chat('&cThis slot is already in use.')
+    loadItemstack(
+        getItemFromNBT('{id:"minecraft:skull",Count:1b,tag:{display:{Lore:[0:"§7Place this in your house to",1:"§7place an NPC!"],Name:"§aNPC"}},Damage:3s}').itemStack,
+        Player.getHeldItemIndex() + 36
+    )
+    ChatLib.chat(`${Settings.chatPrefix}&r &aGave you an NPC item!`);
+    World.playSound('random.pop', 0.2, 2)
+}).setName('npc')
 
 register('command', (amount) => {
     if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
@@ -198,7 +212,7 @@ register('command', (amount) => {
     if (isNaN(amount)) return ChatLib.chat('&cInvalid Usage: /amount <amount>')
     if (amount < 1 || amount > 64) return ChatLib.chat('&cInvalid Item Amount: Must be between 1 and 64.')
     loadItemstack(Player.getHeldItem().setStackSize(amount).itemStack, Player.getHeldItemIndex() + 36)
-    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aSet item amount to ${amount}.`)
+    ChatLib.chat(`${Settings.chatPrefix}&r &aSet item amount to ${amount}.`)
 }).setName('count')
 
 register('command', (damage) => {
@@ -209,7 +223,7 @@ register('command', (damage) => {
     if (isNaN(amount)) return ChatLib.chat('&cInvalid Usage: /damage <damage>')
     if (amount < 0 || amount > 32767) return ChatLib.chat('&cInvalid Item Damage: Must be between 0 and 32767.')
     loadItemstack(Player.getHeldItem().setDamage(damage).itemStack, Player.getHeldItemIndex() + 36)
-    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aSet item damage to ${damage}.`)
+    ChatLib.chat(`${Settings.chatPrefix}&r &aSet item damage to ${damage}.`)
 }).setName('damage').setAliases['metadata']
 
 register('command', (mat) => {
@@ -218,7 +232,7 @@ register('command', (mat) => {
     if (!mat) return ChatLib.chat('&cInvalid Usage: /material <material>')
     try {
         loadItemstack(getItemFromNBT(Player.getHeldItem().getNBT().setString('id', mat).setByte('Damage', 0).toString()).itemStack, Player.getHeldItemIndex() + 36)
-        ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aSet item material to ${mat}.`)
+        ChatLib.chat(`${Settings.chatPrefix}&r &aSet item material to ${mat}.`)
     } catch (e) {
         ChatLib.chat("&cError changing item material, was the entered value a real item?")
     }
@@ -241,7 +255,7 @@ register('command', (slot) => {
         Player.getHeldItem().itemStack,
         slotNum
     )
-    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aEquipped held item to ${slot.toLowerCase()}.`)
+    ChatLib.chat(`${Settings.chatPrefix}&r &aEquipped held item to ${slot.toLowerCase()}.`)
     World.playSound('random.pop', 0.2, 2)
 }).setName('wear')
 
@@ -269,7 +283,7 @@ register('command', (lvl = 10) => {
     newItemNBT.getTag('tag').set("ench", enchantments)
 
     loadItemstack(getItemFromNBT(newItemNBT).itemStack, Player.getHeldItemIndex() + 36)
-    ChatLib.chat(`&f[&aHousing&f&lEditor&f]&r &aGave item every enchantment with level ${lvl}.`)
+    ChatLib.chat(`${Settings.chatPrefix}&r &aGave item every enchantment with level ${lvl}.`)
 
 }).setName('enchantall').setAliases(['ea'])
 
@@ -289,6 +303,7 @@ register('command', (lvl = 10) => {
 // /metadata command (done)
 // /wear (done)
 
+// TO DO
 // /tag command
 // /glow command
 // /get command (/i, /give)
