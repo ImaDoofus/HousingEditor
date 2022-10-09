@@ -32,21 +32,20 @@ if (Settings.useSafeMode) {
 	const slotIdField = C0EPacketClickWindow.class.getDeclaredField('field_149552_b');
 	slotIdField.setAccessible(true);
 
-	if (Settings.useSafeMode) {
-		register('packetSent', (packet, event) => {
-			if (Player.getContainer().getName() === 'Housing Menu') return; 
-			if (Navigator.isReady) return;
-			if (packet instanceof C0EPacketClickWindow) {
-				const slotId = slotIdField.get(packet);
-				if (!slotId) return;
-				if (slotId !== slotToManuallyClick) cancel(event); 
-			}
-		})
-	}
+	register('packetSent', (packet, event) => {
+		if (Player.getContainer().getName() === 'Housing Menu') return; 
+		if (Navigator.isReady) return;
+		if (packet instanceof C0EPacketClickWindow) {
+			const slotId = slotIdField.get(packet);
+			if (!slotId) return;
+			if (slotId !== slotToManuallyClick) cancel(event); 
+		}
+	})
 }
 
 register('chat', event => {
-	if (ChatLib.getChatMessage(event).match(/ \[PREVIOUS\] \[CANCEL\]/)) Navigator.isReady = true; // when the GUI closed for inputting text.
+	const message = ChatLib.getChatMessage(event);
+	if (message.match(/ \[PREVIOUS\] \[CANCEL\]/) || message.match(/ \[CANCEL\]/)) Navigator.isReady = true; // when the GUI closed for inputting text.
 })
 
 register('guiRender', () => {
@@ -168,7 +167,7 @@ function inputAnvil(text) {
 }
 
 function inputChat(text) {
-	if (Settings.useSafeMode) Client.companion.setCurrentChatMessage(text);
+	if (Settings.useSafeMode) Client.Companion.setCurrentChatMessage(text);
 	else {
 		if (text.startsWith('/')) text = "&r" + text
 		ChatLib.say(text);
