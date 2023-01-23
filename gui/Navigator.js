@@ -94,7 +94,7 @@ function click(slotId) {
 function returnToEditActions() {
 	Navigator.isReturning = true;
 	const containerName = Player.getContainer().getName();
-	if (containerName.match(/Edit /)) return Navigator.isReturning = false;
+	if (containerName.match(/Edit |Actions: /)) return Navigator.isReturning = false;
 	goBack();
 }
 
