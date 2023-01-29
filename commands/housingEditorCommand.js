@@ -2,10 +2,11 @@ import Settings from "../utils/config";
 
 const housingEditorCommand = register('command', ...args => {
 	let command;
-	try	{
+	try {
 		command = args[0].toLowerCase();
-	} catch(e){
-		command = ['help', 1]
+	} catch (e) {
+		args = ['help', 1]
+		command = 'help'
 	}
 
 	if (command === 'help') {
@@ -22,6 +23,7 @@ const housingEditorCommand = register('command', ...args => {
 			ChatLib.chat('&6/loaditem <id> &fLoads an item from the website.')
 			ChatLib.chat('&6/selfstat <stat> <set/inc/dec> <value> &fViews/Sets your stats.')
 			ChatLib.chat('&6/location &fTells you your current location for copying.')
+			ChatLib.chat('&6/npclist &fReturns a list of NPCs and their coordinates. (Note: Will only detect NPCs within your render distance!)')
 			ChatLib.chat('&7&oNext Page: HousingEditor Pro Tool Commands')
 			ChatLib.chat('')
 			ChatLib.chat(`&6-----------------------------------------------------`);
@@ -37,7 +39,7 @@ const housingEditorCommand = register('command', ...args => {
 			ChatLib.chat('')
 			ChatLib.chat(`&6-----------------------------------------------------`);
 		} else if (page === 3) {
-		ChatLib.chat(ChatLib.getCenteredText("&6HousingEditor Commands (3/3)"))
+			ChatLib.chat(ChatLib.getCenteredText("&6HousingEditor Commands (3/3)"))
 			ChatLib.chat(ChatLib.getCenteredText('&7Item Manipulation Commands'))
 			ChatLib.chat('')
 			ChatLib.chat('&6/item <command/help> &c(WIP) &fMain command which covers all HousingEditor item utilties.')
@@ -73,3 +75,78 @@ housingEditorCommand.setTabCompletions((args) => {
 })
 
 housingEditorCommand.setName('housingeditor').setAliases(["he"])
+
+// NPC List Command
+register('command', () => {
+	if (!TabList.getFooter().includes("You are in ")) return ChatLib.chat("&cYou must be in a housing to use this command!")
+	let NPCs = []
+
+	// Collect all NPCs in your world as objects
+	World.getAllPlayers().forEach(p => {
+		if (p.getUUID().version() === 2 && p.getName() !== 'Carpenter ') {
+			NPCs.push(p)
+		}
+	})
+
+	if (NPCs.length === 0) return ChatLib.chat("&cThere are no NPCs either in your render distance!")
+	let NPCListMsg = new Message(`&7NPC List &b(${NPCs.length})\n`)
+
+	// Iterate through the NPC list and add an entry in the chat message that will be sent listing all the NPCs
+	for (let x = 0; x < NPCs.length; x++) {
+		let p = NPCs[x]
+		NPCListMsg.addTextComponent(new TextComponent(`&a${x + 1} &7- `)) // index of NPC
+		let dispName = getNPCDisplayName(p)
+		if (!dispName) {
+			if (cachedNPCNames[p.getName()]) {
+				dispName = cachedNPCNames[p.getName()]
+			} else {
+				dispName = "§cNo Name"
+			}
+		}
+		NPCListMsg.addTextComponent(new TextComponent(`&r${dispName}`).setHoverValue(`&eDisplay Name: &r${dispName}\n&eEntity Name: &7${p.getName()}\n&eUUID: &7${p.getUUID()}`)) // Name of NPC
+		NPCListMsg.addTextComponent(new TextComponent(`&7: `))
+		NPCListMsg.addTextComponent(new TextComponent(`&b${p.getX()}&3, &b${p.getY()}&3, &b${p.getZ()}`).setHoverValue(`&eClick to teleport to NPC`).setClick('run_command', `/tp ${p.getX()} ${p.getY()} ${p.getZ()}`)) // NPC's coordinates
+		if (x < NPCs.length - 1) NPCListMsg.addTextComponent(`\n`)
+	}
+	ChatLib.chat(NPCListMsg)
+}).setName('npclist').setAliases(['npcl', 'npl'])
+
+// NPC's name is separate hologram so this function will try to get a NPC's display name
+function getNPCDisplayName(p, formatted = false) {
+	if (!p || p.getUUID().version() !== 2) return
+	let entities = World.getAllEntities();
+
+	let NPCName;
+	entities.forEach(entity => {
+		if (entity.getClassName() === "EntityArmorStand") {
+			let distance = entity.getEntity().func_70032_d(p.getPlayer()) // distance to NPC
+			if (distance === 0.09375) {
+				NPCName = entity.getName()
+			}
+		};
+	});
+	if (!NPCName || NPCName === "Armor Stand") {
+		if (formatted) return "§cNone"
+		else return null
+	}
+	return NPCName
+}
+
+let cachedNPCNames = {}
+// cache NPC names so if a NPC's name hologram is unrendered the client can still display the NPC name if it was previously in render distance
+register('tick', () => {
+	World.getAllPlayers().forEach(p => {
+		if (!cachedNPCNames[p.getName()]) {
+			if (p.getUUID().version() === 2 && p.getName() !== 'Carpenter ') {
+				let dispName = getNPCDisplayName(p)
+				if (dispName) {
+					cachedNPCNames[p.getName()] = dispName
+				}
+			}
+		}
+	})
+})
+
+register('worldLoad', () => {
+	cachedNPCNames = {}
+})

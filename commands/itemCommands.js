@@ -204,7 +204,7 @@ register('command', () => {
     World.playSound('random.pop', 0.2, 2)
 }).setName('npc')
 
-register('command', (amount) => {
+register('command', (amount = 64) => {
     if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
     if (!Player.getHeldItem()) return ChatLib.chat(`&cYou must be holding an item to use this command.`)
     if (!amount) return ChatLib.chat('&cInvalid Usage: /amount <amount>')
@@ -213,7 +213,7 @@ register('command', (amount) => {
     if (amount < 1 || amount > 64) return ChatLib.chat('&cInvalid Item Amount: Must be between 1 and 64.')
     loadItemstack(Player.getHeldItem().setStackSize(amount).itemStack, Player.getHeldItemIndex() + 36)
     ChatLib.chat(`${Settings.chatPrefix}&r &aSet item amount to ${amount}.`)
-}).setName('count')
+}).setName('count').setAliases(["stack"])
 
 register('command', (damage) => {
     if (!isCreative()) return ChatLib.chat('&cYou must be in creative mode to use this command.');
