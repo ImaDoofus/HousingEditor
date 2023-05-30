@@ -1,4 +1,4 @@
-import { Input, Button } from './GuiBuilder';
+import { Input, Button } from './components/components.js';
 import loadAction from '../api/loadAction';
 
 const button = new Button(0, 0, 0, 20, 'Paste');

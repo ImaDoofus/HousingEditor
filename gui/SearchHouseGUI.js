@@ -2,7 +2,7 @@
 // search function isnt really optimized, because it checks for searchQuery every postGuiRender loop instead of on guiKey, but it's okay
 // because it's not actually laggy and only runs when that "Player Housing" GUI is open
 
-import { Input } from './GuiBuilder';
+import { Input } from './components/components';
 const input = new Input(0, 0, 0, 18);
 const color = Renderer.color(100, 255, 0, 255);
 let searchQuery;
@@ -46,9 +46,6 @@ register('guiKey', (char, keyCode, gui, event) => {
 	}
 })
 
-
-
-
 register('guiMouseClick', (x, y, mouseButton) => {
 	if (!Player.getContainer()) return;
 	if (Player.getContainer().getName() !== 'Player Housing') return;
@@ -65,8 +62,6 @@ register('guiMouseClick', (x, y, mouseButton) => {
 	}
 })
 
-
-
 register('postGuiRender', () => {
 	if (!Player.getContainer()) return;
 	if (Player.getContainer().getName() !== 'Player Housing') return;
@@ -79,9 +74,6 @@ register('postGuiRender', () => {
 			}
 		}
 	});
-
-
-
 })
 
 function highlightSlot(slot) {
@@ -94,8 +86,6 @@ function highlightSlot(slot) {
 	Renderer.drawRect(color, renderX - 9, renderY - 9, 17, 17);
 	Tessellator.popMatrix();
 }
-
-
 
 const removeFormatting = (str) => removeFont(ChatLib.removeFormatting(str)).toLowerCase();
 

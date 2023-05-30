@@ -21,15 +21,14 @@ if (Settings.useBetterWorldedit) {
 				if (Date.now() - lastUsed < cooldown) return ChatLib.chat(`&cYou must wait &e${getCooldown()}s &cto do that!`);
 				lastUsed = Date.now();
 
-				// taken from discord
 				let hit = Player.getPlayer().func_174822_a(50, 0.0); // rayTrace()
 				let bp = hit.func_178782_a(); // getBlockPos()
 				bp = bp.func_177972_a(Player.getPlayer().func_174811_aO().func_176734_d()) // Player.getHorizontalFacing().opposite()
-				let x = bp.func_177958_n() + 0.5;
-				let y = bp.func_177956_o() + 1;
-				let z = bp.func_177952_p() + 0.5;
+				let x = bp.func_177958_n() + 0.5; // getX()
+				let y = bp.func_177956_o() + 1; // getY()
+				let z = bp.func_177952_p() + 0.5; // getZ()
 				usedTeleport = true;
-				ChatLib.command(`tp ${x} ${y} ${z}`); // getX(), getY(), getZ()
+				ChatLib.command(`tp ${x} ${y} ${z}`); 
 				ChatLib.chat(`&aTeleported you to the targeted block!`)
 			}
 		};
@@ -53,9 +52,3 @@ if (Settings.useBetterWorldedit) {
 	}
 	)
 };
-
-
-
-
-
-

@@ -1,0 +1,36 @@
+
+[general]
+
+	[general.general]
+		chat_prefix = "&f[&aHousing&f&lEditor&f]"
+		accidental_house_delete_protection = false
+
+["worldedit_/_protools"]
+
+	["worldedit_/_protools".worldedit]
+		better_worldedit = true
+
+	["worldedit_/_protools".recieve_pro_tools]
+		paste_tool = true
+		undo_tool = true
+		wireframe_tool = true
+		teleportation_tool = true
+		cut_tool = true
+		selection_tool = true
+		fill_tool = true
+		set_tool = true
+		copy_tool = true
+		walls_tool = true
+
+[miscellaneous]
+
+	[miscellaneous.miscellaneous]
+		gui_timeout = 60
+		gui_cooldown = 20
+
+["actions_/_items"]
+
+	["actions_/_items"."actions_/_items"]
+		safe_mode = false
+		show_loading_messages = true
+
