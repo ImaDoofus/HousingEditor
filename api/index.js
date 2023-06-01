@@ -1,4 +1,3 @@
-import './checkVersion';
-import './houseDeleteProtection';
-import './cookieGiveProtection';
-import './uploadHousing';
+import "./checkVersion";
+import "./cookieGiveProtection";
+import "./uploadHousing";
