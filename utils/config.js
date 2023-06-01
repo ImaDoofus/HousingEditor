@@ -21,15 +21,6 @@ class Settings {
 	})
 	chatPrefix = "&f[&aHousing&f&lEditor&f]";
 
-	
-	@SwitchProperty({
-		name: "Accidental House Delete Protection",
-		description: "Prevents you from accidently resetting your plot or deleting your house.",
-		category: "General",
-		subcategory: "General",
-	})
-	houseDeleteProtection = false;
-
 	// Actions / Items 
 
 	@SwitchProperty({

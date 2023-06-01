@@ -3,7 +3,6 @@
 
 	[general.general]
 		chat_prefix = "&f[&aHousing&f&lEditor&f]"
-		accidental_house_delete_protection = false
 
 ["worldedit_/_protools"]
 
