@@ -1,10 +1,10 @@
 export default (actionData) => {
-	let sequence = [];
+  let sequence = [];
 
-	if (actionData.reason && actionData.reason !== "Failed!") {
-		sequence.push(['click', { slot: 10 }]); 
-		sequence.push(['anvil', { text: actionData.reason }]); 
-	}
+  if (actionData.reason && actionData.reason !== "Failed!") {
+    sequence.push(["click", { slot: 10 }]);
+    sequence.push(["chat", { text: actionData.reason }]);
+  }
 
-	return ['Fail Parkour', sequence];
-}
+  return ["Fail Parkour", sequence];
+};

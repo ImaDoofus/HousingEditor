@@ -1,7 +1,7 @@
 export default (actionData) => {
   let sequence = [];
 
-  if (actionData.stat) {
+  if (actionData.stat && actionData.stat !== "Kills") {
     sequence.push(["click", { slot: 10 }]);
     sequence.push(["chat", { text: actionData.stat }]);
   }

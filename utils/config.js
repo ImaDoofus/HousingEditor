@@ -1,6 +1,7 @@
 // config.js
 import { @Vigilant @SliderProperty @SwitchProperty @NumberProperty @TextProperty @ButtonProperty @SliderProperty @CheckboxProperty } from 'Vigilance';
-import { version } from '../api/checkVersion';
+const metadata = FileLib.read("HousingEditor", "./metadata.json");
+const version = JSON.parse(metadata).version;
 
 @Vigilant("HousingEditor", `Housing Editor ${version}`, {
 	getCategoryComparator: () => (a, b) => {

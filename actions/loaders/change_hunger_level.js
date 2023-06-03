@@ -1,9 +1,9 @@
 export default (actionData) => {
   let sequence = [];
 
-  if (actionData.health && actionData.health !== "20") {
+  if (actionData.level && actionData.level !== "20") {
     sequence.push(["click", { slot: 10 }]);
-    sequence.push(["anvil", { text: actionData.health }]);
+    sequence.push(["anvil", { text: actionData.level }]);
   }
 
   if (actionData.mode && actionData.mode !== "set") {
@@ -14,5 +14,5 @@ export default (actionData) => {
     if (actionData.mode === "divide") sequence.push(["click", { slot: 14 }]);
   }
 
-  return ["Change Health", sequence];
+  return ["Change Hunger Level", sequence];
 };

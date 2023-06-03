@@ -6,7 +6,7 @@ import go_to_house_spawn from "./go_to_house_spawn";
 import display_title from "./display_title";
 import display_action_bar from "./display_action_bar";
 import reset_inventory from "./reset_inventory";
-import set_max_health from "./set_max_health";
+import change_max_health from "./change_max_health";
 import parkour_checkpoint from "./parkour_checkpoint";
 import give_item from "./give_item";
 import remove_item from "./remove_item";
@@ -23,11 +23,12 @@ import play_sound from "./play_sound";
 import set_compass_target from "./set_compass_target";
 import set_gamemode from "./set_gamemode";
 import change_health from "./change_health";
-import set_hunger_level from "./set_hunger_level";
+import change_hunger_level from "./change_hunger_level";
 import random_action from "./random_action";
 import use_remove_held_item from "./use_remove_held_item";
 import apply_inventory_layout from "./apply_inventory_layout";
 import trigger_function from "./trigger_function";
+import enchant_held_item from "./enchant_held_item";
 
 export default {
   conditional,
@@ -38,7 +39,7 @@ export default {
   display_title,
   display_action_bar,
   reset_inventory,
-  set_max_health,
+  change_max_health,
   parkour_checkpoint,
   give_item,
   remove_item,
@@ -55,9 +56,10 @@ export default {
   set_compass_target,
   set_gamemode,
   change_health,
-  set_hunger_level,
+  change_hunger_level,
   random_action,
   use_remove_held_item,
   apply_inventory_layout,
   trigger_function,
+  enchant_held_item,
 };

@@ -8,9 +8,10 @@ export default class LimitedAction {
   getSequence() {
     let sequence = [];
 
+    sequence.push(["setGuiContext", { context: "Add Action" }]);
     sequence.push(["click", { slot: 50 }]); // click "Add Action Button"
     sequence.push(["option", { option: this.sequence[0] }]); // click the action type
-
+    sequence.push(["setGuiContext", { context: this.sequence[0] }]);
     this.sequence[1].forEach((operation) => {
       sequence.push(operation);
     });

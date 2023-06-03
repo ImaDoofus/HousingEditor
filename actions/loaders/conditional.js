@@ -5,6 +5,7 @@ export default (actionData) => {
   let sequence = [];
 
   if (actionData.conditions) {
+    sequence.push(["setGuiContext", { context: "Conditional -> Conditions" }]);
     sequence.push(["click", { slot: 10 }]);
     actionData.conditions.forEach((condition) => {
       sequence.push(...loadCondition(condition));
@@ -15,6 +16,7 @@ export default (actionData) => {
   if (actionData.matchAnyCondition) sequence.push(["click", { slot: 11 }]);
 
   if (actionData.if && actionData.if.length > 0) {
+    sequence.push(["setGuiContext", { context: "Conditional -> If" }]);
     sequence.push(["click", { slot: 12 }]);
     actionData.if.forEach((action) => {
       let actionSequence = new LimitedAction(action[0], action[1]).getSequence();
@@ -24,6 +26,7 @@ export default (actionData) => {
   }
 
   if (actionData.else && actionData.else.length > 0) {
+    sequence.push(["setGuiContext", { context: "Conditional -> Else" }]);
     sequence.push(["click", { slot: 13 }]);
     actionData.else.forEach((action) => {
       let actionSequence = new LimitedAction(action[0], action[1]).getSequence();
@@ -118,7 +121,7 @@ function loadCondition(condition) {
         if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
         if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
       }
-      if (!isNaN(conditionData.compareValue)) {
+      if (conditionData.compareValue) {
         sequence.push(["click", { slot: 12 }]);
         sequence.push(["anvil", { text: conditionData.compareValue }]);
       }
@@ -138,7 +141,7 @@ function loadCondition(condition) {
         if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
         if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
       }
-      if (!isNaN(conditionData.compareValue)) {
+      if (conditionData.compareValue) {
         sequence.push(["click", { slot: 12 }]);
         sequence.push(["anvil", { text: conditionData.compareValue }]);
       }
@@ -147,7 +150,7 @@ function loadCondition(condition) {
 
     case "required_group":
       sequence.push(["setGuiContext", { context: "Condition -> Required Group" }]);
-      sequence.push(["click", { slot: 10 }]);
+      sequence.push(["option", { option: "Required Group" }]);
       if (conditionData.group) {
         sequence.push(["click", { slot: 10 }]);
         sequence.push(["option", { option: conditionData.group }]);
@@ -175,6 +178,143 @@ function loadCondition(condition) {
         sequence.push(["click", { slot: 10 }]);
         sequence.push(["item", { item: conditionData.blockType }]);
       }
+      if (conditionData.matchTypeOnly) {
+        sequence.push(["click", { slot: 11 }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "portal_type":
+      sequence.push(["setGuiContext", { context: "Condition -> Portal Type" }]);
+      sequence.push(["option", { option: "Portal Type" }]);
+      if (conditionData.portalType) {
+        sequence.push(["click", { slot: 10 }]);
+        if (conditionData.portalType === "nether_portal") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.portalType === "end_portal") sequence.push(["click", { slot: 11 }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "damage_amount":
+      sequence.push(["setGuiContext", { context: "Condition -> Damage Amount" }]);
+      sequence.push(["option", { option: "Damage Amount" }]);
+      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
+        sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
+      }
+      if (conditionData.compareValue) {
+        sequence.push(["click", { slot: 11 }]);
+        sequence.push(["anvil", { text: conditionData.compareValue }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "fishing_environment":
+      sequence.push(["setGuiContext", { context: "Condition -> Fishing Environment" }]);
+      sequence.push(["option", { option: "Fishing Environment" }]);
+      if (conditionData.environment) {
+        sequence.push(["click", { slot: 10 }]);
+        if (conditionData.environment === "water") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.environment === "lava") sequence.push(["click", { slot: 11 }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "placeholder_number_requirement":
+      sequence.push(["setGuiContext", { context: "Condition -> Placeholder Number Requirement" }]);
+      sequence.push(["option", { option: "Placeholder Number Requirement" }]);
+      if (conditionData.placeholder) {
+        sequence.push(["click", { slot: 10 }]);
+        sequence.push(["anvil", { text: conditionData.placeholder }]);
+      }
+      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
+        sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
+      }
+      if (conditionData.compareValue) {
+        sequence.push(["click", { slot: 12 }]);
+        sequence.push(["anvil", { text: conditionData.compareValue }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "player_health":
+      sequence.push(["setGuiContext", { context: "Condition -> Player Health" }]);
+      sequence.push(["option", { option: "Player Health" }]);
+      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
+        sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
+      }
+      if (conditionData.compareValue) {
+        sequence.push(["click", { slot: 11 }]);
+        sequence.push(["anvil", { text: conditionData.compareValue }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "player_hunger":
+      sequence.push(["setGuiContext", { context: "Condition -> Player Hunger" }]);
+      sequence.push(["option", { option: "Player Hunger" }]);
+      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
+        sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
+      }
+      if (conditionData.compareValue) {
+        sequence.push(["click", { slot: 11 }]);
+        sequence.push(["anvil", { text: conditionData.compareValue }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "player_max_health":
+      sequence.push(["setGuiContext", { context: "Condition -> Max Player Health" }]);
+      sequence.push(["option", { option: "Max Player Health" }]);
+      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
+        sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
+      }
+      if (conditionData.compareValue) {
+        sequence.push(["click", { slot: 11 }]);
+        sequence.push(["anvil", { text: conditionData.compareValue }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "player_sneaking":
+      sequence.push(["setGuiContext", { context: "Condition -> Player Sneaking" }]);
+      sequence.push(["option", { option: "Player Sneaking" }]);
+      break;
+
+    case "pvp_enabled":
+      sequence.push(["setGuiContext", { context: "Condition -> PvP Enabled" }]);
+      sequence.push(["option", { option: "PvP Enabled" }]);
+      break;
+
+    case "required_gamemode":
+      sequence.push(["setGuiContext", { context: "Condition -> Required Gamemode" }]);
+      sequence.push(["option", { option: "Required Gamemode" }]);
+      if (conditionData.gamemode) {
+        sequence.push(["click", { slot: 10 }]);
+        if (conditionData.gamemode === "adventure") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.gamemode === "survival") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.gamemode === "creative") sequence.push(["click", { slot: 12 }]);
+      }
+      sequence.push(["back"]);
       break;
   }
   return sequence;

@@ -16,18 +16,17 @@ register("tick", () => {
     const doneOperation = queue.pop();
     doneLoading(doneOperation[1].actionName, doneOperation[1].actionAuthor);
   }
-  if (!Navigator.isReady) return;
   if (queue.length === 0) return;
+  updateRemainingTime();
+  if (!Navigator.isReady) return;
+  operationCount++;
   timeWithoutOperation = 0;
   if (Navigator.isReturning) return Navigator.returnToEditActions();
   if (Navigator.isSelecting) {
     const attemptResult = Navigator.selectOption(Navigator.optionBeingSelected);
-    if (attemptResult === false)
-      fails.push(`&cCouldn't find option &f${Navigator.optionBeingSelected} &cin &f${currentGuiContext}&c.`);
+    if (attemptResult === false) fails.push(`&cCouldn't find option &f${Navigator.optionBeingSelected} &cin &f${currentGuiContext}&c.`);
     return;
   }
-
-  updateRemainingTime();
 
   let [operationType, operationData] = queue.shift();
   if (operationType === "setGuiContext") {
@@ -57,26 +56,22 @@ register("tick", () => {
 
 function updateRemainingTime() {
   if (startTime === 0) startTime = Date.now();
-  operationCount++;
   const averageOperationMs = (Date.now() - startTime) / operationCount;
-  const timeRemaining = ((averageOperationMs * queue.length) / 1000).toFixed(1);
+  const timeRemaining = Math.round((averageOperationMs * queue.length) / 1000);
   timeRemainingButton.setText(`Time Remaining: ${timeRemaining}s`);
 }
 
 function doneLoading(actionName, actionAuthor) {
   timeWithoutOperation = startTime = operationCount = 0;
+  const remainingOperations = queue.length;
   queue = [];
   Client.currentGui.close();
 
   if (fails.length > 0) {
-    ChatLib.chat(
-      `&cFailed to load: &r${actionName}&r &cby &b@${actionAuthor}&r &ccorrectly: &f(${fails.length} error${
-        fails.length > 1 ? "s" : ""
-      })`
-    );
+    ChatLib.chat(`&cFailed to load: &r${actionName}&r &cby &b@${actionAuthor}&r &ccorrectly: &f(${fails.length} error${fails.length > 1 ? "s" : ""})`);
     fails.forEach((fail) => ChatLib.chat("   > " + fail));
     fails = [];
-    ChatLib.chat(`&cfinished with &f${queue.length} &coperation${queue.length !== 1 ? "s" : ""} left in queue.`);
+    ChatLib.chat(`&cfinished with &f${remainingOperations} &coperation${remainingOperations !== 1 ? "s" : ""} left in queue.`);
   } else {
     ChatLib.chat(`Loaded: &r${actionName}&r by &b@${actionAuthor}&r successfully!`);
   }
@@ -96,4 +91,5 @@ register("guiRender", (x, y) => {
 
 export function addOperation(operation) {
   queue.push(operation);
+  console.log(JSON.stringify(operation));
 }

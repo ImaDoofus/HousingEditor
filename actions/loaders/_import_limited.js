@@ -5,7 +5,7 @@ import go_to_house_spawn from "./go_to_house_spawn";
 import display_title from "./display_title";
 import display_action_bar from "./display_action_bar";
 import reset_inventory from "./reset_inventory";
-import set_max_health from "./set_max_health";
+import change_max_health from "./change_max_health";
 import parkour_checkpoint from "./parkour_checkpoint";
 import give_item from "./give_item";
 import remove_item from "./remove_item";
@@ -22,42 +22,44 @@ import play_sound from "./play_sound";
 import set_compass_target from "./set_compass_target";
 import set_gamemode from "./set_gamemode";
 import change_health from "./change_health";
-import set_hunger_level from "./set_hunger_level";
+import change_hunger_level from "./change_hunger_level";
 import use_remove_held_item from "./use_remove_held_item";
 import exit from "./exit";
 import cancel_event from "./cancel_event";
 import apply_inventory_layout from "./apply_inventory_layout";
 import trigger_function from "./trigger_function";
+import enchant_held_item from "./enchant_held_item";
 
 export default {
-	change_player_group,
-	kill_player,
-	full_heal,
-	go_to_house_spawn,
-	display_title,
-	display_action_bar,
-	reset_inventory,
-	set_max_health,
-	parkour_checkpoint,
-	give_item,
-	remove_item,
-	send_a_chat_message,
-	apply_potion_effect,
-	clear_all_potion_effects,
-	give_experience_levels,
-	send_to_lobby,
-	change_player_stat,
-	change_global_stat,
-	teleport_player,
-	fail_parkour,
-	play_sound,
-	set_compass_target,
-	set_gamemode,
-	change_health,
-	set_hunger_level,
-	use_remove_held_item,
-	exit,
-	cancel_event,
-	apply_inventory_layout,
-	trigger_function,
+  change_player_group,
+  kill_player,
+  full_heal,
+  go_to_house_spawn,
+  display_title,
+  display_action_bar,
+  reset_inventory,
+  change_max_health,
+  parkour_checkpoint,
+  give_item,
+  remove_item,
+  send_a_chat_message,
+  apply_potion_effect,
+  clear_all_potion_effects,
+  give_experience_levels,
+  send_to_lobby,
+  change_player_stat,
+  change_global_stat,
+  teleport_player,
+  fail_parkour,
+  play_sound,
+  set_compass_target,
+  set_gamemode,
+  change_health,
+  change_hunger_level,
+  use_remove_held_item,
+  exit,
+  cancel_event,
+  apply_inventory_layout,
+  trigger_function,
+  enchant_held_item,
 };
