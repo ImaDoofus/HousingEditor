@@ -1,12 +1,12 @@
 export default (actionData) => {
-	let sequence = [];
-	
-	if (actionData.function) {
-		sequence.push(['click', { slot: 10 }]);
-		sequence.push(['option', { option: actionData.function }]);
-	}
+  let sequence = [];
 
-	if (actionData.triggerForAllPlayers) sequence.push(['click', { slot: 11 }]);
+  if (actionData.function) {
+    sequence.push(["click", { slot: 10 }]);
+    sequence.push(["option", { option: actionData.function }]);
+  }
 
-	return ['Trigger Function', sequence];
-}
+  if (actionData.triggerForAllPlayers) sequence.push(["click", { slot: 11 }]);
+
+  return ["Trigger Function", sequence];
+};

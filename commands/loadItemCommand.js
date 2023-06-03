@@ -22,7 +22,8 @@ function loadItem(itemId) {
   if (Player.asPlayerMP().player.field_71075_bZ.field_75098_d === false)
     return ChatLib.chat("&cYou must be in creative mode to use this command.");
   hotbarSlot = Player.getHeldItemIndex() + 36;
-  if (Player.getHeldItem()) return ChatLib.chat("&cPlease make sure your hand is empty.");
+  if (Player.getHeldItem())
+    return ChatLib.chat("&cPlease make sure your hand is empty.");
   axios({
     url: HOSTNAME + "/items/" + itemId,
     method: "GET",
@@ -52,11 +53,17 @@ function loadItem(itemId) {
 }
 
 const getItemName = () =>
-  ChatLib.replaceFormatting(itemBeingLoaded.itemData.customName || itemBeingLoaded.itemData.item.name);
-const getItemLore = () => itemBeingLoaded.itemData.customLore.map((line) => ChatLib.replaceFormatting(line));
+  ChatLib.replaceFormatting(
+    itemBeingLoaded.itemData.customName || itemBeingLoaded.itemData.item.name
+  );
+const getItemLore = () =>
+  itemBeingLoaded.itemData.customLore.map((line) =>
+    ChatLib.replaceFormatting(line)
+  );
 
 function loadRightClickActions(actionList, actionName, actionAuthor) {
-  if (Settings.showLoadingMessage) ChatLib.chat(`Loading item: ${actionName}&r by &b@${actionAuthor}`);
+  if (Settings.showLoadingMessage)
+    ChatLib.chat(`Loading item: ${actionName}&r by &b@${actionAuthor}`);
   if (actionList.length === 0) return;
   ChatLib.say("/item");
   addOperation(["click", { slot: 34 }]); // "Edit Actions"
@@ -70,7 +77,10 @@ function loadRightClickActions(actionList, actionName, actionAuthor) {
 }
 
 register("packetReceived", (packet) => {
-  if (packet.class.getName() === "net.minecraft.network.play.server.S2FPacketSetSlot") {
+  if (
+    packet.class.getName() ===
+    "net.minecraft.network.play.server.S2FPacketSetSlot"
+  ) {
     let slotField = packet.class.getDeclaredField("field_149177_b");
     // let itemField = packet.class.getDeclaredField('field_149178_c');
     slotField.setAccessible(true);
@@ -79,7 +89,11 @@ register("packetReceived", (packet) => {
     // let item = itemField.get(packet);
     // if (!item) return;
     if (itemBeingLoaded && slot === 36 + hotbarSlot) {
-      loadRightClickActions(itemBeingLoaded.rightClickActions, getItemName(), itemBeingLoaded.author?.name);
+      loadRightClickActions(
+        itemBeingLoaded.rightClickActions,
+        getItemName(),
+        itemBeingLoaded.author?.name
+      );
       itemBeingLoaded = null;
     }
   }

@@ -9,7 +9,8 @@ register("command", () => {
   .setAliases(["/protools", "pt", "/pt"]);
 
 function genProtools() {
-  if (Player.asPlayerMP().player.field_71075_bZ.field_75098_d === false) return ChatLib.chat("&cYou must be in creative mode to use this command.");
+  if (Player.asPlayerMP().player.field_71075_bZ.field_75098_d === false)
+    return ChatLib.chat("&cYou must be in creative mode to use this command.");
   let itemstacks = [];
   if (Settings.selectionTool)
     itemstacks.push(
@@ -74,5 +75,9 @@ function genProtools() {
   itemstacks.forEach((itemstack, index) => {
     loadItemstack(itemstack, 36 + index);
   });
-  ChatLib.chat(`&aAdded &e${itemstacks.length}&a protool${itemstacks.length === 1 ? "" : "s"} to your hotbar.`);
+  ChatLib.chat(
+    `&aAdded &e${itemstacks.length}&a protool${
+      itemstacks.length === 1 ? "" : "s"
+    } to your hotbar.`
+  );
 }

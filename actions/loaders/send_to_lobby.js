@@ -1,10 +1,10 @@
 export default (actionData) => {
-	let sequence = [];
+  let sequence = [];
 
-	if (actionData.lobby) {
-		sequence.push(['click', { slot: 10 }]);
-		sequence.push(['option', { option: actionData.lobby }]);
-	}
+  if (actionData.lobby) {
+    sequence.push(["click", { slot: 10 }]);
+    sequence.push(["option", { option: actionData.lobby }]);
+  }
 
-	return ['Send to Lobby', sequence];
-}
+  return ["Send to Lobby", sequence];
+};

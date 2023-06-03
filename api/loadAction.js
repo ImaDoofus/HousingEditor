@@ -30,7 +30,8 @@ export default (actionId) => {
 };
 
 function loadResponse(actionList, actionName, actionAuthor) {
-  if (Settings.showLoadingMessage) ChatLib.chat(`Loading action: ${actionName}&r by &b@${actionAuthor}`);
+  if (Settings.showLoadingMessage)
+    ChatLib.chat(`Loading action: ${actionName}&r by &b@${actionAuthor}`);
   for (let i = 0; i < actionList.length; i++) {
     let actionType = actionList[i][0];
     let actionData = actionList[i][1];
@@ -42,7 +43,12 @@ function loadResponse(actionList, actionName, actionAuthor) {
 
 function loadTestAction() {
   ChatLib.chat("Loading test action.");
-  let change_player_stat = new Action("send_a_chat_message", { message: "howdy" });
+  let change_player_stat = new Action("send_a_chat_message", {
+    message: "howdy",
+  });
   change_player_stat.load();
-  addOperation(["done", { actionName: "Test Action", actionAuthor: "Test Author" }]);
+  addOperation([
+    "done",
+    { actionName: "Test Action", actionAuthor: "Test Author" },
+  ]);
 }

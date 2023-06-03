@@ -1,7 +1,11 @@
-const outputSlotField = Java.type("net.minecraft.inventory.ContainerRepair").class.getDeclaredField("field_82852_f");
+const outputSlotField = Java.type(
+  "net.minecraft.inventory.ContainerRepair"
+).class.getDeclaredField("field_82852_f");
 outputSlotField.setAccessible(true);
 
-const outputSlotItemField = Java.type("net.minecraft.inventory.InventoryCraftResult").class.getDeclaredField("field_70467_a");
+const outputSlotItemField = Java.type(
+  "net.minecraft.inventory.InventoryCraftResult"
+).class.getDeclaredField("field_70467_a");
 outputSlotItemField.setAccessible(true);
 
 export default (input) => {

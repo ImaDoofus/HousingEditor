@@ -1,10 +1,10 @@
 export default (actionData) => {
-	let sequence = [];
+  let sequence = [];
 
-	if (actionData.message) {
-		sequence.push(['click', { slot: 10 }]);
-		sequence.push(['chat', { text: actionData.message }]);
-	}
+  if (actionData.message) {
+    sequence.push(["click", { slot: 10 }]);
+    sequence.push(["chat", { text: actionData.message }]);
+  }
 
-	return ['Display Action Bar', sequence];
-}
+  return ["Display Action Bar", sequence];
+};

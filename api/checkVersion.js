@@ -22,7 +22,8 @@ function checkVersion() {
   })
     .then((response) => {
       const contentType = response.headers["Content-Type"];
-      if (contentType.indexOf("application/json") > -1) ChatLib.chat(response.data?.message);
+      if (contentType.indexOf("application/json") > -1)
+        ChatLib.chat(response.data?.message);
       else error(response);
     })
     .catch((error) => {

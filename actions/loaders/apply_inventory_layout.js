@@ -1,10 +1,10 @@
 export default (actionData) => {
-	let sequence = [];
+  let sequence = [];
 
-	if (actionData.layout) {
-		sequence.push(['click', { slot: 10 }]); 
-		sequence.push(['option', { option: actionData.layout }]); 
-	}
+  if (actionData.layout) {
+    sequence.push(["click", { slot: 10 }]);
+    sequence.push(["option", { option: actionData.layout }]);
+  }
 
-	return ['Apply Inventory Layout', sequence];
-}
+  return ["Apply Inventory Layout", sequence];
+};

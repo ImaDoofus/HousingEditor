@@ -1,5 +1,5 @@
 export default (actionData) => {
-	let sequence = [];
-	
-	return ['Clear All Potion Effects', sequence];
-}
+  let sequence = [];
+
+  return ["Clear All Potion Effects", sequence];
+};

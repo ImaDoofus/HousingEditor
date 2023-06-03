@@ -14,13 +14,25 @@ const housingEditorCommand = register("command", (...args) => {
       ChatLib.chat(ChatLib.getCenteredText("&6HousingEditor Commands (1/3)"));
       ChatLib.chat(ChatLib.getCenteredText("&7Basic HousingEditor Commands"));
       ChatLib.chat("");
-      ChatLib.chat("&6/housingeditor help <page> &fView all the HousingEditor commands.");
-      ChatLib.chat("&6/housingeditor config &fOpen HousingEditor the configuration GUI.");
-      ChatLib.chat("&6/linkaccount <code> &fLinks your account to the website.");
+      ChatLib.chat(
+        "&6/housingeditor help <page> &fView all the HousingEditor commands."
+      );
+      ChatLib.chat(
+        "&6/housingeditor config &fOpen HousingEditor the configuration GUI."
+      );
+      ChatLib.chat(
+        "&6/linkaccount <code> &fLinks your account to the website."
+      );
       ChatLib.chat("&6/loaditem <id> &fLoads an item from the website.");
-      ChatLib.chat("&6/selfstat <stat> <set/inc/dec> <value> &fViews/Sets your stats.");
-      ChatLib.chat("&6/location &fTells you your current location for copying.");
-      ChatLib.chat("&6/npclist &fReturns a list of NPCs and their coordinates. (Note: Will only detect NPCs within your render distance!)");
+      ChatLib.chat(
+        "&6/selfstat <stat> <set/inc/dec> <value> &fViews/Sets your stats."
+      );
+      ChatLib.chat(
+        "&6/location &fTells you your current location for copying."
+      );
+      ChatLib.chat(
+        "&6/npclist &fReturns a list of NPCs and their coordinates. (Note: Will only detect NPCs within your render distance!)"
+      );
       ChatLib.chat("&7&oNext Page: HousingEditor Pro Tool Commands");
       ChatLib.chat("");
       ChatLib.chat(`&6-----------------------------------------------------`);
@@ -29,9 +41,15 @@ const housingEditorCommand = register("command", (...args) => {
       ChatLib.chat(ChatLib.getCenteredText("&6HousingEditor Commands (2/3)"));
       ChatLib.chat(ChatLib.getCenteredText("&7Pro Tool Commands"));
       ChatLib.chat("");
-      ChatLib.chat("&6//protools (/pt) &fGives you protools (can customize in config file).");
-      ChatLib.chat("&6//up <height> &fTeleports you on y-axis emit <height> to tp to housing max build height.");
-      ChatLib.chat("&6//tppos1 //tppos2 &fTeleports you to protool selection 1 or 2.");
+      ChatLib.chat(
+        "&6//protools (/pt) &fGives you protools (can customize in config file)."
+      );
+      ChatLib.chat(
+        "&6//up <height> &fTeleports you on y-axis emit <height> to tp to housing max build height."
+      );
+      ChatLib.chat(
+        "&6//tppos1 //tppos2 &fTeleports you to protool selection 1 or 2."
+      );
       ChatLib.chat("&7&oNext Page: Item Manipulation Commands");
       ChatLib.chat("");
       ChatLib.chat(`&6-----------------------------------------------------`);
@@ -39,22 +57,44 @@ const housingEditorCommand = register("command", (...args) => {
       ChatLib.chat(ChatLib.getCenteredText("&6HousingEditor Commands (3/3)"));
       ChatLib.chat(ChatLib.getCenteredText("&7Item Manipulation Commands"));
       ChatLib.chat("");
-      ChatLib.chat("&6/item <command/help> &c(WIP) &fMain command which covers all HousingEditor item utilties.");
+      ChatLib.chat(
+        "&6/item <command/help> &c(WIP) &fMain command which covers all HousingEditor item utilties."
+      );
       ChatLib.chat("&6/nbt &fDisplays the NBT of your held item in chat.");
-      ChatLib.chat("&6/unbreakable <true/false> (/ub) &fToggles whether or not an item is unbreakable.");
+      ChatLib.chat(
+        "&6/unbreakable <true/false> (/ub) &fToggles whether or not an item is unbreakable."
+      );
       ChatLib.chat(
         "&6/hideflags <true/false> <value> (/hf) &fToggles the visibility of an item's flags, the value parameter is an optional byte which will allow you to hide specific flags"
       );
-      ChatLib.chat("&6/lore <add/set/remove/list/clear> &fManipulate the lore of your held item. (Use /lore help for more information)");
+      ChatLib.chat(
+        "&6/lore <add/set/remove/list/clear> &fManipulate the lore of your held item. (Use /lore help for more information)"
+      );
       ChatLib.chat("&6/rename <text> &fRename your held item.");
-      ChatLib.chat("&6/actionpad (/ap) &fAutomatically recieve an actionpad into your selected hotbar slot.");
-      ChatLib.chat("&6/hologram (/hg) &fAutomatically recieve a hologram into your selected hotbar slot.");
-      ChatLib.chat("&6/npc &fAutomatically recieve a NPC item into your selected hotbar slot.");
-      ChatLib.chat("&6/wear <head/chest/legs/feet> &fWear your held item on the selected slot.");
-      ChatLib.chat("&6/count <amount> (/stack) &fSets the amount of items in your held item.");
-      ChatLib.chat("&6/material <material> (/mat) &fSets the material of your held item.");
-      ChatLib.chat("&6/damage <damage> (/metadata) &fSets the damage value  of your held item.");
-      ChatLib.chat("&6/enchantall <level> (/ea) &fAdd every enchantment with the specified level to your held item");
+      ChatLib.chat(
+        "&6/actionpad (/ap) &fAutomatically recieve an actionpad into your selected hotbar slot."
+      );
+      ChatLib.chat(
+        "&6/hologram (/hg) &fAutomatically recieve a hologram into your selected hotbar slot."
+      );
+      ChatLib.chat(
+        "&6/npc &fAutomatically recieve a NPC item into your selected hotbar slot."
+      );
+      ChatLib.chat(
+        "&6/wear <head/chest/legs/feet> &fWear your held item on the selected slot."
+      );
+      ChatLib.chat(
+        "&6/count <amount> (/stack) &fSets the amount of items in your held item."
+      );
+      ChatLib.chat(
+        "&6/material <material> (/mat) &fSets the material of your held item."
+      );
+      ChatLib.chat(
+        "&6/damage <damage> (/metadata) &fSets the damage value  of your held item."
+      );
+      ChatLib.chat(
+        "&6/enchantall <level> (/ea) &fAdd every enchantment with the specified level to your held item"
+      );
       ChatLib.chat("");
       ChatLib.chat(`&6-----------------------------------------------------`);
     } else {
@@ -65,7 +105,9 @@ const housingEditorCommand = register("command", (...args) => {
 
   if (command === "config") return Settings.openGUI();
 
-  ChatLib.chat(`&cInvalid argument "${command}". Type /housingeditor help for a list of commands.`);
+  ChatLib.chat(
+    `&cInvalid argument "${command}". Type /housingeditor help for a list of commands.`
+  );
 });
 
 housingEditorCommand.setTabCompletions((args) => {
@@ -77,7 +119,8 @@ housingEditorCommand.setName("housingeditor").setAliases(["he"]);
 
 // NPC List Command
 register("command", () => {
-  if (!TabList.getFooter().includes("You are in ")) return ChatLib.chat("&cYou must be in a housing to use this command!");
+  if (!TabList.getFooter().includes("You are in "))
+    return ChatLib.chat("&cYou must be in a housing to use this command!");
   let NPCs = [];
 
   // Collect all NPCs in your world as objects
@@ -87,7 +130,8 @@ register("command", () => {
     }
   });
 
-  if (NPCs.length === 0) return ChatLib.chat("&cThere are no NPCs either in your render distance!");
+  if (NPCs.length === 0)
+    return ChatLib.chat("&cThere are no NPCs either in your render distance!");
   let NPCListMsg = new Message(`&7NPC List &b(${NPCs.length})\n`);
 
   // Iterate through the NPC list and add an entry in the chat message that will be sent listing all the NPCs
@@ -103,7 +147,9 @@ register("command", () => {
       }
     }
     NPCListMsg.addTextComponent(
-      new TextComponent(`&r${dispName}`).setHoverValue(`&eDisplay Name: &r${dispName}\n&eEntity Name: &7${p.getName()}\n&eUUID: &7${p.getUUID()}`)
+      new TextComponent(`&r${dispName}`).setHoverValue(
+        `&eDisplay Name: &r${dispName}\n&eEntity Name: &7${p.getName()}\n&eUUID: &7${p.getUUID()}`
+      )
     ); // Name of NPC
     NPCListMsg.addTextComponent(new TextComponent(`&7: `));
     NPCListMsg.addTextComponent(

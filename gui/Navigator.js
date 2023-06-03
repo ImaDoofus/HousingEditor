@@ -5,20 +5,38 @@ import Settings from "../utils/config";
 
 const lastItemAddedMargin = Settings.guiCooldown; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
 
-const arrow = new Image(javax.imageio.ImageIO.read(new java.io.File("./config/ChatTriggers/modules/HousingEditor/assets/red-arrow.png")));
+const arrow = new Image(
+  javax.imageio.ImageIO.read(
+    new java.io.File(
+      "./config/ChatTriggers/modules/HousingEditor/assets/red-arrow.png"
+    )
+  )
+);
 let drawArrow = false;
 let drawArrowAt = { x: 0, y: 0 };
 let slotToManuallyClick = -1;
 
-const guiTopField = net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField("field_147009_r");
-const guiLeftField = net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField("field_147003_i");
+const guiTopField =
+  net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField(
+    "field_147009_r"
+  );
+const guiLeftField =
+  net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField(
+    "field_147003_i"
+  );
 guiTopField.setAccessible(true);
 guiLeftField.setAccessible(true);
 
 register("postGuiRender", () => {
   if (drawArrow) {
     Renderer.translate(0, 0, 400);
-    Renderer.drawImage(arrow, drawArrowAt.x + drawArrowAt.offsetX, drawArrowAt.y + drawArrowAt.offsetY, 50, 50);
+    Renderer.drawImage(
+      arrow,
+      drawArrowAt.x + drawArrowAt.offsetX,
+      drawArrowAt.y + drawArrowAt.offsetY,
+      50,
+      50
+    );
   }
 }).setPriority(Priority.HIGHEST);
 
@@ -28,8 +46,11 @@ register("guiOpened", () => {
 });
 
 if (Settings.useSafeMode) {
-  const C0EPacketClickWindow = Java.type("net.minecraft.network.play.client.C0EPacketClickWindow");
-  const slotIdField = C0EPacketClickWindow.class.getDeclaredField("field_149552_b");
+  const C0EPacketClickWindow = Java.type(
+    "net.minecraft.network.play.client.C0EPacketClickWindow"
+  );
+  const slotIdField =
+    C0EPacketClickWindow.class.getDeclaredField("field_149552_b");
   slotIdField.setAccessible(true);
 
   register("packetSent", (packet, event) => {
@@ -45,7 +66,8 @@ if (Settings.useSafeMode) {
 
 register("chat", (event) => {
   const message = ChatLib.getChatMessage(event);
-  if (message.match(/ \[PREVIOUS\] \[CANCEL\]/) || message.match(/ \[CANCEL\]/)) Navigator.isReady = true; // when the GUI closed for inputting text.
+  if (message.match(/ \[PREVIOUS\] \[CANCEL\]/) || message.match(/ \[CANCEL\]/))
+    Navigator.isReady = true; // when the GUI closed for inputting text.
 });
 
 register("guiRender", () => {
@@ -54,7 +76,11 @@ register("guiRender", () => {
   if (Player.getContainer().getClassName() === "ContainerCreative") return;
   if (Player.getContainer().getName() === "Housing Menu") return;
   if (Navigator.itemsLoaded.lastItemAddedTimestamp === 0) return; // no items loaded yet so wait for items to load
-  if (Date.now() - Navigator.itemsLoaded.lastItemAddedTimestamp < lastItemAddedMargin) return;
+  if (
+    Date.now() - Navigator.itemsLoaded.lastItemAddedTimestamp <
+    lastItemAddedMargin
+  )
+    return;
   Navigator.isReady = true;
   Navigator.guiIsLoading = false;
 });
@@ -129,7 +155,10 @@ function selectItem(item) {
 
 register("packetReceived", (packet) => {
   if (!Navigator.isLoadingItem) return;
-  if (packet.class.getName() === "net.minecraft.network.play.server.S2FPacketSetSlot") {
+  if (
+    packet.class.getName() ===
+    "net.minecraft.network.play.server.S2FPacketSetSlot"
+  ) {
     const containerName = Player.getContainer().getName();
     if (containerName !== "Select an Item") return;
     // let slotField = packet.class.getDeclaredField('field_149177_b');

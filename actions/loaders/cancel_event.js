@@ -1,5 +1,5 @@
 export default (actionData) => {
-	let sequence = [];
+  let sequence = [];
 
-	return ['Cancel Event', sequence];
-}
+  return ["Cancel Event", sequence];
+};
