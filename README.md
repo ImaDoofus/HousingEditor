@@ -11,7 +11,7 @@
 <h3 style="text-align: left;">How to set up Housing Editor</h3>
 <ol>
 <li>Download <a href="https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html">Forge for 1.8.9</a> if you do not have it already, then download the latest version of <a href="https://www.chattriggers.com/">ChatTriggers for 1.8.9</a> and drag the ChatTriggers .jar file into your mods folder.</li>
-<li>Download the Housing Editor module from this page, to do this find the releases tab on the right-hand side, and download ZIP.</li>
+<li>Download the Housing Editor module from this page by clicking the green "Code" button and then "Download ZIP"</li>
 <li>Drag the Housing Editor file into your ChatTriggers modules folder, which you can get to by typing <code>/ct files</code> in-game. If the file is zipped unzip it.</li>
 <li>Type <code>/ct reload</code></li>
 <li>Now you can make an account on the <a href="https://www.housingeditor.com" target="_blank">Housing Editor website</a> and voila!</li>
