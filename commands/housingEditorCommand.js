@@ -186,6 +186,9 @@ function getNPCDisplayName(p, formatted = false) {
 }
 
 let cachedNPCNames = {};
+
+/* Causes extreme lag in places such as the Skyblock hub
+
 // cache NPC names so if a NPC's name hologram is unrendered the client can still display the NPC name if it was previously in render distance
 register("tick", () => {
   World.getAllPlayers().forEach((p) => {
@@ -203,3 +206,5 @@ register("tick", () => {
 register("worldLoad", () => {
   cachedNPCNames = {};
 });
+
+*/

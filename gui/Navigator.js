@@ -3,6 +3,7 @@ import utilLoadItem from "../utils/loadItemstack";
 import createItemStack from "../utils/createItemStack";
 import Settings from "../utils/config";
 
+const C0EPacketClickWindow = Java.type("net.minecraft.network.play.client.C0EPacketClickWindow");
 const lastItemAddedMargin = Settings.guiCooldown; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
 
 const arrow = new Image(
@@ -116,7 +117,7 @@ function click(slotId) {
     slotToManuallyClick = slotId;
     setArrowToSlot(slotId);
   } else {
-    Player.getContainer().click(slotId);
+    Client.sendPacket(new C0EPacketClickWindow(Player.getContainer().getWindowId(), slotId, 0, 0, null, 0));
     setNotReady();
   }
 }
