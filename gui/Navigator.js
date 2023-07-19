@@ -117,7 +117,7 @@ function click(slotId) {
     slotToManuallyClick = slotId;
     setArrowToSlot(slotId);
   } else {
-    Client.sendPacket(new C0EPacketClickWindow(Player.getContainer().getWindowId(), slotId, 0, 0, null, 0));
+    Client.getMinecraft().field_71442_b.func_78753_a(Player.getContainer().getWindowId(), slotId, 2, 3, Player.getPlayer());
     setNotReady();
   }
 }
