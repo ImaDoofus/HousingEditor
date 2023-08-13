@@ -1,6 +1,6 @@
 import { request as axios } from "axios";
 import { HOSTNAME } from "./hostname";
-import { addOperation } from "../gui/Queue";
+import { addOperation } from "../gui/queue";
 import Action from "../actions/Action";
 import Settings from "../utils/config";
 

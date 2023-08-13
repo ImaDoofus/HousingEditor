@@ -1,5 +1,5 @@
 import getPotionEffect from "../../utils/getPotionEffect";
-import LimitedAction from "../LimitedAction";
+import LimitedAction from "../limitedAction";
 
 export default (actionData) => {
   let sequence = [];

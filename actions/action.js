@@ -1,5 +1,5 @@
 import loaders from "./loaders/_import_all";
-import { addOperation } from "../gui/Queue";
+import { addOperation } from "../gui/queue";
 
 export default class Action {
   constructor(type, actionData) {

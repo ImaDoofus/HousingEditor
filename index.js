@@ -1,5 +1,5 @@
-import "./gui/LoadActionGUI";
-import "./gui/SearchHouseGUI";
+import "./gui/loadActionGUI";
+import "./gui/searchHouseGUI";
 import "./api";
 import "./commands";
 import "./worldedit";

@@ -1,5 +1,5 @@
 import { request as axios } from "axios";
-import { addOperation } from "../gui/Queue";
+import { addOperation } from "../gui/queue";
 import Action from "../actions/Action";
 import { HOSTNAME } from "../api/hostname";
 import loadItemstack from "../utils/loadItemstack";

@@ -1,5 +1,5 @@
 import { Input, Button } from "./components/components.js";
-import loadAction from "../api/loadAction";
+import loadAction from "../api/loadAction.js";
 
 const button = new Button(0, 0, 0, 20, "Paste");
 

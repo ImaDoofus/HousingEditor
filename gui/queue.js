@@ -1,4 +1,4 @@
-import Navigator from "./Navigator";
+import Navigator from "./navigator";
 import { Button } from "./components/components";
 import Settings from "../utils/config";
 
