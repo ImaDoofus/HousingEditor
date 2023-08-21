@@ -1,2 +1,1 @@
 import "./checkVersion";
-import "./houseDeleteProtection";

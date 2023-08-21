@@ -3,8 +3,7 @@ import Settings from "../utils/config";
 const housingEditorCommand = register("command", (...args) => {
   let command = args?.[0];
 
-  console.log(args);
-  console.log(command);
+  if (Settings.debug) console.log(`${args}\n${command}`);
 
   if (command === "help") {
     let page = parseInt(args[1]);

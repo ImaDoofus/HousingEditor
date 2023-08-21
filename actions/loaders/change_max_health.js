@@ -1,6 +1,8 @@
+import Settings from "../../utils/config.js";
+
 export default (actionData) => {
   let sequence = [];
-  console.log(JSON.stringify(actionData));
+  if (Settings.debug) console.log(JSON.stringify(actionData));
   if (actionData.health && actionData.health !== "20") {
     sequence.push(["click", { slot: 10 }]);
     sequence.push(["anvil", { text: actionData.health }]);

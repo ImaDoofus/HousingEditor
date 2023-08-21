@@ -131,5 +131,5 @@ register("guiMouseClick", (x, y, mouseButton) => {
 export function addOperation(operation) {
   Navigator.isWorking = true;
   queue.push(operation);
-  console.log(JSON.stringify(operation));
+  if (Settings.debug) console.log(JSON.stringify(operation));
 }

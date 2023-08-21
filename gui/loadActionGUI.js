@@ -1,5 +1,6 @@
 import { Input, Button } from "./components/components.js";
 import loadAction from "../api/loadAction.js";
+import Settings from "../utils/config.js";
 
 const button = new Button(0, 0, 0, 20, "Paste");
 
@@ -112,7 +113,7 @@ register("guiMouseClick", (x, y, mouseButton) => {
         World.playSound("random.click", 1, 1);
         inputUpdate();
       } catch (e) {
-        console.log(e);
+        if (Settings.debug) console.log(e);
       }
       return;
     }

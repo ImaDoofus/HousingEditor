@@ -48,6 +48,13 @@ class Settings {
 	})
 	showLoadingMessages = true;
 
+	@SwitchProperty({
+		name: "Spam Hider",
+		description: 'Removes useless added action messages from chat and stops annoying sounds from playing.',
+		category: "Actions / Items",
+		subcategory: "Actions / Items",
+	})
+	spamhider = true;
 	
 	// MISCELLANEOUS
 
@@ -70,6 +77,14 @@ class Settings {
 		max: 200
 	})
 	guiTimeout = 60;
+
+	@SwitchProperty({
+		name: "Debug messages",
+		description: "Show debug messages in the console.",
+		category: "Miscellaneous",
+		subcategory: "Miscellaneous"
+	})
+	debug = false;
 
 	// WORLDEDIT / PROTOOLS 
 
