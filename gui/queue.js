@@ -69,6 +69,7 @@ function updateRemainingTime() {
 
 function doneLoading(actionName, actionAuthor) {
   timeWithoutOperation = startTime = operationCount = 0;
+  Navigator.isWorking = false;
   const remainingOperations = queue.length;
   queue = [];
   Client.currentGui.close();
@@ -108,6 +109,7 @@ register("guiRender", (x, y) => {
 });
 
 export function addOperation(operation) {
+  Navigator.isWorking = true;
   queue.push(operation);
   console.log(JSON.stringify(operation));
 }

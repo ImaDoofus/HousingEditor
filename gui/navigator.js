@@ -1,11 +1,21 @@
+/// <reference types="../../CTAutocomplete" />
+
 import utilInputAnvil from "../utils/inputAnvil";
 import utilLoadItem from "../utils/loadItemstack";
 import createItemStack from "../utils/createItemStack";
 import Settings from "../utils/config";
 
-const C0EPacketClickWindow = Java.type("net.minecraft.network.play.client.C0EPacketClickWindow");
-const lastItemAddedMargin = Settings.guiCooldown; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
+const S2EPacketCloseWindow = Java.type(
+  "net.minecraft.network.play.server.S2EPacketCloseWindow"
+);
+const C0EPacketClickWindow = Java.type(
+  "net.minecraft.network.play.client.C0EPacketClickWindow"
+);
+const slotIdField =
+  C0EPacketClickWindow.class.getDeclaredField("field_149552_b");
+slotIdField.setAccessible(true);
 
+const lastItemAddedMargin = Settings.guiCooldown; // wait certain amount of ms after the last item in the GUI was added before safely saying that the GUI has loaded.
 const arrow = new Image(
   javax.imageio.ImageIO.read(
     new java.io.File(
@@ -15,7 +25,7 @@ const arrow = new Image(
 );
 let drawArrow = false;
 let drawArrowAt = { x: 0, y: 0 };
-let slotToManuallyClick = -1;
+let slotToClick = -1;
 
 const guiTopField =
   net.minecraft.client.gui.inventory.GuiContainer.class.getDeclaredField(
@@ -46,24 +56,14 @@ register("guiOpened", () => {
   Navigator.guiIsLoading = true;
 });
 
-if (Settings.useSafeMode) {
-  const C0EPacketClickWindow = Java.type(
-    "net.minecraft.network.play.client.C0EPacketClickWindow"
-  );
-  const slotIdField =
-    C0EPacketClickWindow.class.getDeclaredField("field_149552_b");
-  slotIdField.setAccessible(true);
-
-  register("packetSent", (packet, event) => {
-    if (Player.getContainer().getName() === "Housing Menu") return;
-    if (Navigator.isReady) return;
-    if (packet instanceof C0EPacketClickWindow) {
-      const slotId = slotIdField.get(packet);
-      if (!slotId) return;
-      if (slotId !== slotToManuallyClick) cancel(event);
-    }
-  });
-}
+register("packetSent", (packet, event) => {
+  if (Player.getContainer().getName() === "Housing Menu") return;
+  if (!Navigator.isWorking) return;
+  const slotId = slotIdField.get(packet);
+  if (!slotId) return;
+  if (slotId !== slotToClick) cancel(event);
+  else slotToClick = -1;
+}).setFilteredClass(C0EPacketClickWindow);
 
 register("chat", (event) => {
   const message = ChatLib.getChatMessage(event);
@@ -113,11 +113,20 @@ function setArrowToSlot(slotId) {
 }
 
 function click(slotId) {
+  slotToClick = slotId;
   if (Settings.useSafeMode) {
-    slotToManuallyClick = slotId;
     setArrowToSlot(slotId);
   } else {
-    Client.sendPacket(new C0EPacketClickWindow(Player.getContainer().getWindowId(), slotId, 0, 0, null, 0));
+    Client.sendPacket(
+      new C0EPacketClickWindow(
+        Player.getContainer().getWindowId(),
+        slotId,
+        0,
+        0,
+        null,
+        0
+      )
+    );
     setNotReady();
   }
 }
@@ -151,10 +160,20 @@ function selectItem(item) {
   }
 }
 
-// const S2FPacketSetSlot = Java.type("net.minecraft.network.play.server.S2FPacketSetSlot");
-// https://wiki.vg/Protocol#Set_Slot
+register("guiKey", (character, code, gui, event) => {
+  if (!Navigator.isWorking) return;
+  if (
+    code === Keyboard.KEY_ESCAPE ||
+    code === Client.getMinecraft().field_71474_y.field_151445_Q.func_151463_i()
+  )
+    cancel(event);
+});
 
-register("packetReceived", (packet) => {
+register("packetReceived", (packet, event) => {
+  if (packet instanceof S2EPacketCloseWindow) {
+    if (Settings.useSafeMode || !Navigator.isWorking) return;
+    cancel(event);
+  }
   if (!Navigator.isLoadingItem) return;
   if (
     packet.class.getName() ===
@@ -197,7 +216,7 @@ function selectOption(optionName) {
 const goBack = () => click(Player.getContainer().getSize() - 5 - 36); // click the back button on all size guis
 
 function inputAnvil(text) {
-  if (Settings.useSafeMode) slotToManuallyClick = 2;
+  slotToClick = 2;
   utilInputAnvil(text);
   setNotReady();
 }
@@ -218,6 +237,7 @@ function setNotReady() {
 }
 
 let Navigator = {
+  isWorking: false,
   isReady: false,
   isSelecting: false,
   isReturning: false,
