@@ -10,10 +10,15 @@
 </ol>
 <h3 style="text-align: left;">How to set up Housing Editor</h3>
 <ol>
-<li>Download <a href="https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html">Forge for 1.8.9</a> if you do not have it already, then download the latest version of <a href="https://www.chattriggers.com/">ChatTriggers for 1.8.9</a> and drag the ChatTriggers .jar file into your mods folder.</li>
-<li>Download the Housing Editor module from this page, to do this find the releases tab on the right-hand side, and download ZIP.</li>
-<li>Drag the Housing Editor file into your ChatTriggers modules folder, which you can get to by typing <code>/ct files</code> in-game. If the file is zipped unzip it.</li>
-<li>Type <code>/ct reload</code></li>
+<li>Download <a href="https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html">Forge for 1.8.9</a> if you do not have it already, then download the latest version of <a href="https://www.chattriggers.com/">ChatTriggers for 1.8.9</a> and drag the ChatTriggers.jar file into your mods folder, it should be called ctjs-2.2.0-1.8.9.jar</li>
+<li>Download the Housing Editor module from this page, to do this click the green Code button and select Download ZIP at the bottom.</li>
+<li>Extract the folder inside. The folder should be called HousingEditor-master.</li>
+<li>Change the name of the folder to HousingEditor.</li>
+<li>Go into your house and type <code>/ct files</code>.</li>
+<li>A file browser should open up inside the ChatTriggers folder inside the config folder of Minecraft.</li>
+<li>Drag the HousingEditor folder you just renamed into your ChatTriggers modules folder.</li>
+<li>Type <code>/ct reload</code> in your house in game</li>
+<li>If an error comes up, just type <code>/ct import Axios</code> and <code>/ct import Vigilance</code></li>
 <li>Now you can make an account on the <a href="https://www.housingeditor.com" target="_blank">Housing Editor website</a> and voila!</li>
 </ol>
 <p><img src="https://cdn.discordapp.com/attachments/994735120688873662/995541839346139216/unknown.png" alt="Command List" /></p>
