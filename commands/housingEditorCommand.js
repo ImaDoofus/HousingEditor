@@ -138,14 +138,15 @@ register("command", () => {
   for (let x = 0; x < NPCs.length; x++) {
     let p = NPCs[x];
     NPCListMsg.addTextComponent(new TextComponent(`&a${x + 1} &7- `)); // index of NPC
-    let dispName = getNPCDisplayName(p);
-    if (!dispName) {
-      if (cachedNPCNames[p.getName()]) {
-        dispName = cachedNPCNames[p.getName()];
-      } else {
-        dispName = "§cNo Name";
-      }
+    
+    let dispName = "§cNo Name"; 
+    if (cachedNPCNames[p.getName()]) {
+      dispName = cachedNPCNames[p.getName()];
+    } else {
+      let temp = getNPCDisplayName(p, true);
+      if (temp) dispName = temp;
     }
+    
     NPCListMsg.addTextComponent(
       new TextComponent(`&r${dispName}`).setHoverValue(
         `&eDisplay Name: &r${dispName}\n&eEntity Name: &7${p.getName()}\n&eUUID: &7${p.getUUID()}`
@@ -186,6 +187,36 @@ function getNPCDisplayName(p, formatted = false) {
 }
 
 let cachedNPCNames = {};
+
+let continueVal = true;
+
+new Thread(() => {
+  while (continueVal) {
+    try {
+      World.getAllPlayers().forEach((p) => {
+        if (!cachedNPCNames[p.getName()]) {
+          if (p.getUUID().version() === 2 && p.getName() !== "Carpenter ") {
+            let dispName = getNPCDisplayName(p);
+            if (dispName) {
+              cachedNPCNames[p.getName()] = dispName;
+            }
+          }
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    Thread.sleep(50);
+  }
+}).start();
+
+register("worldLoad", () => {
+  cachedNPCNames = {};
+});
+
+register("gameUnload", () => {
+  continueVal = false;
+});
 
 /* Causes extreme lag in places such as the Skyblock hub
 
