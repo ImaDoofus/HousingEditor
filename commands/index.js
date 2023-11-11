@@ -1,0 +1,13 @@
+import "./protoolsCommand";
+import "./setCommand";
+import "./upCommand";
+import "./tpPosCommands";
+import "./selfStatCommand";
+import "./linkAccountCommand";
+import "./loadItemCommand";
+import "./housingEditorCommand";
+import "./locationCommand";
+import "./itemCommands";
+import "./dataValueCommand";
+import "./sixSideCommand";
+import "./npcListCommand";

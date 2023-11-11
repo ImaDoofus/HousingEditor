@@ -1,0 +1,694 @@
+[
+  {
+    "name": "acacia_wood",
+    "id": "162"
+  },
+  {
+    "name": "acacia_wood_plank",
+    "id": "5:4"
+  },
+  {
+    "name": "acacia_wood_slab",
+    "id": "126:4"
+  },
+  {
+    "name": "acacia_wood_stairs",
+    "id": "163"
+  },
+  {
+    "name": "air",
+    "id": "0"
+  },
+  {
+    "name": "andesite",
+    "id": "1:5"
+  },
+  {
+    "name": "barrier",
+    "id": "166"
+  },
+  {
+    "name": "bedrock",
+    "id": "7"
+  },
+  {
+    "name": "birch_wood",
+    "id": "17:2"
+  },
+  {
+    "name": "birch_wood_plank",
+    "id": "5:2"
+  },
+  {
+    "name": "birch_wood_slab",
+    "id": "126:2"
+  },
+  {
+    "name": "birch_wood_stairs",
+    "id": "135"
+  },
+  {
+    "name": "black_hardened_clay",
+    "id": "159:15"
+  },
+  {
+    "name": "black_stained_glass",
+    "id": "95:15"
+  },
+  {
+    "name": "black_wool",
+    "id": "35:15"
+  },
+  {
+    "name": "block_of_coal",
+    "id": "173"
+  },
+  {
+    "name": "blue_hardened_clay",
+    "id": "159:11"
+  },
+  {
+    "name": "blue_stained_glass",
+    "id": "95:11"
+  },
+  {
+    "name": "blue_wool",
+    "id": "35:11"
+  },
+  {
+    "name": "bookshelf",
+    "id": "47"
+  },
+  {
+    "name": "brick_slab",
+    "id": "44:4"
+  },
+  {
+    "name": "brick_stairs",
+    "id": "108"
+  },
+  {
+    "name": "bricks",
+    "id": "45"
+  },
+  {
+    "name": "brown_hardened_clay",
+    "id": "159:12"
+  },
+  {
+    "name": "brown_stained_glass",
+    "id": "95:12"
+  },
+  {
+    "name": "brown_wool",
+    "id": "35:12"
+  },
+  {
+    "name": "chiseled_quartz_block",
+    "id": "155:1"
+  },
+  {
+    "name": "chiseled_red_sandstone",
+    "id": "179:1"
+  },
+  {
+    "name": "chiseled_sandstone",
+    "id": "24:1"
+  },
+  {
+    "name": "chiseled_stone_bricks",
+    "id": "98:3"
+  },
+  {
+    "name": "clay",
+    "id": "82"
+  },
+  {
+    "name": "coal_ore",
+    "id": "16"
+  },
+  {
+    "name": "coarse_dirt",
+    "id": "3:1"
+  },
+  {
+    "name": "cobblestone",
+    "id": "4"
+  },
+  {
+    "name": "cobblestone_slab",
+    "id": "44:3"
+  },
+  {
+    "name": "cobblestone_stairs",
+    "id": "67"
+  },
+  {
+    "name": "cracked_stone_bricks",
+    "id": "98:2"
+  },
+  {
+    "name": "crafting_table",
+    "id": "58"
+  },
+  {
+    "name": "cyan_hardened_clay",
+    "id": "159:9"
+  },
+  {
+    "name": "cyan_stained_glass",
+    "id": "95:9"
+  },
+  {
+    "name": "cyan_wool",
+    "id": "35:9"
+  },
+  {
+    "name": "dark_oak_wood",
+    "id": "162:1"
+  },
+  {
+    "name": "dark_oak_wood_plank",
+    "id": "5:5"
+  },
+  {
+    "name": "dark_oak_wood_slab",
+    "id": "126:5"
+  },
+  {
+    "name": "dark_oak_wood_stairs",
+    "id": "164"
+  },
+  {
+    "name": "dark_prismarine",
+    "id": "168:2"
+  },
+  {
+    "name": "diamond_block",
+    "id": "57"
+  },
+  {
+    "name": "diamond_ore",
+    "id": "56"
+  },
+  {
+    "name": "diorite",
+    "id": "1:3"
+  },
+  {
+    "name": "dirt",
+    "id": "3"
+  },
+  {
+    "name": "dispenser",
+    "id": "23"
+  },
+  {
+    "name": "dragon_egg",
+    "id": "122"
+  },
+  {
+    "name": "dropper",
+    "id": "158"
+  },
+  {
+    "name": "emerald_block",
+    "id": "133"
+  },
+  {
+    "name": "emerald_ore",
+    "id": "129"
+  },
+  {
+    "name": "end_portal_frame",
+    "id": "120"
+  },
+  {
+    "name": "end_stone",
+    "id": "121"
+  },
+  {
+    "name": "furnace",
+    "id": "61"
+  },
+  {
+    "name": "glass",
+    "id": "20"
+  },
+  {
+    "name": "glowstone",
+    "id": "89"
+  },
+  {
+    "name": "gold_block",
+    "id": "41"
+  },
+  {
+    "name": "gold_ore",
+    "id": "14"
+  },
+  {
+    "name": "granite",
+    "id": "1:1"
+  },
+  {
+    "name": "grass",
+    "id": "2"
+  },
+  {
+    "name": "gravel",
+    "id": "13"
+  },
+  {
+    "name": "gray_hardened_clay",
+    "id": "159:7"
+  },
+  {
+    "name": "gray_stained_glass",
+    "id": "95:7"
+  },
+  {
+    "name": "gray_wool",
+    "id": "35:7"
+  },
+  {
+    "name": "green_hardened_clay",
+    "id": "159:13"
+  },
+  {
+    "name": "green_stained_glass",
+    "id": "95:13"
+  },
+  {
+    "name": "green_wool",
+    "id": "35:13"
+  },
+  {
+    "name": "hardened_clay",
+    "id": "172"
+  },
+  {
+    "name": "hay_bale",
+    "id": "170"
+  },
+  {
+    "name": "ice",
+    "id": "79"
+  },
+  {
+    "name": "iron_block",
+    "id": "42"
+  },
+  {
+    "name": "iron_ore",
+    "id": "15"
+  },
+  {
+    "name": "jack_olantern",
+    "id": "91"
+  },
+  {
+    "name": "jungle_wood",
+    "id": "17:3"
+  },
+  {
+    "name": "jungle_wood_plank",
+    "id": "5:3"
+  },
+  {
+    "name": "jungle_wood_slab",
+    "id": "126:3"
+  },
+  {
+    "name": "jungle_wood_stairs",
+    "id": "136"
+  },
+  {
+    "name": "lapis_lazuli_block",
+    "id": "22"
+  },
+  {
+    "name": "lapis_lazuli_ore",
+    "id": "21"
+  },
+  {
+    "name": "light_blue_hardened_clay",
+    "id": "159:3"
+  },
+  {
+    "name": "light_blue_stained_glass",
+    "id": "95:3"
+  },
+  {
+    "name": "light_blue_wool",
+    "id": "35:3"
+  },
+  {
+    "name": "light_gray_hardened_clay",
+    "id": "159:8"
+  },
+  {
+    "name": "light_gray_stained_glass",
+    "id": "95:8"
+  },
+  {
+    "name": "light_gray_wool",
+    "id": "35:8"
+  },
+  {
+    "name": "lime_hardened_clay",
+    "id": "159:5"
+  },
+  {
+    "name": "lime_stained_glass",
+    "id": "95:5"
+  },
+  {
+    "name": "lime_wool",
+    "id": "35:5"
+  },
+  {
+    "name": "magenta_hardened_clay",
+    "id": "159:2"
+  },
+  {
+    "name": "magenta_stained_glass",
+    "id": "95:2"
+  },
+  {
+    "name": "magenta_wool",
+    "id": "35:2"
+  },
+  {
+    "name": "melon_block",
+    "id": "103"
+  },
+  {
+    "name": "moss_stone",
+    "id": "48"
+  },
+  {
+    "name": "mossy_stone_bricks",
+    "id": "98:1"
+  },
+  {
+    "name": "mycelium",
+    "id": "110"
+  },
+  {
+    "name": "nether_brick",
+    "id": "112"
+  },
+  {
+    "name": "nether_brick_slab",
+    "id": "44:6"
+  },
+  {
+    "name": "nether_brick_stairs",
+    "id": "114"
+  },
+  {
+    "name": "nether_quartz_ore",
+    "id": "153"
+  },
+  {
+    "name": "netherrack",
+    "id": "87"
+  },
+  {
+    "name": "note_block",
+    "id": "25"
+  },
+  {
+    "name": "oak_leaves",
+    "id": "18"
+  },
+  {
+    "name": "oak_wood",
+    "id": "17"
+  },
+  {
+    "name": "oak_wood_plank",
+    "id": "5"
+  },
+  {
+    "name": "oak_wood_slab",
+    "id": "126"
+  },
+  {
+    "name": "oak_wood_stairs",
+    "id": "53"
+  },
+  {
+    "name": "obsidian",
+    "id": "49"
+  },
+  {
+    "name": "orange_hardened_clay",
+    "id": "159:1"
+  },
+  {
+    "name": "orange_stained_glass",
+    "id": "95:1"
+  },
+  {
+    "name": "orange_wool",
+    "id": "35:1"
+  },
+  {
+    "name": "packed_ice",
+    "id": "174"
+  },
+  {
+    "name": "pillar_quartz_block",
+    "id": "155:2"
+  },
+  {
+    "name": "pink_hardened_clay",
+    "id": "159:6"
+  },
+  {
+    "name": "pink_stained_glass",
+    "id": "95:6"
+  },
+  {
+    "name": "pink_wool",
+    "id": "35:6"
+  },
+  {
+    "name": "piston",
+    "id": "33"
+  },
+  {
+    "name": "podzol",
+    "id": "3:2"
+  },
+  {
+    "name": "polished_andesite",
+    "id": "1:6"
+  },
+  {
+    "name": "polished_diorite",
+    "id": "1:4"
+  },
+  {
+    "name": "polished_granite",
+    "id": "1:2"
+  },
+  {
+    "name": "prismarine",
+    "id": "168"
+  },
+  {
+    "name": "prismarine_bricks",
+    "id": "168:1"
+  },
+  {
+    "name": "pumpkin",
+    "id": "86"
+  },
+  {
+    "name": "purple_hardened_clay",
+    "id": "159:10"
+  },
+  {
+    "name": "purple_stained_glass",
+    "id": "95:10"
+  },
+  {
+    "name": "purple_wool",
+    "id": "35:10"
+  },
+  {
+    "name": "quartz_block",
+    "id": "155"
+  },
+  {
+    "name": "quartz_slab",
+    "id": "44:7"
+  },
+  {
+    "name": "quartz_stairs",
+    "id": "156"
+  },
+  {
+    "name": "red_hardened_clay",
+    "id": "159:14"
+  },
+  {
+    "name": "red_sand",
+    "id": "12:1"
+  },
+  {
+    "name": "red_sandstone",
+    "id": "179"
+  },
+  {
+    "name": "red_sandstone_slab",
+    "id": "182"
+  },
+  {
+    "name": "red_sandstone_stairs",
+    "id": "180"
+  },
+  {
+    "name": "red_stained_glass",
+    "id": "95:14"
+  },
+  {
+    "name": "red_wool",
+    "id": "35:14"
+  },
+  {
+    "name": "redstone_block",
+    "id": "152"
+  },
+  {
+    "name": "redstone_lamp_",
+    "id": "123"
+  },
+  {
+    "name": "redstone_ore",
+    "id": "73"
+  },
+  {
+    "name": "sand",
+    "id": "12"
+  },
+  {
+    "name": "sandstone",
+    "id": "24"
+  },
+  {
+    "name": "sandstone_slab",
+    "id": "44:1"
+  },
+  {
+    "name": "sandstone_stairs",
+    "id": "128"
+  },
+  {
+    "name": "sea_lantern",
+    "id": "169"
+  },
+  {
+    "name": "slime_block",
+    "id": "165"
+  },
+  {
+    "name": "smooth_red_sandstone",
+    "id": "179:2"
+  },
+  {
+    "name": "smooth_sandstone",
+    "id": "24:2"
+  },
+  {
+    "name": "snow_block",
+    "id": "80"
+  },
+  {
+    "name": "soul_sand",
+    "id": "88"
+  },
+  {
+    "name": "sponge",
+    "id": "19"
+  },
+  {
+    "name": "spruce_leaves",
+    "id": "18:1"
+  },
+  {
+    "name": "spruce_wood",
+    "id": "17:1"
+  },
+  {
+    "name": "spruce_wood_plank",
+    "id": "5:1"
+  },
+  {
+    "name": "spruce_wood_slab",
+    "id": "126:1"
+  },
+  {
+    "name": "spruce_wood_stairs",
+    "id": "134"
+  },
+  {
+    "name": "sticky_piston",
+    "id": "29"
+  },
+  {
+    "name": "stone",
+    "id": "1"
+  },
+  {
+    "name": "stone_brick_slab",
+    "id": "44:5"
+  },
+  {
+    "name": "stone_brick_stairs",
+    "id": "109"
+  },
+  {
+    "name": "stone_bricks",
+    "id": "98"
+  },
+  {
+    "name": "stone_slab",
+    "id": "44"
+  },
+  {
+    "name": "wet_sponge",
+    "id": "19:1"
+  },
+  {
+    "name": "white_hardened_clay",
+    "id": "159"
+  },
+  {
+    "name": "white_stained_glass",
+    "id": "95"
+  },
+  {
+    "name": "white_wool",
+    "id": "35"
+  },
+  {
+    "name": "wool",
+    "id": "35"
+  },
+  {
+    "name": "yellow_hardened_clay",
+    "id": "159:4"
+  },
+  {
+    "name": "yellow_stained_glass",
+    "id": "95:4"
+  },
+  {
+    "name": "yellow_wool",
+    "id": "35:4"
+  }
+]
