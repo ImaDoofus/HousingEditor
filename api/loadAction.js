@@ -6,12 +6,12 @@ import Settings from "../utils/config";
 
 export default (actionId) => {
   if (actionId === "test") return loadTestAction();
-  
+
   try {
     const json = JSON.parse(FileLib.getUrlContent(`${HOSTNAME}/actions/${actionId}`));
     loadResponse(json.actionData, json.post?.title, json.author?.name);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 
   /*
@@ -39,8 +39,7 @@ export default (actionId) => {
 };
 
 function loadResponse(actionList, actionName, actionAuthor) {
-  if (Settings.showLoadingMessage)
-    ChatLib.chat(`Loading action: ${actionName}&r by &b@${actionAuthor}`);
+  if (Settings.showLoadingMessage) ChatLib.chat(`Loading action: ${actionName}&r by &b@${actionAuthor}`);
   for (let i = 0; i < actionList.length; i++) {
     let actionType = actionList[i][0];
     let actionData = actionList[i][1];
@@ -56,8 +55,5 @@ function loadTestAction() {
     message: "howdy",
   });
   change_player_stat.load();
-  addOperation([
-    "done",
-    { actionName: "Test Action", actionAuthor: "Test Author" },
-  ]);
+  addOperation(["done", { actionName: "Test Action", actionAuthor: "Test Author" }]);
 }
