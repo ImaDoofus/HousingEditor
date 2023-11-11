@@ -11,10 +11,7 @@ let currentGuiContext = null;
 
 register("tick", () => {
   if (queue.length > 0) timeWithoutOperation++;
-  if (
-    (timeWithoutOperation > Settings.guiTimeout) & (queue.length > 0) &&
-    !Settings.useSafeMode
-  ) {
+  if ((timeWithoutOperation > Settings.guiTimeout) & (queue.length > 0) && !Settings.useSafeMode) {
     fails.push(`&cOperation timed out. &f(too long without GUI click)`);
     const doneOperation = queue.pop();
     doneLoading(doneOperation[1].actionName, doneOperation[1].actionAuthor);
@@ -27,10 +24,7 @@ register("tick", () => {
   if (Navigator.isReturning) return Navigator.returnToEditActions();
   if (Navigator.isSelecting) {
     const attemptResult = Navigator.selectOption(Navigator.optionBeingSelected);
-    if (attemptResult === false)
-      fails.push(
-        `&cCouldn't find option &f${Navigator.optionBeingSelected} &cin &f${currentGuiContext}&c.`
-      );
+    if (attemptResult === false) fails.push(`&cCouldn't find option &f${Navigator.optionBeingSelected} &cin &f${currentGuiContext}&c.`);
     return;
   }
 
@@ -74,22 +68,12 @@ function doneLoading(actionName, actionAuthor) {
   Client.currentGui.close();
 
   if (fails.length > 0) {
-    ChatLib.chat(
-      `&cFailed to load: &r${actionName}&r &cby &b@${actionAuthor}&r &ccorrectly: &f(${
-        fails.length
-      } error${fails.length > 1 ? "s" : ""})`
-    );
+    ChatLib.chat(`&cFailed to load: &r${actionName}&r &cby &b@${actionAuthor}&r &ccorrectly: &f(${fails.length} error${fails.length > 1 ? "s" : ""})`);
     fails.forEach((fail) => ChatLib.chat("   > " + fail));
     fails = [];
-    ChatLib.chat(
-      `&cfinished with &f${remainingOperations} &coperation${
-        remainingOperations !== 1 ? "s" : ""
-      } left in queue.`
-    );
+    ChatLib.chat(`&cfinished with &f${remainingOperations} &coperation${remainingOperations !== 1 ? "s" : ""} left in queue.`);
   } else {
-    ChatLib.chat(
-      `Loaded: &r${actionName}&r by &b@${actionAuthor}&r successfully!`
-    );
+    ChatLib.chat(`Loaded: &r${actionName}&r by &b@${actionAuthor}&r successfully!`);
   }
 }
 
@@ -99,9 +83,7 @@ register("guiRender", (x, y) => {
   if (!Player.getContainer()) return;
   if (queue.length === 0) return;
 
-  timeRemainingButton.setX(
-    Renderer.screen.getWidth() / 2 - timeRemainingButton.getWidth() / 2
-  );
+  timeRemainingButton.setX(Renderer.screen.getWidth() / 2 - timeRemainingButton.getWidth() / 2);
   timeRemainingButton.setY(timeRemainingButton.getHeight() * 3);
 
   timeRemainingButton.render(x, y);
@@ -109,5 +91,4 @@ register("guiRender", (x, y) => {
 
 export function addOperation(operation) {
   queue.push(operation);
-  console.log(JSON.stringify(operation));
 }
