@@ -69,6 +69,7 @@ function updateRemainingTime() {
 
 function doneLoading(actionName, actionAuthor) {
   timeWithoutOperation = startTime = operationCount = 0;
+  Navigator.isWorking = false;
   const remainingOperations = queue.length;
   queue = [];
   Client.currentGui.close();
@@ -94,6 +95,7 @@ function doneLoading(actionName, actionAuthor) {
 }
 
 const timeRemainingButton = new Button(0, 0, 200, 20, "Time Remaining:");
+const cancelButton = new Button(0, 100, 100, 20, "Cancel");
 
 register("guiRender", (x, y) => {
   if (!Player.getContainer()) return;
@@ -102,12 +104,33 @@ register("guiRender", (x, y) => {
   timeRemainingButton.setX(
     Renderer.screen.getWidth() / 2 - timeRemainingButton.getWidth() / 2
   );
+  cancelButton.setX(
+    Renderer.screen.getWidth() / 2 - (timeRemainingButton.getWidth() - 100) / 2
+  );
+
   timeRemainingButton.setY(timeRemainingButton.getHeight() * 3);
+  cancelButton.setY(timeRemainingButton.getHeight() * 3 + 20);
 
   timeRemainingButton.render(x, y);
+  cancelButton.render(x, y);
+});
+
+register("guiMouseClick", (x, y) => {
+  if (!Player.getContainer()) return;
+
+  if (
+    x > cancelButton.getX() &&
+    x < cancelButton.getX() + cancelButton.getWidth() &&
+    y > cancelButton.getY() &&
+    y < cancelButton.getY() + cancelButton.getHeight()
+  ) {
+    fails.push(`&6Cancelled by user.`);
+    queue.splice(0, queue.length - 1);
+  }
 });
 
 export function addOperation(operation) {
+  Navigator.isWorking = true;
   queue.push(operation);
   console.log(JSON.stringify(operation));
 }
