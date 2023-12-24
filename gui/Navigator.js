@@ -125,7 +125,7 @@ function click(slotId) {
 function returnToEditActions() {
   Navigator.isReturning = true;
   const containerName = Player.getContainer().getName();
-  if (containerName.match(/Edit |Actions: /)) {
+  if (containerName.match(/Edit Actions|Actions: |Aktionen: |Modifier les Actions|Modifica Azioni|Azioni: |編輯動作|動作：|Editar ações|Ações: |Редактировать действия|Действия: |이벤트 편집|이벤트: |Zmień działania|Endre handlinger|Handlinger: |Rediger Handlinger|Muokkaa toimintoja|Toiminnot: /)) {
     Navigator.isReturning = false;
     return;
   }
