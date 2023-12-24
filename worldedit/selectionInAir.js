@@ -12,7 +12,7 @@ if (Settings.useBetterWorldedit) {
     if (Client.isInGui() || Client.isInChat()) return;
     if (button === 0 || button === 1) {
       // left or right click
-      if (Player.getHeldItem()?.getName()?.includes("Region Selection Tool")) {
+      if (Player.getHeldItem()?.getName()?.match(/Region Selection Tool|Werkzeug: Regionsauswahl|Outil Sélection de Région|Gebiedselectietool|Herramienta de selección de región|Strumento Selezione Regione|区域选择工具|區域選擇工具|Ferramenta de seleção|Выделение региона|구역 선택 도구|Narzędzie do wyznaczania obszaru|区域選択ツール|Regionvalgsverktøy|Område-Markeringsværktøj|Alueenvalintatyökalu/)) {
         if (Player.lookingAt() instanceof Block) return;
         if (Date.now() - lastUsed < cooldown)
           return ChatLib.chat(
