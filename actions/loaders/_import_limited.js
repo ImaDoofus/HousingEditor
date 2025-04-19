@@ -35,6 +35,9 @@ import pause_execution from "./pause_execution";
 import display_menu from "./display_menu";
 import close_menu from "./close_menu";
 import balance_player_team from "./balance_player_team";
+import drop_item from "./drop_item";
+import change_velocity from "./change_velocity";
+import launch_to_target from "./launch_to_target";
 
 export default {
   change_player_group,
@@ -74,4 +77,7 @@ export default {
   display_menu,
   close_menu,
   balance_player_team,
+  drop_item,
+  change_velocity,
+  launch_to_target,
 };
