@@ -124,6 +124,6 @@ function isInActionGui() {
   const containerName = Player.getContainer().getName();
   if (Client.currentGui.getClassName() === "GuiEditSign") return false;
   if (Player.getContainer().getClassName() !== "ContainerChest") return false;
-  if (containerName.match(/Edit Actions|Actions: /)) return true;
+  if (containerName.match(/Edit Actions|Actions: |Aktionen: |Modifier les Actions|Modifica Azioni|Azioni: |編輯動作|動作：|Editar ações|Ações: |Редактировать действия|Действия: |이벤트 편집|이벤트: |Zmień działania|Endre handlinger|Handlinger: |Rediger Handlinger|Muokkaa toimintoja|Toiminnot: /)) return true;
   return false;
 }
