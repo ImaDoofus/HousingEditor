@@ -148,64 +148,18 @@ function loadCondition(condition) {
       sequence.push(["back"]);
       break;
 
-    case "player_stat_requirement":
-      sequence.push(["option", { option: "Player Stat Requirement" }]);
+    case "variable_requirement":
+      sequence.push(["option", { option: "Variable Requirement" }]);
       if (conditionData.inverted) {
         sequence.push(["click", { slot: 10 }]);
       }
-      if (conditionData.stat && conditionData.stat !== "Kills") {
+      if (conditionData.holder && conditionData.holder !== "Player") {
         sequence.push(["click", { slot: 11 }]);
-        sequence.push(["chat", { text: conditionData.stat }]);
-      }
-      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
-        sequence.push(["click", { slot: 12 }]);
-        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
-        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
-        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
-        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
-      }
-      if (conditionData.compareValue) {
-        sequence.push(["click", { slot: 13 }]);
-        sequence.push(["anvil", { text: conditionData.compareValue }]);
-      }
-      sequence.push(["back"]);
-      break;
-
-    case "global_stat_requirement":
-      sequence.push(["option", { option: "Global Stat Requirement" }]);
-      if (conditionData.inverted) {
-        sequence.push(["click", { slot: 10 }]);
+        sequence.push(["option", { option: conditionData.holder }]);
       }
       if (conditionData.stat && conditionData.stat !== "Kills") {
-        sequence.push(["click", { slot: 11 }]);
-        sequence.push(["chat", { text: conditionData.stat }]);
-      }
-      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
         sequence.push(["click", { slot: 12 }]);
-        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
-        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
-        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
-        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
-      }
-      if (conditionData.compareValue) {
-        sequence.push(["click", { slot: 13 }]);
-        sequence.push(["anvil", { text: conditionData.compareValue }]);
-      }
-      sequence.push(["back"]);
-      break;
-
-    case "team_stat_requirement":
-      sequence.push(["option", { option: "Team Stat Requirement" }]);
-      if (conditionData.inverted) {
-        sequence.push(["click", { slot: 10 }]);
-      }
-      if (conditionData.stat && conditionData.stat !== "Kills") {
-        sequence.push(["click", { slot: 11 }]);
         sequence.push(["chat", { text: conditionData.stat }]);
-      }
-      if (conditionData.team) {
-        sequence.push(["click", { slot: 12 }]);
-        sequence.push(["option", { option: conditionData.team }]);
       }
       if (conditionData.comparator && conditionData.comparator !== "equal_to") {
         sequence.push(["click", { slot: 13 }]);
@@ -216,7 +170,99 @@ function loadCondition(condition) {
       }
       if (conditionData.compareValue) {
         sequence.push(["click", { slot: 14 }]);
-        sequence.push(["anvil", { text: conditionData.compareValue }]);
+        sequence.push(["chat", { text: conditionData.compareValue }]);
+      }
+      if (conditionData.fallback) {
+        sequence.push(["click", { slot: 15 }]);
+        sequence.push(["chat", { text: conditionData.fallback }]);
+      }
+      sequence.push(["back"]);
+      break;
+    case "player_stat_requirement":
+      sequence.push(["option", { option: "Variable Requirement" }]);
+      if (conditionData.inverted) {
+        sequence.push(["click", { slot: 10 }]);
+      }
+      if (conditionData.stat && conditionData.stat !== "Kills") {
+        sequence.push(["click", { slot: 12 }]);
+        sequence.push(["chat", { text: conditionData.stat }]);
+      }
+      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
+        sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
+      }
+      if (conditionData.compareValue) {
+        sequence.push(["click", { slot: 14 }]);
+        sequence.push(["chat", { text: conditionData.compareValue }]);
+      }
+      if (conditionData.fallback) {
+        sequence.push(["click", { slot: 15 }]);
+        sequence.push(["chat", { text: conditionData.fallback }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "global_stat_requirement":
+      sequence.push(["option", { option: "Variable Requirement" }]);
+      if (conditionData.inverted) {
+        sequence.push(["click", { slot: 10 }]);
+      }
+      sequence.push(["click", { slot: 11 }]);
+      sequence.push(["click", { slot: 11 }]);
+      if (conditionData.stat && conditionData.stat !== "Kills") {
+        sequence.push(["click", { slot: 12 }]);
+        sequence.push(["chat", { text: conditionData.stat }]);
+      }
+      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
+        sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
+      }
+      if (conditionData.compareValue) {
+        sequence.push(["click", { slot: 14 }]);
+        sequence.push(["chat", { text: conditionData.compareValue }]);
+      }
+      if (conditionData.fallback) {
+        sequence.push(["click", { slot: 15 }]);
+        sequence.push(["chat", { text: conditionData.fallback }]);
+      }
+      sequence.push(["back"]);
+      break;
+
+    case "team_stat_requirement":
+      sequence.push(["option", { option: "Variable Requirement" }]);
+      if (conditionData.inverted) {
+        sequence.push(["click", { slot: 10 }]);
+      }
+      sequence.push(["click", { slot: 11 }]);
+      sequence.push(["click", { slot: 12 }]);
+      if (conditionData.team) {
+        sequence.push(["click", { slot: 12 }]);
+        sequence.push(["option", { option: conditionData.team }]);
+      }
+      if (conditionData.stat && conditionData.stat !== "Kills") {
+        sequence.push(["click", { slot: 13 }]);
+        sequence.push(["chat", { text: conditionData.stat }]);
+      }
+      if (conditionData.comparator && conditionData.comparator !== "equal_to") {
+        sequence.push(["click", { slot: 14 }]);
+        if (conditionData.comparator === "less_than") sequence.push(["click", { slot: 10 }]);
+        if (conditionData.comparator === "less_than_or_equal_to") sequence.push(["click", { slot: 11 }]);
+        if (conditionData.comparator === "greater_than_or_equal_to") sequence.push(["click", { slot: 13 }]);
+        if (conditionData.comparator === "greater_than") sequence.push(["click", { slot: 14 }]);
+      }
+      if (conditionData.compareValue) {
+        sequence.push(["click", { slot: 15 }]);
+        sequence.push(["chat", { text: conditionData.compareValue }]);
+      }
+      if (conditionData.fallback) {
+        sequence.push(["click", { slot: 16 }]);
+        sequence.push(["chat", { text: conditionData.fallback }]);
       }
       sequence.push(["back"]);
       break;

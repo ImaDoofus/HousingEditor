@@ -14,6 +14,7 @@ import apply_potion_effect from "./apply_potion_effect";
 import clear_all_potion_effects from "./clear_all_potion_effects";
 import give_experience_levels from "./give_experience_levels";
 import send_to_lobby from "./send_to_lobby";
+import change_variable from "./change_variable";
 import change_player_stat from "./change_player_stat";
 import change_global_stat from "./change_global_stat";
 import change_team_stat from "./change_team_stat";
@@ -38,6 +39,9 @@ import balance_player_team from "./balance_player_team";
 import drop_item from "./drop_item";
 import change_velocity from "./change_velocity";
 import launch_to_target from "./launch_to_target";
+import set_player_weather from "./set_player_weather";
+import set_player_time from "./set_player_time";
+import toggle_nametag_display from "./toggle_nametag_display";
 
 export default {
   change_player_group,
@@ -56,6 +60,7 @@ export default {
   clear_all_potion_effects,
   give_experience_levels,
   send_to_lobby,
+  change_variable,
   change_player_stat,
   change_global_stat,
   teleport_player,
@@ -80,4 +85,7 @@ export default {
   drop_item,
   change_velocity,
   launch_to_target,
+  set_player_weather,
+  set_player_time,
+  toggle_nametag_display,
 };
