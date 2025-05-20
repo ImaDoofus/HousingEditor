@@ -55,7 +55,7 @@ if (Settings.useSafeMode) {
   slotIdField.setAccessible(true);
 
   register("packetSent", (packet, event) => {
-    if (Player.getContainer().getName() === "Housing Menu") return;
+    if (Player.getContainer().getName().match(/Housing Menu|Housing-Menü|Menu Housing|Housingmenu|Menú de Housing|Menù di Housing|家园菜单|家園選單|Menu do Housing|Меню Housing|Housing 메뉴|Housing メニュー|Housing-meny|Housing-Menu|Housing-valikko/)) return;
     if (Navigator.isReady) return;
     if (packet instanceof C0EPacketClickWindow) {
       const slotId = slotIdField.get(packet);
@@ -75,7 +75,7 @@ register("guiRender", () => {
   if (Navigator.isReady) return;
   if (!Player.getContainer()) return;
   if (Player.getContainer().getClassName() === "ContainerCreative") return;
-  if (Player.getContainer().getName() === "Housing Menu") return;
+  if (Player.getContainer().getName().match(/Housing Menu|Housing-Menü|Menu Housing|Housingmenu|Menú de Housing|Menù di Housing|家园菜单|家園選單|Menu do Housing|Меню Housing|Housing 메뉴|Housing メニュー|Housing-meny|Housing-Menu|Housing-valikko/)) return;
   if (Navigator.itemsLoaded.lastItemAddedTimestamp === 0) return; // no items loaded yet so wait for items to load
   if (
     Date.now() - Navigator.itemsLoaded.lastItemAddedTimestamp <
@@ -125,7 +125,7 @@ function click(slotId) {
 function returnToEditActions() {
   Navigator.isReturning = true;
   const containerName = Player.getContainer().getName();
-  if (containerName.match(/Edit |Actions: /)) {
+  if (containerName.match(/Edit Actions|Actions: |Aktionen: |Modifier les Actions|Modifica Azioni|Azioni: |編輯動作|動作：|Editar ações|Ações: |Редактировать действия|Действия: |이벤트 편집|이벤트: |Zmień działania|Endre handlinger|Handlinger: |Rediger Handlinger|Muokkaa toimintoja|Toiminnot: /)) {
     Navigator.isReturning = false;
     return;
   }
